@@ -172,6 +172,7 @@
               <li><a href="#" data-toggle="modal" data-target="#create-agent-modal"><i class="fa fa-plus"></i> <span>Create Agent</span></a></li>
               <li><a href="#" data-toggle="modal" data-target="#create-label-modal"><i class="fa fa-plus"></i> <span>Create Label</span></a></li>
               <li><a href="#" data-toggle="modal" data-target="#create-priority-modal"><i class="fa fa-plus"></i> <span>Create Priority</span></a></li>
+              <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i> <span>Create Ticket</span></a></li>
             </ul>
           </li>
           <li class="header">Spotlight</li>
@@ -337,6 +338,332 @@
   <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
+  </div>
+
+  <!-- create customer form -->
+  <div class="modal fade" id="create-customer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">
+                  Create New Customer
+              </h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Token</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" placeholder="Token">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Notes</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3" placeholder="Notes"></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="create-agent-modal" tabindex="-1" role="dialog" aria-labelledby="agent-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">
+                  Create New Agent
+              </h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Department</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>VIP</option>
+                    <option>Design</option>
+                    <option>Software</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Role</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>Admin</option>
+                    <option>Supervisor</option>
+                    <option>Support agent</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Agent Image</label>
+                <div class="col-sm-10">
+                  <input type="file" id="exampleInputFile">
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Create Department -->
+  <div class="modal fade" id="create-department-modal" tabindex="-1" role="dialog" aria-labelledby="agent-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">
+                  Create New Department
+              </h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Create Label -->
+  <div class="modal fade" id="create-label-modal" tabindex="-1" role="dialog" aria-labelledby="agent-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">
+                  Create New Label
+              </h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Color</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>Red</option>
+                    <option>Silver</option>
+                    <option>Green</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  Create Priority -->
+  <div class="modal fade" id="create-priority-modal" tabindex="-1" role="dialog" aria-labelledby="agent-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">
+                  Create New Priority
+              </h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Color</label>
+                <div class="col-sm-10">
+                  <select class="form-control">
+                    <option>Red</option>
+                    <option>Silver</option>
+                    <option>Green</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Priority in numbers</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" placeholder="Higher number, more important">
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="create-ticket-modal" tabindex="-1" role="dialog" aria-labelledby="agent-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <!-- Modal Header -->
+        <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal">
+                   <span aria-hidden="true">&times;</span>
+                   <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">
+                Create New Ticket
+            </h4>
+        </div>
+
+          <!-- Modal Body -->
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="box-body">
+               <!-- text input -->
+              <div class="form-group">
+                <label>Customer</label>
+                <input type="text" required="required" class="form-control" placeholder="phone number or twitter handle">
+              </div>
+
+              <!-- textarea -->
+              <div class="form-group">
+                <label>Problem</label>
+                <textarea class="form-control" required="required" rows="3" placeholder="Enter ..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Department</label>
+                <select class="form-control">
+                  <option>Payments</option>
+                  <option>Subscribtions</option>
+                  <option>DSL Plus</option>
+                  <option>Technical Support</option>
+                </select>
+              </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-success pull-right">Submit</button>
+            </div><!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- ./wrapper -->
   <!-- jQuery 2.1.4 -->
