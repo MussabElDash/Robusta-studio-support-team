@@ -4727,3 +4727,14 @@ table.text-center th {
     white-space: normal!important;
   }
 }
+.add-icon {
+  color: green;
+}
+
+#chat-box-workspace {
+  height: auto !important;
+}
+
+.content-header {
+  height: 50px;
+}
