@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>@yield('title')</title>
+    <title>@yield('title', 'Robusta')</title>
 
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/AdminLTE.min.css') !!}
@@ -33,7 +33,7 @@
         @include('layout.header')
       </header>
 
-      @include('layout.sidebar')
+      @include('layout.sidebar.sidebar')
 
       <div class="content-wrapper">
         <section class="content-header">
@@ -43,7 +43,6 @@
         <section class="content">
           @yield('content')
         </section>
-
       </div>
 
       <footer class="main-footer">

@@ -12,10 +12,16 @@
       <li class="dropdown notifications-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-bell-o"></i>
-          <span class="label label-warning">10</span>
+          <!-- number should be changed to $variable -->
+          <span class="label label-warning">0</span>
         </a>
         <ul class="dropdown-menu">
-          <li class="header">You have 10 notifications</li>
+          @if (false)
+            <li class="header">You have @yield('notificationsCount') notifications</li>
+          @else
+            <li class="header">No new notifications</li>
+          @endif
+          <!-- should be refactored to partials after we set the types of the notifications -->
           <li>
             <ul class="menu">
               <li>

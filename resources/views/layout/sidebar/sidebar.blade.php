@@ -10,12 +10,24 @@
       </div>
     </div>
 
-    @include('layout.search_form')
+    @include('layout.sidebar.search_form')
+
     <ul class="sidebar-menu">
-      <li class="header">MAIN NAVIGATION</li>
-      <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+      <li class="header">
+        MAIN NAVIGATION
+      </li>
+      <!-- Common tabs -->
       <li class="active"><a href="../Statics/feed.html"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
-      <li><a href="statistics.html"><i class="fa fa-pie-chart"></i> <span>Statistics</span></a></li>
+      <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+
+      @if (true)
+        @include('layout.sidebar.admin')
+      @elseif (true)
+        @include('layout.sidebar.supervisor')
+      @else
+        @include('layout.sidebar.agent')
+      @endif
+
       <li class="treeview">
         <a href="#">
           <i class="fa fa-ellipsis-h"></i> <span>Settings</span>
@@ -30,6 +42,7 @@
           <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i> <span>Create Ticket</span></a></li>
         </ul>
       </li>
+
       <li class="header">Spotlight</li>
       <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>VIP Tickets</span></a></li>
     </ul>
