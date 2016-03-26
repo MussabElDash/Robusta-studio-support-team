@@ -15,9 +15,17 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/home', function () {
+Route::get('/layout', function () {
     return view('layout.layout');
 });
+
+Route::get('/department', function () {
+  return view('department._form');
+});
+
+Route::resource('department', 'DepartmentController', [ 'only' => [
+  'store'
+]]);
 
 /*
 |--------------------------------------------------------------------------

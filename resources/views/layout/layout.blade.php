@@ -50,5 +50,9 @@
       </footer>
 
     </div>
+
+    @section('modals')
+    @show
+
   </body>
 </html>
