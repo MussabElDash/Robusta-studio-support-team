@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('landing');
 });
 
+Route::get('/home', function () {
+    return view('layout.layout');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
