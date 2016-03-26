@@ -16,39 +16,16 @@
           <span class="label label-warning">0</span>
         </a>
         <ul class="dropdown-menu">
-          @if (false)
-            <li class="header">You have @yield('notificationsCount') notifications</li>
-          @else
-            <li class="header">No new notifications</li>
-          @endif
-          <!-- should be refactored to partials after we set the types of the notifications -->
+          <!-- number should be changed to $variable -->
+          <li class="header">{{ true ? 'No new notifications' : 'You have' . 5 . 'new notifications'}}</li>
+
           <li>
             <ul class="menu">
-              <li>
-                <a href="#">
-                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the page and may cause design problems
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-users text-red"></i> 5 new members joined
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-user text-red"></i> You changed your username
-                </a>
-              </li>
+              @include('notifications.notification_1')
+              @include('notifications.notification_2')
+              @include('notifications.notification_3')
+              @include('notifications.notification_4')
+              @include('notifications.notification_5')
             </ul>
           </li>
           <li class="footer"><a href="#">View all</a></li>
@@ -57,7 +34,8 @@
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
-          <span class="hidden-xs">Alexander Pierce</span>
+          <!-- should be current user name after authentication task -->
+          <span class="hidden-xs"> {{ isset($userName) ? $userName : 'Alexander Pierce' }}</span>
         </a>
         <ul class="dropdown-menu">
           <li class="user-header">
