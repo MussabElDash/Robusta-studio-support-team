@@ -52,5 +52,11 @@
 @section('modals')
   @parent
 
-  @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'department._form', 'title' => 'Create New Department'])
+  @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'departments._form', 'title' => 'Create New Department'])
+  @include('shared.modals.basic_modal', ['id' => 'create-agent-modal', 'body' => 'agents._form', 'title' => 'Create New Agent'])
+  @include('shared.modals.basic_modal', ['id' => 'create-customer-modal', 'body' => 'customers._form', 'title' => 'Create New Customer'])
+  @include('shared.modals.basic_modal', ['id' => 'create-label-modal', 'body' => 'labels._form', 'title' => 'Create New Label'])
+  @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
+  @include('shared.modals.basic_modal', ['id' => 'create-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
+
 @endsection

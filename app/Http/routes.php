@@ -20,15 +20,30 @@ Route::get('/layout', function () {
     return view('layout.layout');
 });
 
-Route::get('/department', function () {
-  return view('department._form');
-});
-
 // Resources
-Route::resource('department', 'DepartmentController', [ 'only' => [
+Route::resource('department', 'DepartmentsController', [ 'only' => [
   'store'
 ]]);
 
+Route::resource('agent', 'AgentsController', [ 'only' => [
+  'store'
+]]);
+
+Route::resource('priority', 'PrioritiesController', [ 'only' => [
+  'store'
+]]);
+
+Route::resource('ticket', 'TicketsController', [ 'only' => [
+  'store'
+]]);
+
+Route::resource('customer', 'CustomersController', [ 'only' => [
+  'store'
+]]);
+
+Route::resource('label', 'LabelsController', [ 'only' => [
+  'store'
+]]);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
   <head>
     <title>@yield('title', 'Robusta')</title>
 
@@ -9,7 +8,7 @@
     {!! Html::style('assets/css/_all-skins.min.css') !!}
     {!! Html::style('assets/css/font-awesome.min.css') !!}
 
-    @section('header-css')
+    @section('styles')
     @show
 
     {!! Html::script('assets/js/jQuery-2.1.4.min.js') !!}
@@ -17,13 +16,12 @@
     {!! Html::script('assets/js/bootstrap.min.js') !!}
     {!! Html::script('assets/js/AdminLTE.min.js') !!}
 
+    @section('scripts')
+    @show
+
     <script>
       $.widget.bridge('uibutton', $.ui.button);
     </script>
-
-    @section('header-js')
-    @show
-
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
