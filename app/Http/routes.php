@@ -11,6 +11,7 @@
 |
 */
 
+// Single Routes
 Route::get('/', function () {
     return view('landing');
 });
@@ -23,6 +24,7 @@ Route::get('/department', function () {
   return view('department._form');
 });
 
+// Resources
 Route::resource('department', 'DepartmentController', [ 'only' => [
   'store'
 ]]);
