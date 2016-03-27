@@ -21,11 +21,11 @@
 
           <li>
             <ul class="menu">
-              @include('notifications.notification_1')
-              @include('notifications.notification_2')
-              @include('notifications.notification_3')
-              @include('notifications.notification_4')
-              @include('notifications.notification_5')
+              @include('notification.notification_1')
+              @include('notification.notification_2')
+              @include('notification.notification_3')
+              @include('notification.notification_4')
+              @include('notification.notification_5')
             </ul>
           </li>
           <li class="footer"><a href="#">View all</a></li>

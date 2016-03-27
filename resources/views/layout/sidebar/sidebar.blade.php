@@ -52,5 +52,5 @@
 @section('modals')
   @parent
 
-  @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'Department._form', 'title' => 'Create New Department'])
+  @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'department._form', 'title' => 'Create New Department'])
 @endsection
