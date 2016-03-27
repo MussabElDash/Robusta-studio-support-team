@@ -31,7 +31,6 @@
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Agent Image</label>
       {!! Form::label('image', 'Image', ['class' => 'col-sm-2 control-label']) !!}
       <div class="col-sm-10">
         {{ Form::file('image') }}
