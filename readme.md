@@ -6,10 +6,10 @@
 - Go to the project directory
 - Run:
 
-      git pull origin master
+        git pull origin master
 - Run: 
 
-      git flow init
+        git flow init
 
 ** Note: 
 
@@ -17,7 +17,7 @@
 - By default, you will be checked out to develop branch.
 - To work on a new feature run:
 
-      git flow feature start FEATURE_NAME
+        git flow feature start FEATURE_NAME
 - To finish your feature:
 
       git flow feature finish FEATURE_NAME
