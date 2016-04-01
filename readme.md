@@ -20,7 +20,8 @@
     git flow feature start FEATURE_NAME
 
 - Check [this link](http://danielkummer.github.io/git-flow-cheatsheet/) for more options.
-- [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow)illustrates the concepts behind git workflows.
+- [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow) illustrates the concepts behind git workflows.
+
 # .env file
 - .env.example file contains an example.
 - Create .env file.
