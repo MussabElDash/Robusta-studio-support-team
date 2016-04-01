@@ -27,10 +27,10 @@
 - [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow) illustrates the concepts behind git workflows.
 
 # .env file
-- .env.example file contains an example.
-- Create .env file.
-- Copy .env.example file.
-- Paste it in your .env file and consider customizing it for your machine configuraitons.
+  - .env.example file contains an example.
+  - Create .env file.
+  - Copy .env.example file.
+  - Paste it in your .env file and consider customizing it for your machine configuraitons.
 
 # Laravel PHP Framework
 
