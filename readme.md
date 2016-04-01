@@ -1,4 +1,32 @@
 # Robusta-studio-support-team
+# Gitflow setup
+#####Install git-flow:
+  brew install git-flow
+##### Project setup:
+- Go to the project directory
+- Run:
+
+    git pull origin master
+- Run: 
+
+    git flow init
+
+** Note: 
+
+- You should use the default configurations.
+- By default, you will be checked out to develop branch.
+- To work on a new feature run:
+
+    git flow feature start FEATURE_NAME
+
+- Check [this link](http://danielkummer.github.io/git-flow-cheatsheet/) for more options.
+- [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow)illustrates the concepts behind git workflows.
+# .env file
+- .env.example file contains an example.
+- Create .env file.
+- Copy .env.example file.
+- Paste it in your .env file and consider customizing it for your machine configuraitons.
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
