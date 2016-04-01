@@ -10,7 +10,6 @@
 - Run: 
 
         git flow init
-
 ** Note: 
 
 - You should use the default configurations.
@@ -20,10 +19,10 @@
         git flow feature start FEATURE_NAME
 - To finish your feature:
 
-      git flow feature finish FEATURE_NAME
+        git flow feature finish FEATURE_NAME
 - To publish your feature:
 
-      git flow feature publish FEATURE_NAME
+        git flow feature publish FEATURE_NAME
 - Check [this link](http://danielkummer.github.io/git-flow-cheatsheet/) for more options.
 - [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow) illustrates the concepts behind git workflows.
 
