@@ -10,10 +10,6 @@
 - Run: 
 
         git flow init
-** Note: 
-
-- You should use the default configurations.
-- By default, you will be checked out to develop branch.
 - To work on a new feature run:
 
         git flow feature start FEATURE_NAME
