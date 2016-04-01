@@ -6,10 +6,10 @@
 - Go to the project directory
 - Run:
 
-    git pull origin master
+      git pull origin master
 - Run: 
 
-    git flow init
+      git flow init
 
 ** Note: 
 
@@ -17,8 +17,13 @@
 - By default, you will be checked out to develop branch.
 - To work on a new feature run:
 
-    git flow feature start FEATURE_NAME
+      git flow feature start FEATURE_NAME
+- To finish your feature:
 
+      git flow feature finish FEATURE_NAME
+- To publish your feature:
+
+      git flow feature publish FEATURE_NAME
 - Check [this link](http://danielkummer.github.io/git-flow-cheatsheet/) for more options.
 - [This link](https://www.atlassian.com/pt/git/workflows#!workflow-gitflow) illustrates the concepts behind git workflows.
 
