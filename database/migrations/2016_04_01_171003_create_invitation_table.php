@@ -18,8 +18,7 @@ class CreateInvitationTable extends Migration
 
             $table->integer('inviter_id')->unsigned();
             $table->integer('invited_id')->unsigned();
-            $table->integer('invitable_id')->unsigned();
-            $table->string('invitable_type');
+            $table->morphs('invitable');
         });
     }
 
