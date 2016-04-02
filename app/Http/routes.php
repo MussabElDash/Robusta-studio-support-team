@@ -14,6 +14,7 @@
 // Single Routes
 Route::get('/', function () {
     return view('landing');
+    // return view('welcome');
 });
 
 Route::get('/layout', function () {
@@ -57,4 +58,13 @@ Route::resource('label', 'LabelsController', [ 'only' => [
 
 Route::group(['middleware' => ['web']], function () {
     //
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+    Route::get('/', function () {
+        return view('landing');
+    });
 });
