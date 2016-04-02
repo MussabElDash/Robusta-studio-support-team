@@ -12,13 +12,11 @@
 */
 
 // Single Routes
-Route::get('/', function () {
+Route::get('/', ['middleware' => 'web', function () {
     return view('landing');
-});
+}]);
 
-Route::get('/layout', function () {
-    return view('layout.layout');
-});
+Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
 
 // Resources
 Route::resource('department', 'DepartmentsController', [ 'only' => [
@@ -56,5 +54,5 @@ Route::resource('label', 'LabelsController', [ 'only' => [
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::auth();
 });
