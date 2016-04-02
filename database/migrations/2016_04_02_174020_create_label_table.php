@@ -24,7 +24,6 @@ class CreateLabelTable extends Migration
 
 
             $table->string('slug')->unique();
-            $table->timestamps();
         });
     }
 
