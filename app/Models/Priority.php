@@ -6,12 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Priority extends Model
 {
-    //name
-    //value
-    //background_color_id
-    //description
-    //slug
-    //name_color_id
     /**
      * The rules used for validation
      *
@@ -20,8 +14,8 @@ class Priority extends Model
     protected $rules = [
         'name' => 'required',
         'value' => 'required',
-        'background_color_id' => 'required',
-        'name_color_id' => 'required'
+        'background_color' => 'required',
+        'name_color' => 'required'
 
     ];
     /**
@@ -30,7 +24,7 @@ class Priority extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'value', 'background_id','name_color_id'
+        'name', 'value', 'background','name_color'
     ];
 
     /**
@@ -39,6 +33,6 @@ class Priority extends Model
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+
     ];
 }

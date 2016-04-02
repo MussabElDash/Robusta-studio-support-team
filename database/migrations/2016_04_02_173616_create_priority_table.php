@@ -15,11 +15,12 @@ class CreatePriorityTable extends Migration
         Schema::create('Priority', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('value');
+            $table->integer('value');
+            $table->integer('background_color');
+            $table->integer('name_color');
 
             $table->text('description')->nullable();
-            $table->string('background_color_id')->nullable();
-            $table->string('name_color_id')->nullable();
+
 
             $table->string('slug')->unique();
             $table->timestamps();
