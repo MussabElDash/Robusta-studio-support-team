@@ -15,6 +15,15 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            $table->string('slug')->unique();
+            $table->string('twitter_id')->unique();
+            $table->integer('creator_id')->unsigned();
+
+            $table->string('name');
+            $table->text('notes')->nullable();
+            $table->string('profile_image_path')->nullable();
+            $table->string('phone_number')->nullable();
         });
     }
 
