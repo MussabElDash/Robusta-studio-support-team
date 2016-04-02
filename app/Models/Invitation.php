@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invitation extends Model
 {
+    // Morph type map
+    Relation::morphMap([
+        App\Models\Ticket::class,
+    ]);
+
     /*
         Mass Assignment
     */
@@ -21,16 +26,11 @@ class Invitation extends Model
         'invited_id' => 'required',
         'invitable_type' => 'required',
         'invitable_id' => 'required'
-    ]
+    ];
 
     /*
      *   Relations
     */
-
-    // Morph type map
-    Relation::morphMap([
-        App\Models\Ticket::class,
-    ]);
 
     // Get the invitation owner
     public function inviter()
