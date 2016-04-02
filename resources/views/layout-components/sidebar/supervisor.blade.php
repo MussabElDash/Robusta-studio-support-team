@@ -6,4 +6,4 @@
   <!-- check the role of the current user to be supervisor-->
 @endif
 
-@include('layout.sidebar.agent')
+@include('layout-components.sidebar.agent')
