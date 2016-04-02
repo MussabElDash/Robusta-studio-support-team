@@ -13,8 +13,8 @@ class Label extends Model
      */
     protected $rules = [
         'name' => 'required',
-        'background_color_id'=>'required',
-        'name_color_id'=>'required'
+        'background_color'=>'required',
+        'name_color'=>'required'
 
 
     ];
@@ -24,7 +24,7 @@ class Label extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'background_color_id', 'description','name_color_id'
+        'name', 'background_color', 'description','name_color'
     ];
 
     /**
@@ -32,7 +32,4 @@ class Label extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
 }

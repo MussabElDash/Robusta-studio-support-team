@@ -17,11 +17,11 @@ class CreateLabelTable extends Migration
             $table->timestamps();
 
             $table->string('name');
-
+            $table->integer('background_color');
+            $table->integer('name_color');
 
             $table->text('description')->nullable();
-            $table->string('background_color_id')->nullable();
-            $table->string('name_color_id')->nullable();
+
 
             $table->string('slug')->unique();
             $table->timestamps();
