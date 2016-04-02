@@ -1,7 +1,7 @@
 # Robusta-studio-support-team
 # Gitflow setup
 #####Install git-flow:
-  brew install git-flow
+        brew install git-flow
 ##### Project setup:
 - Go to the project directory
 - Run:
