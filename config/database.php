@@ -46,6 +46,13 @@ return [
 
     'connections' => [
 
+        // in memorey database for testing, this makes tests much faster.
+        'sqlite_testing' => [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => database_path('database.sqlite'),
