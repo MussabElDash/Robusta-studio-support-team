@@ -1,6 +1,7 @@
 # Robusta-studio-support-team
 # Gitflow setup
 #####Install git-flow:
+        
         brew install git-flow
 ##### Project setup:
 - Go to the project directory
@@ -19,7 +20,9 @@
 - To publish your feature:
 
         git flow feature publish FEATURE_NAME
+- To merge your commits to the develop branch after finshing use:
 
+        git push origin develop
 ** Note:
 
 - You should use the default configurations.
