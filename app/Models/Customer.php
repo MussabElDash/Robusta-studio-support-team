@@ -15,7 +15,7 @@ class Customer extends Model
     /*
         Validations
     */
-    $rules = [
+    protected $rules = [
         'name' => 'required',
         'twitter_id' => 'required'
     ];
