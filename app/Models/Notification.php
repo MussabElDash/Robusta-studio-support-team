@@ -4,13 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+abstract class Notification extends Model
 {
-    //actor_id
-    //recipient_id
-    //object_id
-    //type
-    //seen
     /**
      * The rules used for validation
      *
@@ -52,8 +47,8 @@ class Notification extends Model
 
     public function object()
     {
-        return belong_to('App\Models\BaseModel', 'recipient_id');
+        return belong_to('App\Models\BaseModel','object_id');
     }
+    abstract function text();
 
-    abstract public function text();
 }
