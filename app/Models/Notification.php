@@ -19,7 +19,8 @@ class Notification extends Model
     protected $rules = [
         'actor_id' => 'required',
         'recipient_id' => 'required',
-        'object_id' => 'required'
+        'object_id' => 'required',
+        'type' => 'required'
     ];
     /**
      * The attributes that are mass assignable.
