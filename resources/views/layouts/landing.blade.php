@@ -62,7 +62,7 @@
 
 
     <footer class="main-footer" style="margin-left: 0px !important">
-      @include('layout.footer')
+      @include('layout-components.footer')
     </footer>
 
   </body>

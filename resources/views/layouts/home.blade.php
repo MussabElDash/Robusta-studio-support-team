@@ -28,14 +28,14 @@
     <div class="wrapper">
 
       <header class="main-header">
-        @include('layout.header')
+        @include('layout-components.header')
       </header>
 
-      @include('layout.sidebar.sidebar')
+      @include('layout-components.sidebar.sidebar')
 
       <div class="content-wrapper">
         <section class="content-header">
-          @include('layout.content_header')
+          @include('layout-components.content_header')
         </section>
 
         <section class="content">
@@ -44,7 +44,7 @@
       </div>
 
       <footer class="main-footer">
-        @include('layout.footer')
+        @include('layout-components.footer')
       </footer>
 
     </div>

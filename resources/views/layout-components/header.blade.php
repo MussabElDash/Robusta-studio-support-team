@@ -1,4 +1,4 @@
-<a href="index2.html" class="logo">
+<a href="/home" class="logo">
   <span class="logo-mini"><b>R</b>bs</span>
   <span class="logo-lg"><b>Robusta</b></span>
 </a>

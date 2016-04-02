@@ -5,12 +5,12 @@
         <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>Alexander Pierce</p>
+        <p>{{$user->name}}</p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
 
-    @include('layout.sidebar.search_form')
+    @include('layout-components.sidebar.search_form')
 
     <ul class="sidebar-menu">
       <li class="header">
@@ -21,11 +21,11 @@
       <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
       @if (true)
-        @include('layout.sidebar.admin')
+        @include('layout-components.sidebar.admin')
       @elseif (true)
-        @include('layout.sidebar.supervisor')
+        @include('layout-components.sidebar.supervisor')
       @else
-        @include('layout.sidebar.agent')
+        @include('layout-components.sidebar.agent')
       @endif
 
       <li class="treeview">
