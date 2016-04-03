@@ -41,8 +41,9 @@
           <li class="user-header">
             <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
             <p>
-              {{ $user->name }} - Web Developer
-              <small>Member since Nov. 2012</small>
+              {{ $user->name }} - {{ $user->role }}
+              {{--*/ $creation = $user->created_at /*--}}
+              <small>Member since {{ jdmonthname($creation->month,0) }}. {{ $creation->year }}</small>
             </p>
           </li>
           <li class="user-footer">
