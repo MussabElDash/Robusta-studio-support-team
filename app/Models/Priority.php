@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Priority extends Model
+class Priority extends BaseModel
 {
     /**
      * The rules used for validation
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'value' => 'required',
         'background_color' => 'required',
