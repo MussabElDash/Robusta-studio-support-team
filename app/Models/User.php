@@ -15,7 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'email' => array(
             'required',

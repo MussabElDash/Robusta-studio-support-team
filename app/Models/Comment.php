@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Comment extends BaseModel
 {
     /*
         Mass Assignment
@@ -16,7 +15,7 @@ class Comment extends Model
         Validations
     */
 
-    protected $rules = [
+    protected static $rules = [
         'body' => 'required',
         'user_id' => 'required',
         'ticket_id' => 'required'

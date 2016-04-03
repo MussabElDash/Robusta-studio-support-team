@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Invitation extends Model
+class Invitation extends BaseModel
 {
     /*
         Mass Assignment
@@ -16,7 +15,7 @@ class Invitation extends Model
         Validations
     */
 
-    protected $rules = [
+    protected static $rules = [
         'inviter_id' => 'required',
         'invited_id' => 'required',
         'invitable_type' => 'required',

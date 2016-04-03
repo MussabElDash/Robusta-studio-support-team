@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Label extends Model
+class Label extends BaseModel
 {
     /**
      * The rules used for validation
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'background_color'=>'required',
         'name_color'=>'required'

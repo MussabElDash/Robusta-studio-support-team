@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Customer extends BaseModel
 {
     /*
         Mass Assignment
@@ -15,7 +14,7 @@ class Customer extends Model
     /*
         Validations
     */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'twitter_id' => 'required'
     ];

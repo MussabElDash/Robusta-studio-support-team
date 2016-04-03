@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-abstract class Notification extends Model
+abstract class Notification extends BaseModel
 {
     /**
      * The rules used for validation
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'actor_id' => 'required',
         'recipient_id' => 'required',
         'object_id' => 'required',

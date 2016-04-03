@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Department extends BaseModel
 {
     /**
      * The rules used for validation
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required'
 
     ];
