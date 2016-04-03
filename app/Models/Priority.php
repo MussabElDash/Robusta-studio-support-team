@@ -16,7 +16,6 @@ class Priority extends BaseModel
         'value' => 'required',
         'background_color' => 'required',
         'name_color' => 'required'
-
     ];
     /**
      * The attributes that are mass assignable.
@@ -24,7 +23,7 @@ class Priority extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'value', 'background','name_color'
+        'name', 'value', 'background_color','name_color'
     ];
 
     /**
