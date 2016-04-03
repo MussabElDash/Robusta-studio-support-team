@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Twitter;
 use Auth;
+use Cache;
+use Carbon;
+
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -25,7 +29,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return view('home');
-        return view('home', ['user' => Auth::user()]);
+        $tweets = Cache::remember('tweets', 1, function() {
+            return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
+        });
+
+        if(!empty($tweets))
+        {
+            return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
+        }
+        else
+        {
+            return view('home', ['user' => Auth::user(), 'tweets' => []]);
+        }
     }
 }
