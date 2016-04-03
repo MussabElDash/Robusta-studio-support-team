@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Validator;
 
 class BaseModel extends Model
 {
-    //
     protected static $rules = array();
 
     protected $errors;
@@ -23,11 +23,10 @@ class BaseModel extends Model
 
     public function validate()
     {
-        $v = Validator::make($this->attributes, static::$rules);
+        $validator = Validator::make($this->attributes, static::$rules);
 
-        if ($v->fails())
-        {
-            $this->errors = $v->errors;
+        if ($validator->fails()) {
+            $this->errors = $validator->messages();
             return false;
         }
 
