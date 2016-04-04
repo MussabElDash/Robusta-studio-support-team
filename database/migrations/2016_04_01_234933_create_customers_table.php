@@ -17,7 +17,7 @@ class CreateCustomersTable extends Migration
             $table->timestamps();
 
             $table->string('slug')->unique();
-            $table->string('twitter_id')->unique();
+            $table->string('twitter_id')->unique()->nullable();
             $table->integer('creator_id')->unsigned();
 
             $table->string('name');

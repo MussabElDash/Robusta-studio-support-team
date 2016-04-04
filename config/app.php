@@ -161,6 +161,10 @@ return [
          * Twitter
          */
         'Thujohn\Twitter\TwitterServiceProvider',
+        /*
+         * Sluggable
+         */
+        'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
     ],
 
@@ -210,6 +214,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Input'     => Illuminate\Support\Facades\Input::class,
         /*
          * Twitter
          */
