@@ -16,6 +16,7 @@ class User extends Authenticatable implements SluggableInterface
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',
+        'unique'     => true,
     ];
     /**
      * The rules used for validation
