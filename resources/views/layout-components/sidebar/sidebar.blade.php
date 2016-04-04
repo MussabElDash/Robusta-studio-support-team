@@ -20,9 +20,10 @@
       <li class="active"><a href="../Statics/feed.html"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
       <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
-      @if (true)
+
+      @if ($user->role == 'Admin')
         @include('layout-components.sidebar.admin')
-      @elseif (true)
+      @elseif ($user->role == 'Supervisor')
         @include('layout-components.sidebar.supervisor')
       @else
         @include('layout-components.sidebar.agent')
@@ -34,17 +35,26 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#" data-toggle="modal" data-target="#create-department-modal"><i class="fa fa-plus"></i> <span>Create Department</span></a></li>
+
+          @if ($user->role == 'Admin')
+            <li><a href="#" data-toggle="modal" data-target="#create-department-modal"><i class="fa fa-plus"></i> <span>Create Department</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#create-agent-modal"><i class="fa fa-plus"></i> <span>Create Agent</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#create-label-modal"><i class="fa fa-plus"></i> <span>Create Label</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#create-priority-modal"><i class="fa fa-plus"></i> <span>Create Priority</span></a></li>
+          @endif
+          @if ($user->role == 'Supervisor' || $user->role == 'Admin')
+            <!-- TODO Modal-->
+            <li><a href="#" data-toggle="modal" data-target="#"><i class="fa fa-plus"></i> <span>Ticket from Feed</span></a></li>
+          @endif
           <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i> <span>Create Customer</span></a></li>
-          <li><a href="#" data-toggle="modal" data-target="#create-agent-modal"><i class="fa fa-plus"></i> <span>Create Agent</span></a></li>
-          <li><a href="#" data-toggle="modal" data-target="#create-label-modal"><i class="fa fa-plus"></i> <span>Create Label</span></a></li>
-          <li><a href="#" data-toggle="modal" data-target="#create-priority-modal"><i class="fa fa-plus"></i> <span>Create Priority</span></a></li>
-          <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i> <span>Create Ticket</span></a></li>
+          <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i> <span>Create Phone Ticket</span></a></li>
         </ul>
       </li>
 
       <li class="header">Spotlight</li>
-      <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>VIP Tickets</span></a></li>
+      @if($user->department() == 'VIP' || $user->role == 'Admin')
+        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>VIP Tickets</span></a></li>
+      @endif
     </ul>
   </section>
 </aside>
