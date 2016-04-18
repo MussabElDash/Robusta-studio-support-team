@@ -3,8 +3,19 @@
 namespace App\Models;
 
 
-class Customer extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+
+class Customer extends Model implements SluggableInterface
+
 {
+    use SluggableTrait;
+    protected $sluggable = [
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+        'unique'     => true,
+    ];
     /*
         Mass Assignment
     */
@@ -26,5 +37,14 @@ class Customer extends BaseModel
     public function creator()
     {
         return  $this->belongsTo('App\Models\User', 'creator_id');
+    }
+
+    public function setTwitterIdAttribute($value) {
+        // var_dump('Here' . $value . 'and Here');
+        if ( empty($value) ) { // will check for empty string, null values, see php.net about it
+            $this->attributes['twitter_id'] = NULL;
+        } else {
+            $this->attributes['twitter_id'] = $value;
+        }
     }
 }

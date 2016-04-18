@@ -3,13 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
 /**
  * Class User
  * @package App\Models
  */
-class User extends Authenticatable
+class User extends Authenticatable implements SluggableInterface
 {
+    use SluggableTrait;
+    protected $sluggable = [
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+        'unique'     => true,
+    ];
     /**
      * The rules used for validation
      *

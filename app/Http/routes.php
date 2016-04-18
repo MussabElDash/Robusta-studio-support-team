@@ -42,6 +42,11 @@ Route::resource('customer', 'CustomersController', [ 'only' => [
 Route::resource('label', 'LabelsController', [ 'only' => [
   'store'
 ]]);
+
+Route::get('/twitter', function()
+{
+    return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes
