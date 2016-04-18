@@ -23,7 +23,7 @@ class User extends Authenticatable implements SluggableInterface
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'email' => array(
             'required',
