@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Label extends Model implements SluggableInterface
+class Label extends BaseModel implements SluggableInterface
 
 {
     use SluggableTrait;

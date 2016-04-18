@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Customer extends Model implements SluggableInterface
+class Customer extends BaseModel implements SluggableInterface
 
 {
     use SluggableTrait;
