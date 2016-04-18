@@ -16,7 +16,7 @@ class Comment extends BaseModel
         Validations
     */
 
-    protected $rules = [
+    protected static $rules = [
         'body' => 'required',
         'user_id' => 'required',
         'ticket_id' => 'required'

@@ -11,7 +11,7 @@ abstract class Notification extends BaseModel
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'actor_id' => 'required',
         'recipient_id' => 'required',
         'object_id' => 'required',

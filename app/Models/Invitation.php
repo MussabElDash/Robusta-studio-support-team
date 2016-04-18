@@ -15,7 +15,7 @@ class Invitation extends BaseModel
         Validations
     */
 
-    protected $rules = [
+    protected static $rules = [
         'inviter_id' => 'required',
         'invited_id' => 'required',
         'invitable_type' => 'required',

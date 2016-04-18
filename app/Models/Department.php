@@ -18,7 +18,7 @@ class Department extends BaseModel implements SluggableInterface
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required'
 
     ];

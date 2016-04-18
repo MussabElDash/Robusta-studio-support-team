@@ -18,7 +18,7 @@ class Label extends BaseModel implements SluggableInterface
      *
      * @var array
      */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'background_color'=>'required',
         'name_color'=>'required'

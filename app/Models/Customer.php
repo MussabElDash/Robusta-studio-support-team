@@ -22,7 +22,7 @@ class Customer extends BaseModel implements SluggableInterface
     /*
         Validations
     */
-    protected $rules = [
+    protected static $rules = [
         'name' => 'required',
         'twitter_id' => 'required'
     ];
