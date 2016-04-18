@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-abstract class Notification extends Model
+abstract class Notification extends BaseModel
 {
     /**
      * The rules used for validation
