@@ -26,7 +26,7 @@ class CreateTicketsTable extends Migration
             $table->integer('customer_id')->unsigned();
 
             $table->timestamps();
-        })
+        });
     }
 
     /**
@@ -36,7 +36,6 @@ class CreateTicketsTable extends Migration
      */
     public function down()
     {
-        //
         Schema::drop('tickets');
     }
 }

@@ -12,7 +12,15 @@ class CreateLabelTicketTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('label_ticket', function ( Blueprint $table )
+        {
+            $table->incremets('id');
+            $table->integer('label_id')->unsigned();
+            $table->integer('ticket_id')->unsigned();
+
+            $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+        });
     }
 
     /**
@@ -22,6 +30,6 @@ class CreateLabelTicketTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('label_ticket');
     }
 }
