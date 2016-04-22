@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ticket;
 
 class Label extends BaseModel
 {
@@ -32,4 +33,11 @@ class Label extends BaseModel
     protected $hidden = [
 
     ];
+
+    // Relations
+    public function tickets()
+    {
+        return $this->belongsToMany( Ticket::class );
+    }
+
 }

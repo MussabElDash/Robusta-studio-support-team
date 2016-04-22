@@ -2,21 +2,31 @@
 
 namespace App\Models;
 
+
+use Illuminate\Database\Eloquent\Builder;
+
 use App\Models\Department;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Priority;
 use App\Models\Label;
+use App\Models\Comment;
+
 
 class Ticket extends BaseModel
 {
     // Mass Assignment
-    protected $fillable = []
+    protected $fillable = [
+        'name'       , 'description'  , 'customer_id',
+        'assigned_to', 'department_id', 'priority_id',
+        'vip'
+    ];
 
     // Validations
     protected static $rules = [
-
-    ]
+        'name'        => 'required',
+        'description' => 'required'
+    ];
 
     // Relations
     public function creator()
@@ -26,7 +36,7 @@ class Ticket extends BaseModel
 
     public function priority()
     {
-        return $this->hasOne( Priority::class );
+        return $this->belongsTo( Priority::class );
     }
 
     public function department()
@@ -39,10 +49,47 @@ class Ticket extends BaseModel
         return $this->belongsTo( Customer::class );
     }
 
+    public function assigned_to()
+    {
+        return $this->belongsTo( User::class, 'assigned_to' );
+    }
+
     public function labels()
     {
         return $this->belongsToMany( Label::class );
     }
 
+    public function comments()
+    {
+        return $this->hasMany( Comment::class );
+    }
+
+    // Scopes
+    public function scopeOpen( Builder $query )
+    {
+        return $query->where( 'open', true );
+    }
+
+    public function scopeDone( Builder $query )
+    {
+        return $query->where( 'open', false );
+    }
+
+    public function scopeVIP( Builder $query )
+    {
+        return $query->where( 'vip', true );
+    }
+
+    public function scopeNotAssigned( Builder $query )
+    {
+        return $query->where( 'assigned_to', null );
+    }
+
+    public function scopeAssigned( Builder $query )
+    {
+        return $query->where( 'assigned_to', 'is not', null );
+    }
+
     // Methods
+
 }

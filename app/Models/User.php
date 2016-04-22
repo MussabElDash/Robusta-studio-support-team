@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+
+use App\Models\Ticket;
 
 /**
  * Class User
@@ -51,8 +54,15 @@ class User extends Authenticatable implements SluggableInterface
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // Relations
     public function department()
     {
         return $this->belongsTo('App\Models\Department', 'department_id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany( Ticket::class );
     }
 }

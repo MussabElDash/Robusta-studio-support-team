@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ticket;
 
 class Priority extends BaseModel
 {
@@ -33,4 +34,11 @@ class Priority extends BaseModel
     protected $hidden = [
 
     ];
+
+    // Relations
+    public function tickets()
+    {
+        return $this->hasMany( Ticket::class );
+    }
+
 }
