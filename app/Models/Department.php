@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Department extends BaseModel implements SluggableInterface
+class Department extends Model implements SluggableInterface
 {
     use SluggableTrait;
+    use BaseModel;
+
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',
@@ -20,8 +22,8 @@ class Department extends BaseModel implements SluggableInterface
      * @var array
      */
     protected static $rules = [
-        'name' => 'required'
-
+        'name' => 'required',
+        'description' => 'required'
     ];
     /**
      * The attributes that are mass assignable.

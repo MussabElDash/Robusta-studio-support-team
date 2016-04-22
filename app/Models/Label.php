@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Label extends BaseModel implements SluggableInterface
+class Label extends Model implements SluggableInterface
 
 {
     use SluggableTrait;
+    use BaseModel;
+    
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',

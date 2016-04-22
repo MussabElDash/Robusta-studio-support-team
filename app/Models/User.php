@@ -20,13 +20,13 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * Class User
  * @package App\Models
  */
-class User extends BaseModel implements SluggableInterface,AuthenticatableContract,
+class User extends Model implements SluggableInterface,AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use SluggableTrait;
-
+    use BaseModel;
 
     protected $sluggable = [
         'build_from' => 'name',

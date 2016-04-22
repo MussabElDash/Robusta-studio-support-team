@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
-class Invitation extends BaseModel
+class Invitation extends Model
 {
+
+    use BaseModel;
+
     /*
         Mass Assignment
     */

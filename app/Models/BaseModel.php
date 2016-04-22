@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 use Validator;
 
-class BaseModel extends Model
+trait BaseModel
 {
-    protected static $rules = array();
-
     protected $errors;
 
     protected static function boot()
     {
         parent::boot();
 
-        static::saving(function($model)
+        static::creating(function($model)
+        {
+             return $model->validate();
+        });
+
+        static::updating(function($model)
         {
             return $model->validate();
         });
