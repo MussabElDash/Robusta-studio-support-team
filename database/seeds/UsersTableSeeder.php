@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,15 +14,31 @@ class UsersTableSeeder extends Seeder
     {
         //
         DB::table('users')->delete();
-        DB::table('users')->insert([
-            'name' => 'Mussab ElDash',
-            'email' => 'mussab14@gmail.com',
-            'password' => Hash::make('mussab') ,
-            'remember_token' => 'ryTVYiDGY4UdFQl8M0yO406MK0WO9imJC62MohqBJkO8ytfsn5Y1PtdWA2k1',
-            'created_at' => '2016-04-02 23:55:02',
-            'updated_at' => '2016-04-02 23:55:21',
-            'role' => 'Admin',
-            'gender' => true
-        ]);
+        $users = [
+            [
+                'name' => 'Mussab ElDash',
+                'email' => 'mussab@admin.com',
+                'password' => Hash::make('mussab'),
+                'role' => 'Admin',
+                'gender' => true
+            ],[
+                'name' => 'Mussab ElDash',
+                'email' => 'mussab@super.com',
+                'password' => Hash::make('mussab'),
+                'role' => 'Supervisor',
+                'gender' => true,
+            ],[
+                'name' => 'Mussab ElDash',
+                'email' => 'mussab@agent.com',
+                'password' => Hash::make('mussab'),
+                'role' => 'Agent',
+                'gender' => true
+            ]
+        ];
+
+        foreach ($users as $user)
+        {
+            User::create($user);
+        }
     }
 }

@@ -34,14 +34,15 @@ class CustomersController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return Response
      */
-    public function store(){ 
+    public function store()
+    {
         $validator = Validator::make(Input::all(), $this->rules);
         // process
         if ($validator->fails()) {
             // redirect
             Session::flash('message', 'Error While creating Customer!');
 			return Redirect::to('home');
-        }else{
+        } else {
         	// store
         	$customer = new Customer;
 			$customer->name = Input::get('name');
