@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 

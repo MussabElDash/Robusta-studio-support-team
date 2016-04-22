@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
@@ -42,4 +43,5 @@ class Priority extends BaseModel implements SluggableInterface
     protected $hidden = [
 
     ];
+
 }
