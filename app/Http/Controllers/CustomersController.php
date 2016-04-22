@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use Input;
-use Validator;
-use Session;
-use Redirect;
 use App\Models\Customer;
+use Auth;
+use Input;
+use Redirect;
+use Session;
+use Validator;
 
 class CustomersController extends Controller
 {
     //
     // validate
-    	protected $rules = [
-            'name'       => 'required'
-        ];
+    protected $rules = [
+        'name' => 'required',
+        'phone_number' => 'required',
+    ];
+
     /**
      * Create a new controller instance.
      *
@@ -28,7 +30,7 @@ class CustomersController extends Controller
         $this->middleware('auth');
     }
 
-	/**
+    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -41,18 +43,50 @@ class CustomersController extends Controller
         if ($validator->fails()) {
             // redirect
             Session::flash('message', 'Error While creating Customer!');
-			return Redirect::to('home');
+            return Redirect::to('home');
         } else {
-        	// store
-        	$customer = new Customer;
-			$customer->name = Input::get('name');
-			$customer->notes = Input::get('notes');
-			$customer->phone_number = Input::get('phone_number');
-			$customer->save();
+            // store
+            $customer = new Customer;
+            $customer->name = Input::get('name');
+            $customer->notes = Input::get('notes');
+            $customer->phone_number = Input::get('phone_number');
+            if (!$customer->save()) {
+                return 'Error';
+            }
 
             // redirect
             Session::flash('message', 'Successfully created Customer!');
-			return Redirect::to('home');
+            return Redirect::to('home');
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $customer = Customer::find($id);
+        if (is_null($customer)) {
+            return 'Error';
+        }
+        return view('customers.show', ['user' => Auth::user(), 'customer' => $customer]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $customer = Customer::find($id);
+        if (is_null($customer)) {
+            return 'Error';
+        }
+        return view('customers.edit', ['user' => Auth::user(), 'customer' => $customer]);
     }
 }
