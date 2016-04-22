@@ -2,17 +2,9 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Label extends BaseModel implements SluggableInterface
+class Label extends BaseModel
 {
-    use SluggableTrait;
-    protected $sluggable = [
-        'build_from' => 'name',
-        'save_to'    => 'slug',
-        'unique'     => true,
-    ];
     /**
      * The rules used for validation
      *
