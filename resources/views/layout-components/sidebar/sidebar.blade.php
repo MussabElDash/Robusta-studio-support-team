@@ -41,6 +41,7 @@
             <li><a href="#" data-toggle="modal" data-target="#create-agent-modal"><i class="fa fa-plus"></i> <span>Create Agent</span></a></li>
             <li><a href="#" data-toggle="modal" data-target="#create-label-modal"><i class="fa fa-plus"></i> <span>Create Label</span></a></li>
             <li><a href="#" data-toggle="modal" data-target="#create-priority-modal"><i class="fa fa-plus"></i> <span>Create Priority</span></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#change-theme"><i class="fa fa-plus"></i> <span>Change Theme</span></a></li>
           @endif
           @if ($user->role == 'Supervisor' || $user->role == 'Admin')
             <!-- TODO Modal-->
@@ -68,5 +69,6 @@
   @include('shared.modals.basic_modal', ['id' => 'create-label-modal', 'body' => 'labels._form', 'title' => 'Create New Label'])
   @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
   @include('shared.modals.basic_modal', ['id' => 'create-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
+  @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
 
 @endsection
