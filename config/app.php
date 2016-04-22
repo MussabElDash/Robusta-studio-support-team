@@ -165,6 +165,7 @@ return [
          * Sluggable
          */
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+        'anlutro\LaravelSettings\ServiceProvider',
 
     ],
 
@@ -219,6 +220,8 @@ return [
          * Twitter
          */
         'Twitter' => 'Thujohn\Twitter\Facades\Twitter',
+
+        'Setting' => 'anlutro\LaravelSettings\Facade',
     ],
 
 ];
