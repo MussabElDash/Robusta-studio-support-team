@@ -8,6 +8,7 @@ use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
 use App\Models\Ticket;
+use App\Models\Invitation;
 
 /**
  * Class User
@@ -61,8 +62,23 @@ class User extends Authenticatable implements SluggableInterface
         return $this->belongsTo('App\Models\Department', 'department_id');
     }
 
+    public function createdTickets()
+    {
+        return $this->hasMany( Ticket::class, 'creator_id' );
+    }
+
     public function tickets()
     {
-        return $this->hasMany( Ticket::class );
+        return $this->hasMany( Ticket::class, 'assigned_to' );
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany( Invitation::class, 'invited_id' );
+    }
+
+    public function sentInvitations()
+    {
+        return $this->hasMany( Invitation::class, 'inviter_id' );
     }
 }

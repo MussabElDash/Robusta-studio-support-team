@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Priority;
 use App\Models\Label;
 use App\Models\Comment;
+use App\Models\Invitation;
 
 
 class Ticket extends BaseModel
@@ -62,6 +63,11 @@ class Ticket extends BaseModel
     public function comments()
     {
         return $this->hasMany( Comment::class );
+    }
+
+    public function invitaions()
+    {
+        return $this->morphMany( Invitation::class, 'invitable' );
     }
 
     // Scopes
