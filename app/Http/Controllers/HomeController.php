@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 
 
 use App\Http\Requests;
+use App\Models\Department;
 
 class HomeController extends Controller
 {
@@ -37,11 +38,11 @@ class HomeController extends Controller
         $tweets = Cache::remember('tweets', 1, function () {
             return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         });
-
+        $departments = Department::lists('name', 'id');
         if (!empty($tweets)) {
-            return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
+            return view('home', ['user' => Auth::user(), 'tweets' => $tweets, 'departments' => $departments]);
         } else {
-            return view('home', ['user' => Auth::user(), 'tweets' => []]);
+            return view('home', ['user' => Auth::user(), 'tweets' => [], 'departments' => $departments]);
         }
     }
 
