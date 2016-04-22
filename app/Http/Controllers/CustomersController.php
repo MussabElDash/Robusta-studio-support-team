@@ -57,7 +57,34 @@ class CustomersController extends Controller
 
             // redirect
             Session::flash('message', 'Successfully created Customer!');
+            return Redirect::action('CustomersController@show', $customer);
+        }
+    }
+
+    public function update($id)
+    {
+        $customer = Customer::find($id);
+        if (is_null($customer)) {
+            return 'Error';
+        }
+        $validator = Validator::make(Input::all(), $this->rules);
+        // process
+        if ($validator->fails()) {
+            // redirect
+            Session::flash('message', 'Error While creating Customer!');
             return Redirect::to('home');
+        } else {
+            // store
+            $customer->name = Input::get('name');
+            $customer->notes = Input::get('notes');
+            $customer->phone_number = Input::get('phone_number');
+            if (!$customer->save()) {
+                return 'Error';
+            }
+
+            // redirect
+            Session::flash('message', 'Successfully created Customer!');
+            return Redirect::action('CustomersController@show', $customer);
         }
     }
 
