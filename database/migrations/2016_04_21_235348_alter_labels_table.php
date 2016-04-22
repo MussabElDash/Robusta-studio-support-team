@@ -12,7 +12,7 @@ class AlterLabelsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('label', 'labels');
+
 
         Schema::table('labels', function( Blueprint $table )
         {
@@ -28,8 +28,8 @@ class AlterLabelsTable extends Migration
      */
     public function down()
     {
-        Schema::rename('labels', 'label');
-        Schema::table('label', function( Blueprint $table )
+
+        Schema::table('labels', function( Blueprint $table )
         {
             $table->string('slug')->unique();
             $table->dropUnique('labels_name_unique');

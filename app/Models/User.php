@@ -75,7 +75,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     // Relations
     public function department()
     {
-        return $this->belongsTo('App\Models\Department', 'department_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function createdTickets()
