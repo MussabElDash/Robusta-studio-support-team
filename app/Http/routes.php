@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -17,34 +16,37 @@ Route::get('/', ['middleware' => 'web', function () {
 }]);
 
 Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
-
+Route::get('/get-skin', function(){
+    return response(view('skin'))->header('Content-Type', 'text/css');
+});
+Route::post('/home', ['middleware' => 'web','uses' => 'HomeController@store']);
 // Resources
-Route::resource('department', 'DepartmentsController', [ 'only' => [
-  'store'
+
+Route::resource('department', 'DepartmentsController', ['only' => [
+    'store'
 ]]);
 
-Route::resource('agent', 'AgentsController', [ 'only' => [
-  'store'
+Route::resource('agent', 'AgentsController', ['only' => [
+    'store'
 ]]);
 
-Route::resource('priority', 'PrioritiesController', [ 'only' => [
-  'store'
+Route::resource('priority', 'PrioritiesController', ['only' => [
+    'store'
 ]]);
 
-Route::resource('ticket', 'TicketsController', [ 'only' => [
-  'store'
+Route::resource('ticket', 'TicketsController', ['only' => [
+    'store'
 ]]);
 
-Route::resource('customer', 'CustomersController', [ 'only' => [
-  'store'
+Route::resource('customer', 'CustomersController', ['only' => [
+    'store'
 ]]);
 
-Route::resource('label', 'LabelsController', [ 'only' => [
-  'store'
+Route::resource('label', 'LabelsController', ['only' => [
+    'store'
 ]]);
 
-Route::get('/twitter', function()
-{
+Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
 });
 /*

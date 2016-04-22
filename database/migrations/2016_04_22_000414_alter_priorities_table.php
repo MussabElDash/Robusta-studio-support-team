@@ -12,8 +12,6 @@ class AlterPrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::rename('Priority', 'priorities');
-
         Schema::table('priorities', function( Blueprint $table )
         {
             $table->dropColumn('slug');
@@ -28,8 +26,7 @@ class AlterPrioritiesTable extends Migration
      */
     public function down()
     {
-        Schema::rename('priorities', 'Priority');
-        Schema::table('Priority', function( Blueprint $table )
+        Schema::table('priorities', function( Blueprint $table )
         {
             $table->string('slug')->unique();
             $table->dropUnique('priorities_name_unique');

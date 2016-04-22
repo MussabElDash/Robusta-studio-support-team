@@ -1,0 +1,10 @@
+#!/bin/bash
+sed -i.bak 's/#fff/#ffffff/g' skin.blade.php
+keys=($( awk -F ',' '{ print $2 }' colors.txt))
+values=($( awk -F ',' '{ print NR }' colors.txt))
+echo ${keys[0]}
+for i in "${!keys[@]}"
+do
+  # sed -i.bak 's/'${keys[$i]}'/{{$color'${values[$i]}'}}/g' skin.blade.php
+  echo 'COLOR_'${values[$i]}_DESCRIPTION' = '${keys[$i]}
+done

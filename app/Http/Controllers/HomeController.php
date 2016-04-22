@@ -6,9 +6,14 @@ use Twitter;
 use Auth;
 use Cache;
 use Carbon;
+use anlutro\LaravelSettings\Facade as Setting;
+use Input;
+use Session;
+use Redirect;
+use Illuminate\Http\Request;
+
 
 use App\Http\Requests;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -29,17 +34,25 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         // $tweets = Cache::remember('tweets', 1, function() {
         //     return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         // });
 
-        // if(!empty($tweets))
-        // {
+        // if(!empty($tweets)) {
         //     return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
+        // } else {
+        //    return view('home', ['user' => Auth::user(), 'tweets' => []]);
         // }
-        // else
-        // {
-            return view('home', ['user' => Auth::user(), 'tweets' => []]);
-        // }
+    }
+
+    public function store()
+    {
+        for ($i = 1; $i < 17; $i++){
+            Setting::set('color_'.$i,input::get('color_'.$i));
+        }
+        Setting::save();
+        Session::flash('message', 'Theme successfully saved !');
+        return Redirect::to('home');
     }
 }
