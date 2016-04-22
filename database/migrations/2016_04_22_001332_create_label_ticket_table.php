@@ -30,7 +30,6 @@ class CreateLabelTicketTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign(['label_id', 'ticket_id']);
         Schema::drop('label_ticket');
     }
 }

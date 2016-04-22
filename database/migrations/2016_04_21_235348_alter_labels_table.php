@@ -32,7 +32,7 @@ class AlterLabelsTable extends Migration
         Schema::table('label', function( Blueprint $table )
         {
             $table->string('slug')->unique();
-            $table->dropUnique('label_name_unique');
+            $table->dropUnique('labels_name_unique');
         });
     }
 }

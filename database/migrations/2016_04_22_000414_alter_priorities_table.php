@@ -32,7 +32,7 @@ class AlterPrioritiesTable extends Migration
         Schema::table('Priority', function( Blueprint $table )
         {
             $table->string('slug')->unique();
-            $table->dropUnique('Priority_name_unique');
+            $table->dropUnique('priorities_name_unique');
         });
     }
 }

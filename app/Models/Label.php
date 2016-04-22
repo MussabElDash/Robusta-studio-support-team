@@ -14,8 +14,6 @@ class Label extends BaseModel
         'name' => 'required',
         'background_color'=>'required',
         'name_color'=>'required'
-
-
     ];
     /**
      * The attributes that are mass assignable.
