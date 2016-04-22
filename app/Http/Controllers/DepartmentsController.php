@@ -8,8 +8,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 
+use Session;
+use Redirect;
+
 class DepartmentsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('web');
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,6 +55,10 @@ class DepartmentsController extends Controller
     {
         $department = Department::create(Input::all());
         $department->save();
+        if( empty( $department->errors ) ){
+            return Redirect::back()->with('message', 'Error While creating department!');
+        }
+        return Redirect::back()->with('message', 'Department created successfully');
     }
 
     /**
