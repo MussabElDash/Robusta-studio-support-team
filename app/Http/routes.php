@@ -35,9 +35,12 @@ Route::resource('ticket', 'TicketsController', [ 'only' => [
   'store'
 ]]);
 
-Route::resource('customer', 'CustomersController', [ 'only' => [
-  'store'
+Route::resource('customer', 'CustomersController', ['except' => [
+    'create', 'index'
 ]]);
+Route::post('/customer/{id}/edit', function($id){
+    return redirect()->action('CustomersController@edit', [$id]);
+});
 
 Route::resource('label', 'LabelsController', [ 'only' => [
   'store'
