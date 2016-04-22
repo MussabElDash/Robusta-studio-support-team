@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Priority extends BaseModel implements SluggableInterface
+class Priority extends Model implements SluggableInterface
 {
     use SluggableTrait;
+    use BaseModel;
+    
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',

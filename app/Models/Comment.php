@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
-
-class Comment extends BaseModel
+class Comment extends Model
 {
+
+    use BaseModel;
     /*
         Mass Assignment
     */
-
     protected $fillable = ['body'];
 
     /*
         Validations
     */
-
     protected static $rules = [
         'body' => 'required',
         'user_id' => 'required',
@@ -25,7 +25,6 @@ class Comment extends BaseModel
     /*
      *   Relations
     */
-
     public function owner()
     {
       return $this->belongsTo('App\Models\User');
