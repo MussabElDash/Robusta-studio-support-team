@@ -27,7 +27,8 @@ class AddForeignKeyRelationToInvitationsTable extends Migration
     public function down()
     {
         Schema::table('invitations', function (Blueprint $table) {
-
+            $table->dropForeign(['invited_id']);
+            $table->dropForeign(['inviter_id']);
         });
     }
 }

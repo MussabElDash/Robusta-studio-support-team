@@ -27,6 +27,9 @@ class AddForeignKeyRelationToNotificationsTable extends Migration
     {
         Schema::table('notifications', function (Blueprint $table) {
             //
+            $table->dropForeign(['actor_id']);
+            $table->dropForeign(['recipient_id']);
+
         });
     }
 }

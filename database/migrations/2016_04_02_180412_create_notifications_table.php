@@ -16,8 +16,7 @@ class CreateNotificationsTable extends Migration
             $table->increments('id');
             $table->integer('actor_id')->unsigned();
             $table->integer('recipient_id')->unsigned();
-            $table->integer('object_id')->unsigned();
-            $table->string('type');
+            $table->morphs('notifiable');
             $table->boolean('seen');
             $table->timestamps();
         });

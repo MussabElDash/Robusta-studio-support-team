@@ -44,9 +44,9 @@ abstract class Notification extends BaseModel
         return $this->belongsTo(User::class, 'recipient_id');
     }
 
-    public function object()
+    public function notifiable()
     {
-        return $this->belongsTo(BaseModel::class, 'object_id');
+        return $this->belongsTo(BaseModel::class, 'notifiable_id');
     }
 
     abstract function text();

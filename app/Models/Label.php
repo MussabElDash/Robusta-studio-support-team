@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Ticket;
 
-class Label extends BaseModel implements SluggableInterface
+class Label extends BaseModel
 
 
 {

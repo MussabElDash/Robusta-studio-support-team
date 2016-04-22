@@ -25,6 +25,7 @@ class AddForeignRelationToDepartmentsTable extends Migration
     public function down()
     {
         Schema::table('departments', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
         });
     }
 }
