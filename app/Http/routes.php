@@ -16,19 +16,22 @@ Route::get('/', ['middleware' => 'web', function () {
 }]);
 
 Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
-Route::get('/get-skin', function(){
+Route::get('/get-skin', function () {
     return response(view('skin'))->header('Content-Type', 'text/css');
 });
-Route::post('/home', ['middleware' => 'web','uses' => 'HomeController@store']);
+Route::post('/home', ['middleware' => 'web', 'uses' => 'HomeController@store']);
 // Resources
 
 Route::resource('department', 'DepartmentsController', ['only' => [
     'store'
 ]]);
 
-Route::resource('agent', 'AgentsController', ['only' => [
-    'store'
+Route::resource('agent', 'AgentsController', ['except' => [
+    'index', 'create'
 ]]);
+Route::post('/agent/{id}/edit', function ($id) {
+    return redirect()->action('AgentsController@edit', [$id]);
+});
 
 Route::resource('priority', 'PrioritiesController', ['only' => [
     'store'
