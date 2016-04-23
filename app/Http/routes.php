@@ -26,11 +26,13 @@ Route::resource('department', 'DepartmentsController', ['only' => [
     'store'
 ]]);
 
-Route::resource('priority', 'PrioritiesController', ['only' => [
+Route::resource('agent', 'AgentsController', ['only' => [
     'store'
 ]]);
 
-Route::resource('ticket', 'TicketsController');
+Route::resource('priority', 'PrioritiesController', ['only' => [
+    'store'
+]]);
 
 Route::resource('customer', 'CustomersController', ['only' => [
     'store'
@@ -43,6 +45,26 @@ Route::resource('label', 'LabelsController', ['only' => [
 Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
 });
+
+Route::group(['middleware' => 'auth'], function ()
+{
+
+    Route::group(['prefix' => 'tickets'], function ()
+    {
+        // CRUD
+        Route::get( '/create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
+        Route::post( '/', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
+        Route::get( '/',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
+        Route::get( '/edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
+        Route::delete( '/{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
+        Route::put( '/{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
+        Route::get( '/{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
+
+        Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+    });
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
