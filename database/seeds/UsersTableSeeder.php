@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
@@ -18,27 +18,33 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Mussab ElDash',
                 'email' => 'mussab@admin.com',
-                'password' => Hash::make('mussab'),
+                'password' => 'mussab',
+                'password_confirmation' => 'mussab',
                 'role' => 'Admin',
                 'gender' => true
-            ],[
+            ], [
                 'name' => 'Mussab ElDash',
                 'email' => 'mussab@super.com',
-                'password' => Hash::make('mussab'),
+                'password' => 'mussab',
+                'password_confirmation' => 'mussab',
                 'role' => 'Supervisor',
                 'gender' => true,
-            ],[
+            ], [
                 'name' => 'Mussab ElDash',
                 'email' => 'mussab@agent.com',
-                'password' => Hash::make('mussab'),
+                'password' => 'mussab',
+                'password_confirmation' => 'mussab',
                 'role' => 'Agent',
                 'gender' => true
             ]
         ];
 
-        foreach ($users as $user)
-        {
-            User::create($user);
+        foreach ($users as $user) {
+            $user = User::create($user);
+            if ($user->hasErrors()) {
+                echo $user->getErrors() . "\n";
+                echo $user->password . "\n" . $user->password_confirmation . "\n";
+            }
         }
     }
 }
