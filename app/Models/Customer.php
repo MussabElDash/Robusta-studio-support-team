@@ -4,11 +4,10 @@ namespace App\Models;
 
 
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-use App\Models\Ticket;
+
 
 class Customer extends BaseModel implements SluggableInterface
 {
@@ -37,7 +36,7 @@ class Customer extends BaseModel implements SluggableInterface
 
     public function creator()
     {
-        return  $this->belongsTo('App\Models\User', 'creator_id');
+        return  $this->belongsTo(User::class, 'creator_id');
     }
 
     public function tickets()

@@ -5,13 +5,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 
-use App\Models\Department;
-use App\Models\Customer;
-use App\Models\User;
-use App\Models\Priority;
-use App\Models\Label;
-use App\Models\Comment;
-use App\Models\Invitation;
 
 
 class Ticket extends BaseModel

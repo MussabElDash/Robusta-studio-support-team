@@ -34,13 +34,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         // $tweets = Cache::remember('tweets', 1, function() {
         //     return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         // });
 
         // if(!empty($tweets)) {
         //     return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
+
         // } else {
            return view('home', ['user' => Auth::user(), 'tweets' => []]);
         // }

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 
-use App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+
+use App\Models\Ticket;
 
 class Priority extends BaseModel
 {

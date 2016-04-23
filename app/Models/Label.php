@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Ticket;
 
 class Label extends BaseModel
+
 {
     /**
      * The rules used for validation
@@ -13,8 +14,8 @@ class Label extends BaseModel
      */
     protected static $rules = [
         'name' => 'required',
-        'background_color'=>'required',
-        'name_color'=>'required'
+        'background_color' => 'required',
+        'name_color' => 'required'
     ];
     /**
      * The attributes that are mass assignable.
@@ -22,7 +23,7 @@ class Label extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'background_color', 'description','name_color'
+        'name', 'background_color', 'description', 'name_color'
     ];
 
     /**
@@ -37,7 +38,7 @@ class Label extends BaseModel
     // Relations
     public function tickets()
     {
-        return $this->belongsToMany( Ticket::class );
+        return $this->belongsToMany(Ticket::class);
     }
 
 }
