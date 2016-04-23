@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
+
+use App\Models\Ticket;
 
 class TicketsController extends Controller
 {
+
     // CRUD
     public function index()
     {
@@ -46,6 +49,7 @@ class TicketsController extends Controller
 
     public function pool()
     {
-        return view('tickets.pool');
+        $tickets = Ticket::all();
+        return view('tickets.pool', [ 'user' => Auth::user(), 'tickets' => $tickets ]);
     }
 }

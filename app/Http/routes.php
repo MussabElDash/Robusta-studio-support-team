@@ -16,9 +16,11 @@ Route::get('/', ['middleware' => 'web', function () {
 }]);
 
 Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
+
 Route::get('/get-skin', function(){
     return response(view('skin'))->header('Content-Type', 'text/css');
 });
+
 Route::post('/home', ['middleware' => 'web','uses' => 'HomeController@store']);
 // Resources
 
@@ -46,25 +48,6 @@ Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
 });
 
-Route::group(['middleware' => 'auth'], function ()
-{
-
-    Route::group(['prefix' => 'tickets'], function ()
-    {
-        // CRUD
-        Route::get( '/create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
-        Route::post( '/', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
-        Route::get( '/',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
-        Route::get( '/edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
-        Route::delete( '/{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
-        Route::put( '/{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
-        Route::get( '/{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
-
-        Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
-    });
-
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -76,6 +59,23 @@ Route::group(['middleware' => 'auth'], function ()
 |
 */
 
+
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
+
+    Route::group(['prefix' => 'tickets', 'middleware' => 'auth'], function ()
+    {
+
+        Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+
+        // CRUD
+        Route::get( 'create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
+        Route::post( '', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
+        Route::get( '',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
+        Route::get( 'edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
+        Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
+        Route::put( '{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
+        Route::get( '{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
+    });
+
 });
