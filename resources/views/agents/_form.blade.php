@@ -26,7 +26,7 @@
     <div class="form-group">
       {!! Form::label('role', 'Role', ['class' => 'col-sm-2 control-label']) !!}
       <div class="col-sm-10">
-        {{ Form::select('role', ['Admin', 'Supervisor', 'Support agent'], '2', ['class' => 'form-control']) }}
+        {{ Form::select('role', ['Admin' => 'Admin', 'Supervisor' => 'Supervisor', 'Agent' => 'Support agent'], 'Agent', ['class' => 'form-control']) }}
       </div>
     </div>
 
