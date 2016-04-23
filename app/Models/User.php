@@ -5,22 +5,19 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
-
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
 
 /**
  * Class User
  * @package App\Models
  */
-class User extends BaseModel implements SluggableInterface,AuthenticatableContract,
+class User extends BaseModel implements SluggableInterface, AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
@@ -30,8 +27,8 @@ class User extends BaseModel implements SluggableInterface,AuthenticatableContra
 
     protected $sluggable = [
         'build_from' => 'name',
-        'save_to'    => 'slug',
-        'unique'     => true,
+        'save_to' => 'slug',
+        'unique' => true,
     ];
     /**
      * The rules used for validation
@@ -40,14 +37,10 @@ class User extends BaseModel implements SluggableInterface,AuthenticatableContra
      */
     protected static $rules = [
         'name' => 'required',
-        'email' => array(
-            'required',
-            'max:50',
-            'email',
-            'unique:users'
-        ),
-        'password' => 'required'
-
+        'email' => 'required|max:50|email|unique:users,email,',
+        'password' => 'required|confirmed',
+        'role' => 'required',
+        'date_of_birth' => 'date',
     ];
     /**
      * The attributes that are mass assignable.
@@ -55,7 +48,8 @@ class User extends BaseModel implements SluggableInterface,AuthenticatableContra
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','gender','date_of_birth','image_url','department_id', 'role'
+        'name', 'email', 'password', 'password_confirmation',
+        'gender', 'date_of_birth', 'image_url', 'department_id', 'role'
     ];
 
     /**
@@ -64,8 +58,11 @@ class User extends BaseModel implements SluggableInterface,AuthenticatableContra
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'password_confirmation', 'remember_token',
     ];
+
+    protected $passwordAttributes = ['password'];
+
     public function department()
     {
         return $this->belongsTo('App\Models\Department', 'department_id');
