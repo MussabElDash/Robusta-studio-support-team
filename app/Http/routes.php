@@ -26,17 +26,11 @@ Route::resource('department', 'DepartmentsController', ['only' => [
     'store'
 ]]);
 
-Route::resource('agent', 'AgentsController', ['only' => [
-    'store'
-]]);
-
 Route::resource('priority', 'PrioritiesController', ['only' => [
     'store'
 ]]);
 
-Route::resource('ticket', 'TicketsController', ['only' => [
-    'store'
-]]);
+Route::resource('ticket', 'TicketsController');
 
 Route::resource('customer', 'CustomersController', ['only' => [
     'store'

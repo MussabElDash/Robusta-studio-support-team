@@ -65,7 +65,7 @@ class Ticket extends BaseModel
         return $this->hasMany( Comment::class );
     }
 
-    public function invitaions()
+    public function invitations()
     {
         return $this->morphMany( Invitation::class, 'invitable' );
     }

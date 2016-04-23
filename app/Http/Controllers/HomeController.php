@@ -42,7 +42,7 @@ class HomeController extends Controller
         // if(!empty($tweets)) {
         //     return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
         // } else {
-        //    return view('home', ['user' => Auth::user(), 'tweets' => []]);
+           return view('home', ['user' => Auth::user(), 'tweets' => []]);
         // }
     }
 
