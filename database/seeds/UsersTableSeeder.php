@@ -42,8 +42,7 @@ class UsersTableSeeder extends Seeder
         foreach ($users as $user) {
             $user = User::create($user);
             if ($user->hasErrors()) {
-                echo $user->getErrors() . "\n";
-                echo $user->password . "\n" . $user->password_confirmation . "\n";
+                echo json_encode($user->getErrors()) . "\n";
             }
         }
     }
