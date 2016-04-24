@@ -62,11 +62,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['prefix' => 'tickets'], function ()
         {
 
-            Route::group(['middleware' => 'userRole:Admin'], function () {
-                Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+            Route::group(['middleware' => 'userRole:Supervisor'], function () {
+                Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
             });
 
-
+            Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
             Route::get('{id}/claim', [ 'as' => 'tickets.claim', 'uses' => 'TicketsController@claim']);
 
             // CRUD
@@ -74,7 +74,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post( '', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
             Route::get( '',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
             Route::get( 'edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
-            Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
+
             Route::put( '{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
             Route::get( '{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
         });

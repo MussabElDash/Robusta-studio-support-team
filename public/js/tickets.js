@@ -15,6 +15,9 @@ $(document).ready(function () {
                 this.fadeOut(300, function () {
                     $(this).remove();
                 });
+            },
+            error: function (data) {
+                console.log("Not Authorized");
             }
         })
     });

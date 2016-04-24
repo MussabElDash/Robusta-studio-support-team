@@ -53,9 +53,10 @@ class TicketsController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        $success = Ticket::destroy($id);
 
         if ($request->ajax()) {
-            $response = ['success' => true];
+            $response = ['success' => $success];
             return Response::json($response);
         }
     }
