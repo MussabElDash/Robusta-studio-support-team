@@ -17,7 +17,8 @@
         MAIN NAVIGATION
       </li>
       <!-- Common tabs -->
-      <li class="active"><a href="../Statics/feed.html"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
+      <li class="{{ isActiveRoute('home') }}"><a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
+      <li class="{{ isActiveRoute('departments') }}"><a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a></li>
       <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
 
