@@ -37,7 +37,7 @@
 
       <div class="content-wrapper">
         <section class="content-header">
-          @include('layout-components.content_header')
+          @yield('content_header')
         </section>
 
         <section class="content">
