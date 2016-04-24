@@ -61,7 +61,7 @@ class BaseModel extends Model
     {
         foreach ($this->attributes as $key => $value) {
             // Remove any confirmation fields
-            if (ends_with($key, '_confirmation') || empty($value)) {
+            if (ends_with($key, '_confirmation') || (empty($value) && $this->getOriginal($key) === NULL)) {
                 array_forget($this->attributes, $key);
                 continue;
             }
