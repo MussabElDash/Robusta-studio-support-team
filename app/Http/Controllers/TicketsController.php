@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
 
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Response;
 
 class TicketsController extends Controller
 {
@@ -42,14 +44,23 @@ class TicketsController extends Controller
         return view('tickets.show');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        return view('tickets.index');
+
+        if ($request->ajax()) {
+            $response = ['success' => true];
+            return Response::json($response);
+        }
     }
 
     public function pool()
     {
         $tickets = Ticket::all();
-        return view('tickets.pool', [ 'user' => Auth::user(), 'tickets' => $tickets ]);
+        return view('tickets.pool', ['user' => Auth::user(), 'tickets' => $tickets]);
+    }
+
+    public function claim($id)
+    {
+
     }
 }

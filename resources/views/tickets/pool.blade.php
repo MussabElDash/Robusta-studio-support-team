@@ -1,111 +1,128 @@
 @extends('layouts.home')
 
+@section('content-header-main', 'Tickets')
+@section('content-header-sub', 'Pool')
+
+@section('breadcrumb')
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Tickets Pool</li>
+@endsection
+
 @section('content')
-    <div class="box box-primary" style="position: relative;">
-        <div class="box-header ui-sortable-handle" style="cursor: move;">
-            <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">To Do List</h3>
-            <div class="box-tools pull-right">
-                <ul class="pagination pagination-sm inline">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="box-body">
-            <ul class="todo-list ui-sortable">
-                @foreach( $tickets as $ticket )
-                    @include('tickets._pool', ['ticket' => $ticket]);
-                @endforeach
-                <li class="" style="">
-                    <input type="checkbox" value="" name="">
-                    <span class="text">Make the theme responsive</span>
-                    <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-                <li class="">
-                    <!-- drag handle -->
-                      <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                    <!-- checkbox -->
-                    <input type="checkbox" value="" name="">
-                    <!-- todo text -->
-                    <span class="text">Design a nice theme</span>
-                    <!-- Emphasis label -->
-                    <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                    <!-- General tools such as edit or delete-->
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-
-                <li>
-                      <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                    <input type="checkbox" value="" name="">
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-                <li class="" style="">
-                      <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                    <input type="checkbox" value="" name="">
-                    <span class="text">Check your messages and notifications</span>
-                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-                <li>
-                      <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                    <input type="checkbox" value="" name="">
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-
-                <li>
-                      <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                    <input type="checkbox" value="" name="">
-                    <span class="text">Let theme shine like a star</span>
-                    <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o"></i>
-                    </div>
-                </li>
-            </ul>
-        </div><!-- /.box-body -->
-        <div class="box-footer clearfix no-border">
-            <button class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-        </div>
+    <meta name="_token" content="{!! csrf_token() !!}" />
+    <div class="col-md-12" id="tickets-pool">
+        <ul class="timeline">
+            @foreach( $tickets as $ticket )
+                @include('tickets._ticket_pool', ['ticket' => $ticket])
+            @endforeach
+        </ul>
     </div>
 
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+
+            <li class="active"><a href="#control-sidebar-theme-demo-home-tab" data-toggle="tab"><i
+                            class="fa fa-filter"></i></a></li>
+
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn"><button type="submit" name="search" id="search-btn"
+                                                          class="btn btn-flat"><i class="fa fa-search"></i>
+                        </button></span>
+                </div>
+            </form>
+            <div class="tab-pane active" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Label</h3>
+                <ul class="control-sidebar-menu">
+
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <h3 class="control-sidebar-heading">Priority</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </aside>
+
+    {!! Html::script('js/tickets.js') !!}
 @endsection

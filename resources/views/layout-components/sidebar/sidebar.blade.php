@@ -21,7 +21,7 @@
             <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
             <li>
-                <a href="{{ URL::route('tickets.pool') }}">
+                <a href="{{ route('tickets.pool') }}">
                     <i class="fa fa-sticky-note-o"></i>
                     <span>Tickets Pool</span>
                 </a>

@@ -33,13 +33,13 @@
       </li>
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
+          <img src="/assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
           <!-- should be current user name after authentication task -->
           <span class="hidden-xs"> {{ $user->name }}</span>
         </a>
         <ul class="dropdown-menu">
           <li class="user-header">
-            <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+            <img src="/assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
             <p>
               {{ $user->name }} - {{ $user->role }}
               {{--*/ $creation = $user->created_at /*--}}
