@@ -1,5 +1,5 @@
 <!-- Can be used for edit - create -->
-{!! Form::model(null, ['route' => 'department.store', 'class' => 'form-horizontal']) !!}
+{!! Form::model(null, ['route' => 'departments.store', 'class' => 'form-horizontal']) !!}
   <div class="box-body">
 
     <div class="form-group">

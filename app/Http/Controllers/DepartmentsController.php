@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Input;
 
 use Session;
 use Redirect;
+use Auth;
+use Log;
 
 class DepartmentsController extends Controller
 {
@@ -33,6 +35,9 @@ class DepartmentsController extends Controller
     public function index()
     {
         //
+        // $tweets = array()
+        $departments = Department::all();
+        return view('departments.index', ['user' => Auth::user(), 'departments' => $departments]);
     }
 
     /**
@@ -67,9 +72,12 @@ class DepartmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        Log::info('dep slug: '.$slug);
+        $departments = Department::all();
+        $department = Department::where('slug', $slug)->first();
+        return view('departments.show', ['user' => Auth::user(), 'departments' => $departments, 'department' => $department]);
     }
 
     /**

@@ -11,7 +11,7 @@ use Input;
 use Session;
 use Redirect;
 use Illuminate\Http\Request;
-
+use Log;
 
 use App\Http\Requests;
 use App\Models\Department;
@@ -35,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        Log::info('Showing user profile for user: ');
         $tweets = Cache::remember('tweets', 1, function () {
             return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         });

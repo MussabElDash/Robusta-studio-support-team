@@ -22,9 +22,7 @@ Route::get('/get-skin', function(){
 Route::post('/home', ['middleware' => 'web','uses' => 'HomeController@store']);
 // Resources
 
-Route::resource('department', 'DepartmentsController', ['only' => [
-    'store'
-]]);
+Route::resource('departments', 'DepartmentsController');
 
 Route::resource('agent', 'AgentsController', ['only' => [
     'store'
