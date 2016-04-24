@@ -1,9 +1,9 @@
 {{ Carbon::setLocale('en') }}
 <li id={{ "ticket-". $ticket->id }}>
     @if( count($ticket->priority) == 0 )
-        <i class="fa fa-bullhorn bg-red"></i>
+        <i class="fa fa-sticky-note-o bg-red"></i>
     @else
-        <i class="fa fa-bullhorn"
+        <i class="fa fa-sticky-note-o"
            style="background-color: {{ $ticket->priority->background_color }}; color: {{ $ticket->priority->name_color }}"></i>
     @endif
 

@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <meta name="_token" content="{!! csrf_token() !!}" />
+    <meta name="_token" content="{!! csrf_token() !!}"/>
 
     <div class="row" style="margin-bottom: 10px">
         <div class="col-md-4 col-md-offset-4">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-
+    {{--{{dd(DB::getQueryLog())}}--}}
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">

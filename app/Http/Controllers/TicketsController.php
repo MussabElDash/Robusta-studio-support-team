@@ -10,8 +10,15 @@ use Auth;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Response;
 
+use DB;
+
 class TicketsController extends Controller
 {
+
+    function __construct()
+    {
+        DB::enableQueryLog();
+    }
 
     // CRUD
     public function index()
@@ -55,7 +62,9 @@ class TicketsController extends Controller
 
     public function pool()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::with(['labels', 'priority', 'department'])->paginate(5);
+
+
         return view('tickets.pool', ['user' => Auth::user(), 'tickets' => $tickets]);
     }
 
