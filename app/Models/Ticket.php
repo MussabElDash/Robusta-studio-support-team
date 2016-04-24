@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Ticket extends BaseModel
 {
+
+    protected $dates = ['created_at', 'updated_at'];
+
     // Mass Assignment
     protected $fillable = [
         'name'       , 'description'  , 'customer_id',

@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('content-header-main', 'Tickets')
-@section('content-header-sub', 'Pool')
+@section('content-header-sub', 'pool')
 
 @section('breadcrumb')
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -10,6 +10,13 @@
 
 @section('content')
     <meta name="_token" content="{!! csrf_token() !!}" />
+
+    <div class="row" style="margin-bottom: 10px">
+        <div class="col-md-4 col-md-offset-4">
+            <button class="btn btn-default btn-block">Refresh</button>
+        </div>
+    </div>
+
     <div class="col-md-12" id="tickets-pool">
         <ul class="timeline">
             @foreach( $tickets as $ticket )
@@ -17,6 +24,13 @@
             @endforeach
         </ul>
     </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <button class="btn btn-default btn-block">Load Older Tickets</button>
+        </div>
+    </div>
+
 
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
