@@ -95,4 +95,20 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return $this->hasMany(Invitation::class, 'inviter_id');
     }
+
+    // Methods
+    public function hasRole($roles)
+    {
+        if (gettype($roles) == "array") {
+            $flag = false;
+
+            foreach( $roles as $role ){
+                $flag = $flag || ($this->role == $role);
+            }
+
+            return $flag;
+        }
+
+        return $this->role == $roles;
+    }
 }

@@ -10,6 +10,8 @@
 |
 */
 
+
+
 // Single Routes
 Route::get('/', ['middleware' => 'web', function () {
     return view('landing');
@@ -32,17 +34,10 @@ Route::resource('agent', 'AgentsController', ['only' => [
     'store'
 ]]);
 
-Route::resource('priority', 'PrioritiesController', ['only' => [
-    'store'
-]]);
-
 Route::resource('customer', 'CustomersController', ['only' => [
     'store'
 ]]);
 
-Route::resource('label', 'LabelsController', ['only' => [
-    'store'
-]]);
 
 Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
@@ -59,24 +54,38 @@ Route::get('/twitter', function () {
 |
 */
 
-
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
-    Route::group(['prefix' => 'tickets', 'middleware' => 'auth'], function ()
-    {
+    Route::group(['middleware' => ['auth']], function () {
 
-        Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
-        Route::get('{id}/claim', [ 'as' => 'tickets.claim', 'uses' => 'TicketsController@claim']);
+        Route::group(['prefix' => 'tickets'], function ()
+        {
 
-        // CRUD
-        Route::get( 'create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
-        Route::post( '', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
-        Route::get( '',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
-        Route::get( 'edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
-        Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
-        Route::put( '{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
-        Route::get( '{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
+            Route::group(['middleware' => 'userRole:Supervisor,Admin'], function () {
+
+            });
+
+            Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+            Route::get('{id}/claim', [ 'as' => 'tickets.claim', 'uses' => 'TicketsController@claim']);
+
+            // CRUD
+            Route::get( 'create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
+            Route::post( '', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
+            Route::get( '',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
+            Route::get( 'edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
+            Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
+            Route::put( '{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
+            Route::get( '{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
+        });
+
+        Route::resource('priority', 'PrioritiesController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('label', 'LabelsController', ['only' => [
+            'store'
+        ]]);
+
     });
-
 });

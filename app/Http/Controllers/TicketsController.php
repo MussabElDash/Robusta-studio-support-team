@@ -60,11 +60,13 @@ class TicketsController extends Controller
         }
     }
 
-    public function pool()
+    public function pool(Request $request)
     {
         $tickets = Ticket::with(['labels', 'priority', 'department'])->paginate(5);
 
-
+        if ($request->ajax()) {
+            return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets])->render());
+        }
         return view('tickets.pool', ['user' => Auth::user(), 'tickets' => $tickets]);
     }
 

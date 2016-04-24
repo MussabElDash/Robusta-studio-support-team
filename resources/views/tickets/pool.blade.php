@@ -11,23 +11,23 @@
 @section('content')
     <meta name="_token" content="{!! csrf_token() !!}"/>
 
-    <div class="row" style="margin-bottom: 10px">
-        <div class="col-md-4 col-md-offset-4">
-            <button class="btn btn-default btn-block">Refresh</button>
-        </div>
-    </div>
+    {{--<div class="row" style="margin-bottom: 10px">--}}
+        {{--<div class="col-md-4 col-md-offset-4">--}}
+            {{--<button class="btn btn-default btn-block">Refresh</button>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
-    <div class="col-md-12" id="tickets-pool">
-        <ul class="timeline">
-            @foreach( $tickets as $ticket )
-                @include('tickets._ticket_pool', ['ticket' => $ticket])
-            @endforeach
+    <div class="col-md-12" >
+        <ul class="timeline" id="tickets-pool">
+            @include('tickets._tickets_pool')
         </ul>
     </div>
 
+
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <button class="btn btn-default btn-block">Load Older Tickets</button>
+        <div class="col-md-4 col-md-offset-4 ticket-pagination">
+            {{--<a class="btn btn-default btn-block" href="{{ route('tickets.pool') }}?page=2">Load Older Tickets</a>--}}
+            {{ $tickets->links() }}
         </div>
     </div>
 
