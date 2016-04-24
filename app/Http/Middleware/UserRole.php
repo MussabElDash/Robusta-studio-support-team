@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-use Log;
 
 class UserRole
 {
@@ -17,7 +16,6 @@ class UserRole
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        Log::error($roles);
         if (!Auth::user()->hasRole($roles)) {
             return redirect()->back();
         }

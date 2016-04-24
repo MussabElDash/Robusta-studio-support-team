@@ -99,16 +99,13 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     // Methods
     public function hasRole($roles)
     {
-        if (gettype($roles) == "array") {
-            $flag = false;
 
-            foreach( $roles as $role ){
-                $flag = $flag || ($this->role == $role);
-            }
+        $flag = false;
 
-            return $flag;
+        foreach ($roles as $role) {
+            $flag = $flag || ($this->role == $role);
         }
 
-        return $this->role == $roles;
+        return $flag;
     }
 }

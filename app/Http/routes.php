@@ -62,11 +62,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['prefix' => 'tickets'], function ()
         {
 
-            Route::group(['middleware' => 'userRole:Supervisor,Admin'], function () {
-
+            Route::group(['middleware' => 'userRole:Admin'], function () {
+                Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
             });
 
-            Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+
             Route::get('{id}/claim', [ 'as' => 'tickets.claim', 'uses' => 'TicketsController@claim']);
 
             // CRUD
