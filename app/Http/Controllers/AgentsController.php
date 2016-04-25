@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\User;
 use Auth;
+use Flash;
 use Input;
 use Redirect;
 use Session;
@@ -12,17 +13,6 @@ use Session;
 class AgentsController extends Controller
 {
     protected static $rules = [];
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-        $this->middleware('auth');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,11 +25,12 @@ class AgentsController extends Controller
         // process
         if ($user->save()) {
             // redirect
-            Session::flash('message', 'Successfully created Agent!');
+
+            Flash::success('Successfully created Agent!');
             return Redirect::action('AgentsController@show', @$user);
         } else {
             // redirect
-            Session::flash('message', $user->getErrors());
+            Flash::error($user->getErrors());
             return Redirect::back();
         }
     }
@@ -58,11 +49,11 @@ class AgentsController extends Controller
         // process
         if ($user->update(Input::all())) {
             // redirect
-            Session::flash('message', 'Successfully created Agent!');
+            Flash::success('Successfully updated an Agent!');
             return Redirect::action('AgentsController@show', @$user);
         } else {
             // redirect
-            Session::flash('message', $user->getErrors());
+            Flash::error($user->getErrors());
             return Redirect::back();
         }
     }
