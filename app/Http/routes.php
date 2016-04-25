@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::group(['prefix' => 'tickets'], function () {
 
-            Route::group(['middleware' => 'userRole:Supervisor'], function () {
+            Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
                 Route::delete('{id}', ['as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy'])->where('id', '[1-9][0-9]*');
             });
 
@@ -73,7 +73,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('create', ['as' => 'tickets.new', 'uses' => 'TicketsController@new']);
             Route::post('', ['as' => 'tickets.store', 'uses' => 'TicketsController@store']);
             Route::get('', ['as' => 'tickets.index', 'uses' => 'TicketsController@index']);
-            Route::get('edit/{id}', ['as' => 'tickets.edit', 'uses' => 'TicketsController@edit'])->where('id', '[1-9][0-9]*');
+            Route::get('{id}/edit', ['as' => 'tickets.edit', 'uses' => 'TicketsController@edit'])->where('id', '[1-9][0-9]*');
 
             Route::put('{id}', ['as' => 'tickets.update', 'uses' => 'TicketsController@update'])->where('id', '[1-9][0-9]*');
             Route::get('{id}', ['as' => 'tickets.show', 'uses' => 'TicketsController@show'])->where('id', '[1-9][0-9]*');

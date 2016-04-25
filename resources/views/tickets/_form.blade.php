@@ -1,6 +1,6 @@
 <!-- Can be used for edit - create -->
 {!! Form::model(isset($ticket) ? $ticket : null, ['route' => isset($ticket) ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store',
- 'method' => isset($ticket) ? 'put': 'post', 'class' => 'form-horizontal']) !!}
+ 'method' => isset($ticket) ? 'put': 'post', 'id' => isset($ticket) ? 'ticket-form-' . $ticket->id : '', 'class' => 'form-horizontal']) !!}
 <div class="box-body">
 
     <div class="form-group">

@@ -53,11 +53,13 @@ class TicketsController extends Controller
 
     public function update(Request $request, $id)
     {
+        $current_user = Auth::user();
         $ticket = Ticket::find($id);
 
         if ($ticket->update($request->all())) {
             if ($request->ajax()) {
-                return Response::json(["html" => view('tickets._ticket_pool', ["ticket" => $ticket]).render(), "id" => $id]);
+                return Response::json(["html" => view('tickets._ticket_pool',
+                    ["ticket" => $ticket, "user" => $current_user])->render(), "id" => $id]);
             }
 
             return view('tickets.show', []);
