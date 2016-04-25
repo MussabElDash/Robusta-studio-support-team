@@ -12,6 +12,7 @@ use Session;
 use Redirect;
 use Auth;
 use Log;
+use Response;
 
 class DepartmentsController extends Controller
 {
@@ -58,12 +59,22 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info("Creating dep ... \n".implode(",", Input::all()));
         $department = Department::create(Input::all());
         $department->save();
-        if( empty( $department->errors ) ){
-            return Redirect::back()->with('message', 'Error While creating department!');
+        if( !empty( $department->errors ) ){
+            $response = array(
+                            'status' => 'error',
+                            'msg' => 'Error While creating department!',
+                        );
+        }else {
+            $response = array(
+                            'status' => 'success',
+                            'msg' => 'department created successfully!',
+                        );
         }
-        return Redirect::back()->with('message', 'Department created successfully');
+        return Response::json( $response );
+        // return Redirect::back()->with('message', 'Department created successfully');
     }
 
     /**
