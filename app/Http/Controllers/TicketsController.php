@@ -26,7 +26,7 @@ class TicketsController extends Controller
         $current_user = Auth::user();
         $tickets = $current_user->tickets()->with('assigned_to', 'department',
             'creator', 'labels', 'priority')->get();
-        return view('tickets.index', [ 'user' => $current_user, 'tickets' => $tickets]);
+        return view('tickets.index', ['user' => $current_user, 'tickets' => $tickets]);
     }
 
     public function store()
@@ -41,14 +41,30 @@ class TicketsController extends Controller
         return view('tickets.new');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        return view('tickets.edit');
+        $ticket = Ticket::with('assigned_to', 'department',
+            'creator', 'labels', 'priority', 'comments.owner')->find($id);
+
+        if ($request->ajax()) {
+            return Response::json(['html' => view('tickets.edit_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
+        }
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        return view('tickets.show');
+        $ticket = Ticket::find($id);
+
+        if ($ticket->update($request->all())) {
+            if ($request->ajax()) {
+                return Response::json(["html" => view('tickets._ticket_pool', ["ticket" => $ticket]).render(), "id" => $id]);
+            }
+
+            return view('tickets.show', []);
+        } else {
+
+        }
+
     }
 
     public function show(Request $request, $id)
@@ -56,8 +72,8 @@ class TicketsController extends Controller
         $ticket = Ticket::with('assigned_to', 'department',
             'creator', 'labels', 'priority', 'comments.owner')->find($id);
 
-        if ($request->ajax()){
-            return Response::json([ 'html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'ticket' => $ticket->id]);
+        if ($request->ajax()) {
+            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
         }
     }
 
@@ -74,10 +90,10 @@ class TicketsController extends Controller
     public function pool(Request $request)
     {
         $current_user = Auth::user();
-        if ($current_user->hasRole(["Admin"])){
+        if ($current_user->hasRole(["Admin"])) {
             $tickets = Ticket::notAssigned()->with(['labels', 'priority'])->paginate(5);
         } else {
-            $tickets = Ticket::notAssigned()->ofDepartment($current_user->department_id)->with(['labels', 'priority'])->paginate(5);
+            $tickets = Ticket::notAssigned()->ofDepartment($current_user->department_id)->with(['labels', 'priority'])->paginate(10);
         }
 
         if ($request->ajax()) {

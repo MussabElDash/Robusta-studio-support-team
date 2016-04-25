@@ -30,8 +30,8 @@ $(document).ready(function () {
                 type: "get",
                 success: function (data) {
                     $("#modals").append(data['html']);
-                    $("#show-ticket-modal-" + data['ticket']).modal("show");
-                    $("#comment-form-" + data['ticket']).submit(function (e) {
+                    $("#show-ticket-modal-" + data['id']).modal("show");
+                    $("#comment-form-" + data['id']).submit(function (e) {
                         e.preventDefault();
 
                         $.ajax({
@@ -56,8 +56,25 @@ $(document).ready(function () {
         } else {
             $("#show-ticket-modal-" + this.dataset["id"]).modal("show");
         }
+    });
 
+    $("[id$='edit']").click(function () {
+        if ($("#edit-ticket-modal-" + this.dataset["id"]).length == 0) {
+            $.ajax({
+                url: this.dataset["route"],
+                type: "get",
+                success: function (data) {
+                    $("#modals").append(data['html']);
+                    $("#edit-ticket-modal-" + data['id']).modal("show");
+                },
+                error: function (data) {
+                    alert("Not Authorized");
+                }
+            });
 
+        } else {
+            $("#edit-ticket-modal-" + this.dataset["id"]).modal("show");
+        }
     });
 
 });
