@@ -10,44 +10,6 @@
 |
 */
 
-// Single Routes
-Route::get('/', ['middleware' => 'web', function () {
-    return view('landing');
-}]);
-
-Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
-Route::get('/get-skin', function () {
-    return response(view('skin'))->header('Content-Type', 'text/css');
-});
-Route::post('/home', ['middleware' => 'web', 'uses' => 'HomeController@store']);
-// Resources
-
-Route::resource('department', 'DepartmentsController', ['only' => [
-    'store'
-]]);
-
-Route::resource('agent', 'AgentsController', ['except' => [
-    'index', 'create'
-]]);
-Route::post('/agent/{id}/edit', function ($id) {
-    return redirect()->action('AgentsController@edit', [$id]);
-});
-
-Route::resource('priority', 'PrioritiesController', ['only' => [
-    'store'
-]]);
-
-Route::resource('ticket', 'TicketsController', ['only' => [
-    'store'
-]]);
-
-Route::resource('customer', 'CustomersController', ['only' => [
-    'store'
-]]);
-
-Route::resource('label', 'LabelsController', ['only' => [
-    'store'
-]]);
 
 Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
@@ -65,4 +27,43 @@ Route::get('/twitter', function () {
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
+    // Single Routes
+    Route::get('/', [function () {
+        return view('landing');
+    }]);
+    Route::get('/home', ['uses' => 'HomeController@index']);
+    Route::get('/get-skin', function () {
+        return response(view('skin'))->header('Content-Type', 'text/css');
+    });
+    Route::post('/home', ['uses' => 'HomeController@store']);
+    Route::post('/agent/{id}/edit', function ($id) {
+        return redirect()->action('AgentsController@edit', [$id]);
+    });
+
+    Route::group(['middleware' => ['auth']], function () {
+        // Resources
+        Route::resource('department', 'DepartmentsController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('agent', 'AgentsController', ['except' => [
+            'index', 'create'
+        ]]);
+
+        Route::resource('priority', 'PrioritiesController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('ticket', 'TicketsController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('customer', 'CustomersController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('label', 'LabelsController', ['only' => [
+            'store'
+        ]]);
+    });
 });
