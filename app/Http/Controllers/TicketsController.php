@@ -112,10 +112,21 @@ class TicketsController extends Controller
             $ticket = Ticket::find($id);
             if ($ticket->canBeClaimed()) {
                 $ticket->assigned_to()->associate($current_user);
-                $ticket->save();
+                if ($ticket->save()) {
+                    if ($request->ajax()) {
+                        return Response::json(["success" => true]);
+                    }
+
+                    return redirect()->to('tickets.index');
+                }
+
             }
         }
 
-        dd(DB::getQueryLog());
+        if ($request->ajax()) {
+            return Response::json(["success" => false]);
+        }
+
+        return redirect()->to('tickets.index');
     }
 }

@@ -44,20 +44,38 @@
 
 
         <div class="pull-right" style="margin-right: 10px">
+
             <a class="btn btn-info btn-xs" id="ticket-show"
                data-route={{route('tickets.show', $ticket->id)}} data-id={{$ticket->id}} ><i
                         class="fa fa-hand-pointer-o"></i> Show</a>
-            <a class="btn btn-info btn-xs" id="ticket-edit"
-               data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i class="fa fa-edit"></i> Edit</a>
+
             @if( $user->hasRole(["Admin", "Supervisor"]))
                 <a class="btn btn-danger btn-xs" id="ticket-destroy"
                    data-route={{route('tickets.destroy', $ticket->id)}} data-id={{$ticket->id}}>
                     <i class="fa fa-trash-o"></i> Delete</a>
             @else
-                <a class="btn btn-danger btn-xs" id="ticket-claim"
+                <a class="btn btn-success btn-xs" id="ticket-claim"
                    data-route={{route('tickets.claim', $ticket->id)}} data-id={{$ticket->id}}>
                     <i class="fa fa-calendar-plus-o"></i> Claim</a>
             @endif
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-bars"></i>
+                    <span class="caret"></span>
+                    <span class="sr-only">Settings</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a id="ticket-invite"
+                           data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i class="fa fa-send-o"></i> Invite</a>
+                    </li>
+                    <li><a id="ticket-edit"
+                       data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i class="fa fa-edit"></i> Edit  </a>
+                    </li>
+                </ul>
+            </div>
+
+
         </div>
 
     </div>

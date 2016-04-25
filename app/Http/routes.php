@@ -67,7 +67,7 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::get('pool', ['as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
-            Route::get('{id}/claim', ['as' => 'tickets.claim', 'uses' => 'TicketsController@claim'])->where('id', '[1-9][0-9]*');
+            Route::post('{id}/claim', ['as' => 'tickets.claim', 'uses' => 'TicketsController@claim'])->where('id', '[1-9][0-9]*');
 
             // CRUD
             Route::get('create', ['as' => 'tickets.new', 'uses' => 'TicketsController@new']);

@@ -118,7 +118,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     public function canClaim()
     {
-        return $this->ticketsCount->count < 3;
+        return ( $this->ticketsCount )? $this->ticketsCount->count < 3 : true;
     }
 
 }

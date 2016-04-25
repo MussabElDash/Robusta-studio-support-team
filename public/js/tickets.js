@@ -94,8 +94,29 @@ $(document).on('click', "[id$='edit']", function (e){
     } else {
         $("#edit-ticket-modal-" + $(this)[0].dataset["id"]).modal("show");
     }
-
 });
+
+$(document).on('click', "[id$='claim']", function(e){
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': $('meta[name="_token"]').attr('content')}
+    });
+
+    $.ajax({
+        url: $(this)[0].dataset["route"],
+        type: "post",
+        context: $("#ticket-" + $(this)[0].dataset["id"]),
+        success: function (data) {
+            alert("claimed");
+            this.fadeOut(300, function () {
+                $(this).remove();
+            });
+            e.preventDefault();
+        },
+        error: function (data) {
+            console.log("Not Authorized");
+        }
+    });
+})
 
 //$(window).on('hashchange', function () {
 //    if (window.location.hash) {
