@@ -75,6 +75,10 @@ $(document).on('click', "[id$='edit']", function (e){
                         success: function (data) {
                             $("#ticket-" + data['id']).html(data["html"]);
                             $("#edit-ticket-modal-" + data["id"]).modal('hide');
+
+                            if( $("#show-ticket-modal-" + data["id"]).length > 0 ){
+                                $("#show-ticket-modal-" + data["id"]).remove();
+                            }
                             e.preventDefault();
                         },
                         error: function (data) {
