@@ -17,16 +17,6 @@ class CustomersController extends Controller
     	protected $rules = [
             'name'       => 'required'
         ];
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-        $this->middleware('auth');
-    }
 
 	/**
      * Store a newly created resource in storage.
