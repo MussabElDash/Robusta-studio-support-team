@@ -18,6 +18,8 @@ class AddGenderAndDateOfBirthAndDepartmentIdAndImageUrlToUserTable extends Migra
             $table->date('date_of_birth')->nullable();
 
             $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+
             $table->string('image_url')->unique()->nullable();
 
             $table->string('slug')->unique();
@@ -33,6 +35,7 @@ class AddGenderAndDateOfBirthAndDepartmentIdAndImageUrlToUserTable extends Migra
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('department_id');
             $table->dropColumn('gender');
             $table->dropColumn('date_of_birth');
             $table->dropColumn('department_id');
