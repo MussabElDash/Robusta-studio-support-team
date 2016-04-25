@@ -39,14 +39,9 @@
         <section class="content-header">
           @include('layout-components.content_header')
         </section>
-
         <section class="content">
+          @include('flash::custom')
           @yield('content')
-          @if (Session::has('message'))
-            <div>
-                {{Session::get('message')}}
-            </div>
-          @endif
         </section>
       </div>
 
