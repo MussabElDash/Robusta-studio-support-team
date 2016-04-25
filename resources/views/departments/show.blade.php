@@ -14,6 +14,9 @@
 
 @section('content')
 <div class="">
+    <div clas="row" style="margin-top:5%">
+        <button class="btn btn-lg btn-warning"><a href="/departments/{{$department['slug']}}/edit" style="color:white">Edit department</a></button>
+    </div>
     <div class="row" style="margin-top:5%">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box bg-red">
@@ -54,27 +57,21 @@
         <div class="col-md-9">
             <div class="box box-solid">
                 <div class="box-header with-border">
-                  <i class="fa fa-text-width"></i>
-
-                  <h3 class="box-title">Name</h3>
+                  <h3 class="">Name</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                   <blockquote>
-                    <p>{{$department['name']}}</p>
-                    <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+                    <p>{{$department['name'] == '' ? 'No description yet' : $department['name']}}</p>
                   </blockquote>
                 </div>
                 <div class="box-header with-border">
-                  <i class="fa fa-text-width"></i>
-
-                  <h3 class="box-title">Description</h3>
+                  <h3 >Description</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                   <blockquote>
-                    <p>{{$department['description']}}</p>
-                    <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+                    <p>{{$department['description'] == '' ? 'No description yet' : $department['description']}}</p>
                   </blockquote>
                 </div>
                 <!-- /.box-body -->
