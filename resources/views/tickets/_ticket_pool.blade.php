@@ -22,7 +22,7 @@
 
         </span>
 
-    <h3 class="timeline-header"><a href="#">{{ $ticket->department->name }}</a> {{ $ticket->name  }}</h3>
+    <h3 class="timeline-header"><a href="#"></a> {{ $ticket->name  }}</h3>
 
     <div class="timeline-body">
         {{ $ticket->description }}

@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use Illuminate\Support\Facades\Response;
 
 use DB;
+use Log;
 
 class TicketsController extends Controller
 {
@@ -43,9 +44,9 @@ class TicketsController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $ticket = Ticket::with('assigned_to', 'department',
-            'creator', 'labels', 'priority', 'comments.owner')->find($id);
+        $ticket = Ticket::with('assigned_to', 'department', 'labels', 'priority')->find($id);
 
+        Log::info(DB::getQueryLog());
         if ($request->ajax()) {
             return Response::json(['html' => view('tickets.edit_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
         }
@@ -71,9 +72,9 @@ class TicketsController extends Controller
 
     public function show(Request $request, $id)
     {
-        $ticket = Ticket::with('assigned_to', 'department',
+        $ticket = Ticket::with('department',
             'creator', 'labels', 'priority', 'comments.owner')->find($id);
-
+        Log::info(DB::getQueryLog());
         if ($request->ajax()) {
             return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
         }

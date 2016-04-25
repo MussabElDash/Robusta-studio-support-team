@@ -106,7 +106,6 @@ $(document).on('click', "[id$='claim']", function(e){
         type: "post",
         context: $("#ticket-" + $(this)[0].dataset["id"]),
         success: function (data) {
-            alert("claimed");
             this.fadeOut(300, function () {
                 $(this).remove();
             });

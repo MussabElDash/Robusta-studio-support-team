@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    {{--{{dd(DB::getQueryLog())}}--}}
+{{--    {{dd(DB::getQueryLog())}}--}}
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
