@@ -21,9 +21,52 @@ $(document).ready(function () {
             }
         })
     });
+
+
+    $("[id$='show']").click(function () {
+        if ($("#show-ticket-modal-" + this.dataset["id"]).length == 0) {
+            $.ajax({
+                url: this.dataset["route"],
+                type: "get",
+                success: function (data) {
+                    $("#modals").append(data['html']);
+                    $("#show-ticket-modal-" + data['ticket']).modal("show");
+                    $("#comment-form-" + data['ticket']).submit(function (e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: this.action,
+                            type: "post",
+                            data: $(this).serialize(),
+                            success: function (data) {
+                                $("#ticket-"+ data['id'] + "-comments").append(data["html"]);
+                                $("#comment-form-" + data['id'])[0].reset();
+                            },
+                            error: function (data) {
+                                console.log("Not Authorized");
+                            }
+                        });
+                    });
+                },
+                error: function (data) {
+                    alert("Not Authorized");
+                }
+            });
+
+        } else {
+            $("#show-ticket-modal-" + this.dataset["id"]).modal("show");
+        }
+
+
+    });
+
 });
 
-$(window).on('hashchange', function() {
+//$(document).change(function (){
+//
+//})
+
+$(window).on('hashchange', function () {
     if (window.location.hash) {
         var page = window.location.hash.replace('#', '');
         if (page == Number.NaN || page <= 0) {
@@ -34,7 +77,7 @@ $(window).on('hashchange', function() {
     }
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $(document).on('click', '.pagination a', function (e) {
         getTickets($(this).attr('href').split('page=')[1]);
         e.preventDefault();
@@ -43,7 +86,7 @@ $(document).ready(function() {
 
 function getTickets(page) {
     $.ajax({
-        url : '?page=' + page,
+        url: '?page=' + page,
         dataType: 'json'
     }).done(function (data) {
         $('#tickets-pool').html(data);

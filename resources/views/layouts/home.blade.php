@@ -54,8 +54,9 @@
 
 </div>
 
-@section('modals')
-@show
-
+<div id="modals">
+    @section('modals')
+    @show
+</div>
 </body>
 </html>

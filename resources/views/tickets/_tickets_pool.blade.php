@@ -46,12 +46,18 @@
 
 
                 <div class="pull-right" style="margin-right: 10px">
-                    <a class="btn btn-info btn-xs" id="ticket-link"><i class="fa fa-hand-pointer-o"></i> Show</a>
+                    <a class="btn btn-info btn-xs" id="ticket-show"
+                       data-route={{route('tickets.show', $ticket->id)}} data-id={{$ticket->id}} ><i
+                                class="fa fa-hand-pointer-o"></i> Show</a>
                     <a class="btn btn-primary btn-xs" id="ticket-link"><i class="fa fa-edit"></i> Edit</a>
                     @if( $user->hasRole(["Admin", "Supervisor"]))
                         <a class="btn btn-danger btn-xs" id="ticket-destroy"
                            data-route={{route('tickets.destroy', $ticket->id)}} data-id={{$ticket->id}}>
                             <i class="fa fa-trash-o"></i> Delete</a>
+                    @else
+                        <a class="btn btn-danger btn-xs" id="ticket-claim"
+                           data-route={{route('tickets.claim', $ticket->id)}} data-id={{$ticket->id}}>
+                            <i class="fa fa-calendar-plus-o"></i> Claim</a>
                     @endif
                 </div>
 

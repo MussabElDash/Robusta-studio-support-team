@@ -11,7 +11,6 @@
 */
 
 
-
 // Single Routes
 Route::get('/', ['middleware' => 'web', function () {
     return view('landing');
@@ -19,11 +18,11 @@ Route::get('/', ['middleware' => 'web', function () {
 
 Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
 
-Route::get('/get-skin', function(){
+Route::get('/get-skin', function () {
     return response(view('skin'))->header('Content-Type', 'text/css');
 });
 
-Route::post('/home', ['middleware' => 'web','uses' => 'HomeController@store']);
+Route::post('/home', ['middleware' => 'web', 'uses' => 'HomeController@store']);
 // Resources
 
 Route::resource('department', 'DepartmentsController', ['only' => [
@@ -59,24 +58,28 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['auth']], function () {
 
-        Route::group(['prefix' => 'tickets'], function ()
-        {
+        Route::resource('comments', 'CommentsController', ['only' => ['store']]);
+
+        Route::group(['prefix' => 'tickets'], function () {
 
             Route::group(['middleware' => 'userRole:Supervisor'], function () {
-                Route::delete( '{id}', [ 'as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy' ]);
+                Route::delete('{id}', ['as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy'])->where('id', '[1-9][0-9]*');
             });
 
-            Route::get('pool', [ 'as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
-            Route::get('{id}/claim', [ 'as' => 'tickets.claim', 'uses' => 'TicketsController@claim']);
+            Route::get('pool', ['as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
+            Route::get('{id}/claim', ['as' => 'tickets.claim', 'uses' => 'TicketsController@claim'])->where('id', '[1-9][0-9]*');
 
             // CRUD
-            Route::get( 'create', [ 'as' => 'tickets.new', 'uses' => 'TicketsController@new' ]);
-            Route::post( '', [ 'as' => 'tickets.store', 'uses' => 'TicketsController@store' ]);
-            Route::get( '',  [ 'as' => 'tickets.index', 'uses' => 'TicketsController@index' ]);
-            Route::get( 'edit/{id}', [ 'as' => 'tickets.edit', 'uses' => 'TicketsController@edit' ]);
+            Route::get('create', ['as' => 'tickets.new', 'uses' => 'TicketsController@new']);
+            Route::post('', ['as' => 'tickets.store', 'uses' => 'TicketsController@store']);
+            Route::get('', ['as' => 'tickets.index', 'uses' => 'TicketsController@index']);
+            Route::get('edit/{id}', ['as' => 'tickets.edit', 'uses' => 'TicketsController@edit'])->where('id', '[1-9][0-9]*');
 
-            Route::put( '{id}', [ 'as' => 'tickets.update', 'uses' => 'TicketsController@update' ]);
-            Route::get( '{id}', [ 'as' => 'tickets.show', 'uses' => 'TicketsController@show' ]);
+            Route::put('{id}', ['as' => 'tickets.update', 'uses' => 'TicketsController@update'])->where('id', '[1-9][0-9]*');
+            Route::get('{id}', ['as' => 'tickets.show', 'uses' => 'TicketsController@show'])->where('id', '[1-9][0-9]*');
+
+            Route::post('{id}/comment', ['as' => 'tickets.comment.store', 'uses' => 'CommentsController@store'])
+                ->where('id', '[1-9][0-9]*');
         });
 
         Route::resource('priority', 'PrioritiesController', ['only' => [

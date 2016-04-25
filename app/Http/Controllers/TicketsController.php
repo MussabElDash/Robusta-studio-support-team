@@ -23,16 +23,21 @@ class TicketsController extends Controller
     // CRUD
     public function index()
     {
-        return view('tickets.index');
+        $current_user = Auth::user();
+        $tickets = $current_user->tickets()->with('assigned_to', 'department',
+            'creator', 'labels', 'priority')->get();
+        return view('tickets.index', [ 'user' => $current_user, 'tickets' => $tickets]);
     }
 
     public function store()
     {
+
         return view('tickets.show');
     }
 
     public function create()
     {
+
         return view('tickets.new');
     }
 
@@ -46,9 +51,14 @@ class TicketsController extends Controller
         return view('tickets.show');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return view('tickets.show');
+        $ticket = Ticket::with('assigned_to', 'department',
+            'creator', 'labels', 'priority', 'comments.owner')->find($id);
+
+        if ($request->ajax()){
+            return Response::json([ 'html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'ticket' => $ticket->id]);
+        }
     }
 
     public function destroy(Request $request, $id)
@@ -63,16 +73,31 @@ class TicketsController extends Controller
 
     public function pool(Request $request)
     {
-        $tickets = Ticket::with(['labels', 'priority', 'department'])->paginate(5);
+        $current_user = Auth::user();
+        if ($current_user->hasRole(["Admin"])){
+            $tickets = Ticket::notAssigned()->with(['labels', 'priority'])->paginate(5);
+        } else {
+            $tickets = Ticket::notAssigned()->ofDepartment($current_user->department_id)->with(['labels', 'priority'])->paginate(5);
+        }
 
         if ($request->ajax()) {
             return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets])->render());
         }
-        return view('tickets.pool', ['user' => Auth::user(), 'tickets' => $tickets]);
+        return view('tickets.pool', ['user' => $current_user, 'tickets' => $tickets]);
     }
 
-    public function claim($id)
+    public function claim(Request $request, $id)
     {
+        $current_user = Auth::user();
 
+        if ($current_user->canClaim()) {
+            $ticket = Ticket::find($id);
+            if ($ticket->canBeClaimed()) {
+                $ticket->assigned_to()->associate($current_user);
+                $ticket->save();
+            }
+        }
+
+        dd(DB::getQueryLog());
     }
 }
