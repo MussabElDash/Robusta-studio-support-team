@@ -223,7 +223,10 @@ return [
         'Twitter' => 'Thujohn\Twitter\Facades\Twitter',
 
         'Setting' => 'anlutro\LaravelSettings\Facade',
+
         'Flash' => 'Laracasts\Flash\Flash',
+
+        'Carbon' => 'Carbon\Carbon',
     ],
 
 ];

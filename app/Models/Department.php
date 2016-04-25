@@ -6,6 +6,10 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
+use App\Models\Ticket;
+use App\Models\User;
+
+
 class Department extends BaseModel implements SluggableInterface
 {
     use SluggableTrait;
@@ -41,6 +45,12 @@ class Department extends BaseModel implements SluggableInterface
 
     ];
     public function head(){
-        return belongs_to('App\Models\User','user_id');
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    // Relations
+    public function tickets()
+    {
+        return $this->hasMany( Ticket::class );
     }
 }

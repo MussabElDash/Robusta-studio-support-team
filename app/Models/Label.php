@@ -2,18 +2,11 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
+use App\Models\Ticket;
 
-class Label extends BaseModel implements SluggableInterface
+class Label extends BaseModel
 
 {
-    use SluggableTrait;
-    protected $sluggable = [
-        'build_from' => 'name',
-        'save_to'    => 'slug',
-        'unique'     => true,
-    ];
     /**
      * The rules used for validation
      *
@@ -21,10 +14,8 @@ class Label extends BaseModel implements SluggableInterface
      */
     protected static $rules = [
         'name' => 'required',
-        'background_color'=>'required',
-        'name_color'=>'required'
-
-
+        'background_color' => 'required',
+        'name_color' => 'required'
     ];
     /**
      * The attributes that are mass assignable.
@@ -32,7 +23,7 @@ class Label extends BaseModel implements SluggableInterface
      * @var array
      */
     protected $fillable = [
-        'name', 'background_color', 'description','name_color'
+        'name', 'background_color', 'description', 'name_color'
     ];
 
     /**
@@ -43,4 +34,11 @@ class Label extends BaseModel implements SluggableInterface
     protected $hidden = [
 
     ];
+
+    // Relations
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class);
+    }
+
 }

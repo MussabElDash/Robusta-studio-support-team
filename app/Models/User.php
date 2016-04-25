@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -23,6 +23,12 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use SluggableTrait;
+
+
+    /**
+     * Class User
+     * @package App\Models
+     */
 
 
     protected $sluggable = [
@@ -63,8 +69,54 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     protected $passwordAttributes = ['password'];
 
+    // Relations
     public function department()
     {
-        return $this->belongsTo('App\Models\Department', 'department_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
+
+    public function createdTickets()
+    {
+        return $this->hasMany(Ticket::class, 'creator_id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class, 'invited_id');
+    }
+
+    public function sentInvitations()
+    {
+        return $this->hasMany(Invitation::class, 'inviter_id');
+    }
+
+    public function ticketsCount()
+    {
+        return $this->hasOne(Ticket::class, 'assigned_to')
+            ->select(DB::raw('assigned_to, count(*) as count'))->groupBy('assigned_to');
+    }
+
+    // Methods
+    public function hasRole($roles)
+    {
+
+        $flag = false;
+
+        foreach ($roles as $role) {
+            $flag = $flag || ($this->role == $role);
+        }
+
+        return $flag;
+    }
+
+    public function canClaim()
+    {
+        return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
+    }
+
 }

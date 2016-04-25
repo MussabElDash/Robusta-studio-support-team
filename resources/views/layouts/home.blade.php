@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>@yield('title', 'Robusta')</title>
 
     {!! Html::style('assets/css/bootstrap.min.css') !!}
@@ -22,37 +22,42 @@
     @show
 
     <script>
-      $.widget.bridge('uibutton', $.ui.button);
+        $.widget.bridge('uibutton', $.ui.button);
     </script>
-  </head>
+</head>
 
-  <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-      <header class="main-header">
+    <header class="main-header">
         @include('layout-components.header')
-      </header>
+    </header>
 
-      @include('layout-components.sidebar.sidebar')
+    @include('layout-components.sidebar.sidebar')
 
-      <div class="content-wrapper">
+    <div class="content-wrapper">
         <section class="content-header">
-          @include('layout-components.content_header')
+            @include('layout-components.content_header')
         </section>
         <section class="content">
-          @include('flash::custom')
-          @yield('content')
+
+            @include('flash::custom')
+
+            <div class="row">
+                @yield('content')
+            </div>
         </section>
-      </div>
-
-      <footer class="main-footer">
-        @include('layout-components.footer')
-      </footer>
-
     </div>
 
+    <footer class="main-footer">
+        @include('layout-components.footer')
+    </footer>
+
+</div>
+
+<div id="modals">
     @section('modals')
     @show
-
-  </body>
+</div>
+</body>
 </html>

@@ -21,8 +21,9 @@ class UsersTableSeeder extends Seeder
                 'password' => 'mussab',
                 'password_confirmation' => 'mussab',
                 'role' => 'Admin',
-                'gender' => true
+                'gender' => true,
             ], [
+
                 'name' => 'Mussab ElDash',
                 'email' => 'mussab@super.com',
                 'password' => 'mussab',
@@ -35,7 +36,7 @@ class UsersTableSeeder extends Seeder
                 'password' => 'mussab',
                 'password_confirmation' => 'mussab',
                 'role' => 'Agent',
-                'gender' => true
+                'gender' => true,
             ]
         ];
 

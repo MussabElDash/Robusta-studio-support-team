@@ -29,13 +29,13 @@ class Invitation extends BaseModel
     // Get the invitation owner
     public function inviter()
     {
-        return $this->belongsTo('App\Models\User', 'inviter_id');
+        return $this->belongsTo(User::class, 'inviter_id');
     }
 
     // Get the invited user
     public function invited()
     {
-        return $this->belongsTo('App\Models\User', 'invited_id');
+        return $this->belongsTo(User::class, 'invited_id');
     }
 
     // Get the object the invited user invited to
