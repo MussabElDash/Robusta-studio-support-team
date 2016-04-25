@@ -63,6 +63,5 @@
             //prevent the form from actually submitting in browser
             return false;
         } );
-
     } );
 </script>

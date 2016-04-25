@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>@yield('title', 'Robusta')</title>
-
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/AdminLTE.min.css') !!}
 
