@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Hash;
 use Illuminate\Database\Eloquent\Model;
+use Log;
 use Validator;
 
 class BaseModel extends Model
@@ -32,7 +33,6 @@ class BaseModel extends Model
                 $model->sluggify();
             }
             $valid = $model->validate(true);
-//            dd($valid);
             $model->fixPassword();
             return $valid;
         });
@@ -50,7 +50,6 @@ class BaseModel extends Model
         $validator = Validator::make($this->attributes, static::$rules);
         if ($validator->fails()) {
             $this->errors = $validator->messages();
-//            dd($this->errors);
             return false;
         }
 
@@ -66,7 +65,9 @@ class BaseModel extends Model
                 continue;
             }
             // Check if this one of our password attributes and if it's been changed.
-            if (in_array($key, $this->passwordAttributes) && !Hash::check($value, $this->getOriginal($key))) {
+            if (in_array($key, $this->passwordAttributes) && $value !== $this->getOriginal($key)
+                && !Hash::check($value, $this->getOriginal($key))
+            ) {
                 // Hash it
                 $this->attributes[$key] = Hash::make($value);
                 continue;
