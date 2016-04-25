@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-
+use App\Models\User;
+use App\Models\Ticket;
 
 class Comment extends BaseModel
 {
@@ -28,11 +29,11 @@ class Comment extends BaseModel
 
     public function owner()
     {
-      return $this->belongsTo('App\Models\User');
+        return $this->belongsTo( User::class );
     }
 
     public function ticket()
     {
-      return $this->belongsTo('App\Models\Ticket');
+        return $this->belongsTo( Ticket::class );
     }
 }

@@ -4,9 +4,10 @@ namespace App\Models;
 
 
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+
+
 
 class Customer extends BaseModel implements SluggableInterface
 {
@@ -30,15 +31,20 @@ class Customer extends BaseModel implements SluggableInterface
         'twitter_id' => 'required'
     ];
 
-    /*
-        Relations
-    */
+
+    // Relations
 
     public function creator()
     {
-        return  $this->belongsTo('App\Models\User', 'creator_id');
+        return  $this->belongsTo(User::class, 'creator_id');
     }
 
+    public function tickets()
+    {
+        return $this->hasMany( Ticket::class );
+    }
+
+    // Methods
     public function setTwitterIdAttribute($value) {
         // var_dump('Here' . $value . 'and Here');
         if ( empty($value) ) { // will check for empty string, null values, see php.net about it

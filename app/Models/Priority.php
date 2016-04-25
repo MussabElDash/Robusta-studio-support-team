@@ -7,14 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Priority extends BaseModel implements SluggableInterface
+use App\Models\Ticket;
+
+
+class Priority extends BaseModel
 {
-    use SluggableTrait;
-    protected $sluggable = [
-        'build_from' => 'name',
-        'save_to'    => 'slug',
-        'unique'     => true,
-    ];
     /**
      * The rules used for validation
      *
@@ -43,5 +40,11 @@ class Priority extends BaseModel implements SluggableInterface
     protected $hidden = [
 
     ];
+    // Relations
+    public function tickets()
+    {
+        return $this->hasMany( Ticket::class );
+    }
+
 
 }
