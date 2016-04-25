@@ -13,7 +13,6 @@ class AlterLabelsTable extends Migration
     public function up()
     {
 
-
         Schema::table('labels', function( Blueprint $table )
         {
             $table->dropColumn('slug');
@@ -28,7 +27,6 @@ class AlterLabelsTable extends Migration
      */
     public function down()
     {
-
         Schema::table('labels', function( Blueprint $table )
         {
             $table->string('slug')->unique();

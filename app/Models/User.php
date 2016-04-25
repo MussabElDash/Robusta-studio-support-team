@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -12,8 +12,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-use App\Models\Ticket;
-use App\Models\Invitation;
+use DB;
 
 /**
  * Class User
@@ -97,4 +96,29 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return $this->hasMany(Invitation::class, 'inviter_id');
     }
+
+    public function ticketsCount()
+    {
+        return $this->hasOne(Ticket::class, 'assigned_to')
+            ->select(DB::raw('assigned_to, count(*) as count'))->groupBy('assigned_to');
+    }
+
+    // Methods
+    public function hasRole($roles)
+    {
+
+        $flag = false;
+
+        foreach ($roles as $role) {
+            $flag = $flag || ($this->role == $role);
+        }
+
+        return $flag;
+    }
+
+    public function canClaim()
+    {
+        return ( $this->ticketsCount )? $this->ticketsCount->count < 3 : true;
+    }
+
 }

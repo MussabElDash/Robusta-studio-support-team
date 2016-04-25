@@ -222,6 +222,8 @@ return [
         'Twitter' => 'Thujohn\Twitter\Facades\Twitter',
 
         'Setting' => 'anlutro\LaravelSettings\Facade',
+
+        'Carbon' => 'Carbon\Carbon',
     ],
 
 ];

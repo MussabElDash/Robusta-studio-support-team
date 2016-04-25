@@ -6,7 +6,6 @@ use App\Models\Ticket;
 
 class Label extends BaseModel
 
-
 {
     /**
      * The rules used for validation

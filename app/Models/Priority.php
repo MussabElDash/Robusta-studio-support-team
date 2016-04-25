@@ -3,12 +3,12 @@
 namespace App\Models;
 
 
+
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
 use App\Models\Ticket;
-
 
 class Priority extends BaseModel
 {
@@ -40,11 +40,11 @@ class Priority extends BaseModel
     protected $hidden = [
 
     ];
+
     // Relations
     public function tickets()
     {
         return $this->hasMany( Ticket::class );
     }
-
 
 }

@@ -20,6 +20,7 @@ class CreateTicketsTable extends Migration
             $table->text('description');
             $table->boolean('open')->default(true);
             $table->boolean('vip')->default(false);
+            $table->string('type');
 
             // Required
             $table->integer('creator_id')->unsigned();

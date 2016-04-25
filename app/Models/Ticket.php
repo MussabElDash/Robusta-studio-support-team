@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Ticket extends BaseModel
 {
+
+    protected $dates = ['created_at', 'updated_at'];
+
     // Mass Assignment
     protected $fillable = [
         'name'       , 'description'  , 'customer_id',
@@ -58,7 +61,7 @@ class Ticket extends BaseModel
         return $this->hasMany( Comment::class );
     }
 
-    public function invitaions()
+    public function invitations()
     {
         return $this->morphMany( Invitation::class, 'invitable' );
     }
@@ -81,14 +84,23 @@ class Ticket extends BaseModel
 
     public function scopeNotAssigned( Builder $query )
     {
-        return $query->where( 'assigned_to', null );
+        return $query->whereNull('assigned_to');
     }
 
     public function scopeAssigned( Builder $query )
     {
-        return $query->where( 'assigned_to', 'is not', null );
+        return $query->whereNotNull('assigned_to');
+    }
+
+    public function scopeOfDepartment( Builder $query, $department_id)
+    {
+        return $query->where('department_id', $department_id);
     }
 
     // Methods
+    public function canBeClaimed()
+    {
+        return $this->assigned_to == null;
+    }
 
 }

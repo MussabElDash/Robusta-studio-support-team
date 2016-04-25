@@ -12,7 +12,6 @@ class AlterPrioritiesTable extends Migration
      */
     public function up()
     {
-
         Schema::table('priorities', function( Blueprint $table )
         {
             $table->dropColumn('slug');
