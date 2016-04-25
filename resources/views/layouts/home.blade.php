@@ -23,6 +23,7 @@
 
     <script>
       $.widget.bridge('uibutton', $.ui.button);
+      $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
     </script>
   </head>
 
