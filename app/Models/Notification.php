@@ -36,18 +36,19 @@ abstract class Notification extends BaseModel
 
     public function actor()
     {
-        return belong_to('App\Models\User', 'actor_id');
+        return $this->belongsTo(User::class, 'actor_id');
     }
 
     public function receiver()
     {
-        return belong_to('App\Models\User', 'recipient_id');
+        return $this->belongsTo(User::class, 'recipient_id');
     }
 
-    public function object()
+    public function notifiable()
     {
-        return belong_to('App\Models\BaseModel','object_id');
+        return $this->belongsTo(BaseModel::class, 'notifiable_id');
     }
+
     abstract function text();
 
 }

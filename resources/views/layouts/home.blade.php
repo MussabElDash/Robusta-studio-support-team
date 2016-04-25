@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>@yield('title', 'Robusta')</title>
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/AdminLTE.min.css') !!}
@@ -24,35 +24,43 @@
       $.widget.bridge('uibutton', $.ui.button);
       $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
     </script>
-  </head>
+</head>
 
-  <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-      <header class="main-header">
+    <header class="main-header">
         @include('layout-components.header')
-      </header>
+    </header>
 
-      @include('layout-components.sidebar.sidebar')
+    @include('layout-components.sidebar.sidebar')
 
-      <div class="content-wrapper">
+    <div class="content-wrapper">
         <section class="content-header">
+<<<<<<< HEAD
           @yield('content_header')
+=======
+            @include('layout-components.content_header')
+>>>>>>> 02f1253f1a9f721c07f52ee76cc736d04b673a73
         </section>
 
         <section class="content">
-          @yield('content')
+            <div class="row">
+                @yield('content')
+            </div>
+
         </section>
-      </div>
-
-      <footer class="main-footer">
-        @include('layout-components.footer')
-      </footer>
-
     </div>
 
+    <footer class="main-footer">
+        @include('layout-components.footer')
+    </footer>
+
+</div>
+
+<div id="modals">
     @section('modals')
     @show
-
-  </body>
+</div>
+</body>
 </html>
