@@ -12,8 +12,6 @@ use Session;
 
 class AgentsController extends Controller
 {
-    protected static $rules = [];
-
     /**
      * Store a newly created resource in storage.
      *
@@ -25,9 +23,8 @@ class AgentsController extends Controller
         // process
         if ($user->save()) {
             // redirect
-
             Flash::success('Successfully created Agent!');
-            return Redirect::action('AgentsController@show', @$user);
+            return Redirect::route('agent.show', $user);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -40,9 +37,9 @@ class AgentsController extends Controller
      *
      * @return Response
      */
-    public function update($id)
+    public function update($agent)
     {
-        $user = User::find($id);
+        $user = User::find($agent);
         if (is_null($user)) {
             return Redirect::back();
         }
@@ -50,11 +47,11 @@ class AgentsController extends Controller
         if ($user->update(Input::all())) {
             // redirect
             Flash::success('Successfully updated an Agent!');
-            return Redirect::action('AgentsController@show', @$user);
+            return Redirect::route('agent.show', $agent);
         } else {
             // redirect
             Flash::error($user->getErrors());
-            return Redirect::back();
+            return Redirect::back()->with('errors', $user->getErrors());
         }
     }
 

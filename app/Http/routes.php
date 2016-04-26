@@ -46,8 +46,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('agent', 'AgentsController', ['except' => [
             'index', 'create'
         ]]);
-        Route::post('/agent/{id}/edit', function ($id) {
-            return redirect()->action('AgentsController@edit', [$id]);
+        Route::post('/agent/{agent}/edit', function ($id) {
+            return redirect()->route('agent.edit', [$id]);
         });
 
         Route::resource('priority', 'PrioritiesController', ['only' => [

@@ -1,42 +1,68 @@
 @extends('layouts.home')
 
 @section('content')
-    <h1>Show Agent</h1>
-    {{ Form::model($agent, array('method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
-    <ul>
-        <li>
-            {{ Form::label('Name:') }}
-            {{ Form::text('name') }}
-        </li>
-        <li>
-            {{ Form::label('Email:') }}
-            {{ Form::text('email') }}
-        </li>
-        <li>
-            {{ Form::label('Role:') }}
-            {{ Form::text('role') }}
-        </li>
-        @unless(is_null($agent->gender))
-            <li>
-                {{ Form::label('Gender:') }}
-                {{ Form::select('gender', ['Select', 'Female', 'Male']) }}
-            </li>
-        @endunless
-        @unless(is_null($agent->date_of_birth))
-            <li>
-                {{ Form::label('Date Of Birth:') }}
-                {{ Form::text('date_of_birth') }}
-            </li>
-        @endunless
-        @unless(is_null($agent->department_id))
-            <li>
-                {{ Form::label('Department:') }}
-                {{ Form::text('department_id') }}
-            </li>
-        @endunless
-        <li>
-            {{ Form::submit('Edit', array('class' => 'btn btn-success')) }}
-        </li>
-    </ul>
-    {{ Form::close() }}
+    <div class="margin-top container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Show Agent</div>
+                    <div class="panel-body">
+                        {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Name</label>
+                            <div class="col-md-6">
+                                {{ Form::label('name', $agent->name, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Email</label>
+                            <div class="col-md-6">
+                                {{ Form::label('email', $agent->email, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ Form::label('role', 'Role', ['class' => 'col-md-4 control-label']) }}
+                            <div class="col-md-6">
+                                {{ Form::label('role', $agent->role, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label('department_id', 'Department ID', ['class' => 'col-md-4 control-label']) !!}
+                            <div class="col-md-6">
+                                {{ Form::label('department_id', $agent->department_id, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label('gender', 'Gender', ['class' => 'col-md-4 control-label']) !!}
+                            <div class="col-md-6">
+                                {{ Form::label('gender', $agent->gender, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label('date_of_birth', 'Date Of Birth', ['class' => 'col-md-4 control-label']) !!}
+                            <div class="col-md-6">
+                                {{ Form::label('date_of_birth', $agent->date_of_birth, ['class' => 'form-control']) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary pull-right">
+                                    <i class="fa fa-btn fa-user"></i>Update
+                                </button>
+                            </div>
+                        </div>
+
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

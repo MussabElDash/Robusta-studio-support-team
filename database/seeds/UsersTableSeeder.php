@@ -16,30 +16,31 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->delete();
         $users = [
             [
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@admin.com',
-                'password' => 'mussab',
-                'password_confirmation' => 'mussab',
+                'name' => 'Admin User',
+                'email' => 'admin@admin.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Admin',
                 'gender' => true,
             ], [
 
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@super.com',
-                'password' => 'mussab',
-                'password_confirmation' => 'mussab',
+                'name' => 'Super User',
+                'email' => 'super@super.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Supervisor',
                 'gender' => true,
             ], [
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@agent.com',
-                'password' => 'mussab',
-                'password_confirmation' => 'mussab',
+                'name' => 'Agent User',
+                'email' => 'agent@agent.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Agent',
                 'gender' => true,
             ]
         ];
 
+        User::passConfirm();
         foreach ($users as $user) {
             $user = User::create($user);
             if ($user->hasErrors()) {

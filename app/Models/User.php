@@ -45,7 +45,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         'name' => 'required',
         'email' => 'required|max:50|email|unique:users,email,',
         'password' => 'required|confirmed',
-        'role' => 'required',
+        'role' => 'required|in:Admin,Supervisor,Agent',
         'date_of_birth' => 'date',
     ];
     /**
@@ -67,7 +67,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         'password', 'password_confirmation', 'remember_token',
     ];
 
-    protected $passwordAttributes = ['password'];
+    protected $passwordAttributes = ['password' => false];
 
     // Relations
     public function department()
@@ -119,4 +119,13 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
 
+    public function setDateOfBirthAttribute($value)
+    {
+        // var_dump('Here' . $value . 'and Here');
+        if (empty($value)) { // will check for empty string, null values, see php.net about it
+            $this->attributes['date_of_birth'] = NULL;
+        } else {
+            $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
+        }
+    }
 }
