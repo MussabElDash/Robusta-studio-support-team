@@ -40,7 +40,6 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
-        User::passConfirm();
         foreach ($users as $user) {
             $user = User::create($user);
             if ($user->hasErrors()) {
