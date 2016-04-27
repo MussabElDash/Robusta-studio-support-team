@@ -40,7 +40,7 @@
                         <div class="form-group">
                             {!! Form::label('gender', 'Gender', ['class' => 'col-md-4 control-label']) !!}
                             <div class="col-md-6">
-                                {{ Form::label('gender', $agent->gender, ['class' => 'form-control']) }}
+                                {{ Form::label('gender', $agent->gender == 0 ? 'Not Defined' : ($agent->gender == 1 ? 'Female' : 'Male'), ['class' => 'form-control']) }}
                             </div>
                         </div>
 
