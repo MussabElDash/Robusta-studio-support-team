@@ -132,6 +132,6 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     public function editable()
     {
-        return Auth::user() === $this || Auth::user()->role === 'Admin';
+        return Auth::user() == $this || Auth::user()->role == 'Admin';
     }
 }
