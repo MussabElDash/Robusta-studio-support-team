@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use DB;
@@ -127,5 +128,10 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         } else {
             $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
         }
+    }
+
+    public function editable()
+    {
+        return Auth::user() === $this || Auth::user()->role === 'Admin';
     }
 }

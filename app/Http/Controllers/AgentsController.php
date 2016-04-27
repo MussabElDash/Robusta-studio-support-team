@@ -66,7 +66,7 @@ class AgentsController extends Controller
     {
         $user = User::find($id);
         if (is_null($user)) {
-            return Redirect::back();
+            return Redirect::to('home');
         }
         return view('agents.show', ['user' => Auth::user(), 'agent' => $user]);
     }
@@ -82,7 +82,12 @@ class AgentsController extends Controller
     {
         $user = User::find($id);
         if (is_null($user)) {
-            return Redirect::back();
+            Flash::error('No such Agent');
+            return Redirect::to('home');
+        }
+        if (!$user->editable()) {
+            Flash::error('You have no permission to edit this Agent');
+            return Redirect::to('home');
         }
         return view('agents.edit', ['user' => Auth::user(), 'agent' => $user]);
     }

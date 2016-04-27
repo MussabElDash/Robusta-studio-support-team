@@ -7,8 +7,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Show Agent</div>
                     <div class="panel-body">
-                        {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
-
+                        @if($agent->editable())
+                            {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
+                        @endif
+                        
                         <div class="form-group">
                             <label class="col-md-4 control-label">Name</label>
                             <div class="col-md-6">
@@ -51,13 +53,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary pull-right">
-                                    <i class="fa fa-btn fa-user"></i>Edit
-                                </button>
+                        @if($agent->editable())
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary pull-right">
+                                        <i class="fa fa-btn fa-user"></i>Edit
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         {{ Form::close() }}
                     </div>
