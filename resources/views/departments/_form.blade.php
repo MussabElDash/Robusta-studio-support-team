@@ -6,11 +6,12 @@
     ]) !!}
 
   <div class="box-body">
+    <div id="nameError" style="display: none" class="alert alert-danger"></div>
     <div class="form-group">
       {!! Form::label('name', 'Name', ['class' => 'col-sm-2 control-label']) !!}
       <div class="col-sm-10">
         {!! Form::text('name', null, [
-            'class' => 'form-control',
+            'class' => 'form-control has-warning error',
             'placeholder' => 'Name',
             'id' => 'department-name',
             'required' => true,
@@ -18,9 +19,12 @@
       </div>
     </div>
 
+
+    <div id="descriptionError" style="display: none" class="alert alert-danger"></div>
     <div class="form-group">
       {!! Form::label('description', 'Description', ['class' => 'col-sm-2 control-label']) !!}
       <div class="col-sm-10">
+
         {!! Form::textarea('description', null, [
             'class' => 'form-control',
             'rows' => '3',
@@ -55,9 +59,17 @@
                 success: function(data){
                     console.log(data);
                     $('.modal').modal('hide')
+                    window.location.href = '/departments/' + data.slug;
                 },
                 error: function(err) {
-                    console.log(err);
+                    if(err.responseJSON.errors.description) {
+                        $('#descriptionError').css('display', 'block');
+                        $('#descriptionError').html(err.responseJSON.errors.description);
+                    }
+                    if(err.responseJSON.errors.name) {
+                        $('#nameError').css('display', 'block');
+                        $('#nameError').html(err.responseJSON.errors.name);
+                    }
                 }
             });
             //prevent the form from actually submitting in browser

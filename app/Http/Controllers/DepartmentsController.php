@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
-
+use Flash;
 use Session;
 use Redirect;
 use Auth;
@@ -17,16 +17,6 @@ use Response;
 class DepartmentsController extends Controller
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-        $this->middleware('auth');
-    }
 
     /**
      * Display a listing of the resource.
@@ -35,20 +25,8 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        //
-        // $tweets = array()
         $departments = Department::all();
-        return view('departments.index', ['user' => Auth::user(), 'departments' => $departments]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('departments.index', ['departments' => $departments]);
     }
 
     /**
@@ -61,20 +39,24 @@ class DepartmentsController extends Controller
     {
         Log::info("Creating dep ... \n".implode(",", Input::all()));
         $department = Department::create(Input::all());
-        $department->save();
-        if( !empty( $department->errors ) ){
+        if( $department->save() ){
+            Flash::success('Successfully created department');
             $response = array(
-                            'status' => 'error',
-                            'msg' => 'Error While creating department!',
-                        );
-        }else {
-            $response = array(
+                            'success' => true,
                             'status' => 'success',
+                            'slug' => $department->slug,
                             'msg' => 'department created successfully!',
                         );
+            return Response::json( $response , 200);
+        }else {
+            $response = array(
+                            'success' => false,
+                            'status' => 'error',
+                            'errors' => $department->getErrors(),
+                            'msg' => 'Error While creating department!',
+                        );
+            return Response::json( $response , 400);
         }
-        return Response::json( $response );
-        // return Redirect::back()->with('message', 'Department created successfully');
     }
 
     /**
@@ -86,9 +68,8 @@ class DepartmentsController extends Controller
     public function show($slug)
     {
         Log::info('dep slug: '.$slug);
-        $departments = Department::all();
         $department = Department::where('slug', $slug)->first();
-        return view('departments.show', ['user' => Auth::user(), 'departments' => $departments, 'department' => $department]);
+        return view('departments.show', ['department' => $department]);
     }
 
     /**
@@ -99,9 +80,8 @@ class DepartmentsController extends Controller
      */
     public function edit($slug)
     {
-        $departments = Department::all();
         $department = Department::where('slug', $slug)->first();
-        return view('departments.edit', ['user' => Auth::user(), 'departments' => $departments, 'department' => $department]);
+        return view('departments.edit', ['department' => $department]);
     }
 
     /**
@@ -119,9 +99,7 @@ class DepartmentsController extends Controller
         $department->name = Input::get('name');
         $department->description = Input::get('description');
         $department->save();
-
-        $departments = Department::all();
-        return view('departments.show', ['user' => Auth::user(), 'departments' => $departments, 'department' => $department]);
+        return view('departments.show', ['user' => Auth::user(), 'department' => $department]);
     }
 
     /**

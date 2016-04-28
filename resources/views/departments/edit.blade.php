@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-<div class="">
+<div class="" style="margin-left: 5%">
     {!! Form::open([
         'route' => ['departments.update', $department['slug']],
         'method' => 'put',
@@ -21,7 +21,7 @@
         ]) !!}
         <div clas="row" style="margin-top:5%">
             {!! Form::submit('Save changes', [
-                'class' => 'btn btn-warning btn-lg'
+                'class' => 'btn btn-info btn-md'
                 ]) !!}
             <!-- <button id="saveButton" class="btn btn-lg btn-warning">Save changes</button> -->
         </div>
