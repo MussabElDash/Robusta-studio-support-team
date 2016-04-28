@@ -24,7 +24,8 @@ class Department extends BaseModel implements SluggableInterface
      * @var array
      */
     protected static $rules = [
-        'name' => 'required'
+        'name' => 'required',
+        'description' => 'required'
     ];
     /**
      * The attributes that are mass assignable.

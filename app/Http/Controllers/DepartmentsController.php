@@ -94,12 +94,16 @@ class DepartmentsController extends Controller
     public function update(Request $request, $slug)
     {
         Log::info("updating dep ... \n".implode(",", Input::all()));
-
         $department = Department::where('slug', $slug)->first();
-        $department->name = Input::get('name');
-        $department->description = Input::get('description');
-        $department->save();
-        return view('departments.show', ['user' => Auth::user(), 'department' => $department]);
+        $id = $department->id;
+        if ($department->update(Input::all())) {
+            $department = Department::find($id);
+            Flash::success('Successfully updated the department');
+            return Redirect::route("departments.show" , [$department->slug]);
+        } else {
+            Flash::error($department->getErrors());
+            return Redirect::back()->with('errors', $department->getErrors());
+        }
     }
 
     /**
