@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Twitter;
+use anlutro\LaravelSettings\Facade as Setting;
+use App\Http\Requests;
 use Auth;
 use Cache;
 use Carbon;
-use anlutro\LaravelSettings\Facade as Setting;
 use Input;
-use Session;
 use Redirect;
 use Illuminate\Http\Request;
 use Log;
 
-use App\Http\Requests;
 use App\Models\Department;
+use Session;
+use Twitter;
 
 class HomeController extends Controller
 {
@@ -36,9 +36,12 @@ class HomeController extends Controller
     public function index()
     {
         Log::info('Showing user profile for user: ');
-        $tweets = Cache::remember('tweets', 1, function () {
-            return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
-        });
+        try {
+            $tweets = Cache::remember('tweets', 1, function () {
+                return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
+            });
+        }catch(\Exception $e) {
+        }
         $departments = Department::lists('name', 'id');
         if (!empty($tweets)) {
             return view('home', ['user' => Auth::user(), 'tweets' => $tweets, 'departments' => $departments]);
@@ -49,8 +52,8 @@ class HomeController extends Controller
 
     public function store()
     {
-        for ($i = 1; $i < 17; $i++){
-            Setting::set('color_'.$i,input::get('color_'.$i));
+        for ($i = 1; $i < 17; $i++) {
+            Setting::set('color_' . $i, input::get('color_' . $i));
         }
         Setting::save();
         Session::flash('message', 'Theme successfully saved !');

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Auth;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-
-use Illuminate\Foundation\Auth\Access\Authorizable;
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
-use DB;
 
 /**
  * Class User
@@ -44,14 +44,10 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
      */
     protected static $rules = [
         'name' => 'required',
-        'email' => array(
-            'required',
-            'max:50',
-            'email',
-            'unique:users'
-        ),
-        'password' => 'required'
-
+        'email' => 'required|max:50|email|unique:users,email,',
+        'password' => 'required|confirmed',
+        'role' => 'required|in:Admin,Supervisor,Agent',
+        'date_of_birth' => 'date',
     ];
     /**
      * The attributes that are mass assignable.
@@ -59,7 +55,8 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gender', 'date_of_birth', 'image_url', 'department_id', 'role'
+        'name', 'email', 'password', 'password_confirmation',
+        'gender', 'date_of_birth', 'image_url', 'department_id', 'role'
     ];
 
     /**
@@ -68,8 +65,10 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'password_confirmation', 'remember_token',
     ];
+
+    protected $passwordAttributes = ['password' => false];
 
     // Relations
     public function department()
@@ -118,7 +117,21 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     public function canClaim()
     {
-        return ( $this->ticketsCount )? $this->ticketsCount->count < 3 : true;
+        return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
 
+    public function setDateOfBirthAttribute($value)
+    {
+        // var_dump('Here' . $value . 'and Here');
+        if (empty($value)) { // will check for empty string, null values, see php.net about it
+            $this->attributes['date_of_birth'] = NULL;
+        } else {
+            $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
+        }
+    }
+
+    public function editable()
+    {
+        return Auth::user() == $this || Auth::user()->role == 'Admin';
+    }
 }

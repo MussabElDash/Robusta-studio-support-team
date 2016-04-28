@@ -10,7 +10,6 @@
 |
 */
 
-
 // Single Routes
 Route::get('/', ['middleware' => 'web', function () {
     return view('landing');
@@ -23,18 +22,6 @@ Route::get('/get-skin', function () {
 });
 
 Route::post('/home', ['middleware' => 'web', 'uses' => 'HomeController@store']);
-// Resources
-
-Route::resource('departments', 'DepartmentsController');
-
-Route::resource('agent', 'AgentsController', ['only' => [
-    'store'
-]]);
-
-Route::resource('customer', 'CustomersController', ['only' => [
-    'store'
-]]);
-
 
 Route::get('/twitter', function () {
     return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
@@ -54,9 +41,45 @@ Route::get('/twitter', function () {
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
+    // Single Routes
+    Route::get('/', [function () {
+        return view('landing');
+    }]);
+    Route::get('/home', ['uses' => 'HomeController@index']);
+    Route::get('/get-skin', function () {
+        return response(view('skin'))->header('Content-Type', 'text/css');
+    });
+    Route::post('/home', ['uses' => 'HomeController@store']);
+
     Route::group(['middleware' => ['auth']], function () {
+        // Resources
+        Route::resource('departments', 'DepartmentsController');
+
+        Route::resource('agent', 'AgentsController', ['except' => [
+            'index', 'create'
+        ]]);
+        Route::post('/agent/{agent}/edit', function ($id) {
+            return redirect()->route('agent.edit', [$id]);
+        });
+
+        Route::resource('priority', 'PrioritiesController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('ticket', 'TicketsController', ['only' => [
+            'store'
+        ]]);
+
+        Route::resource('customer', 'CustomersController', ['only' => [
+            'store'
+        ]]);
 
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
+
+
+        Route::resource('label', 'LabelsController', ['only' => [
+            'store'
+        ]]);
 
         Route::group(['prefix' => 'tickets'], function () {
 
@@ -79,14 +102,5 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('{id}/comment', ['as' => 'tickets.comment.store', 'uses' => 'CommentsController@store'])
                 ->where('id', '[1-9][0-9]*');
         });
-
-        Route::resource('priority', 'PrioritiesController', ['only' => [
-            'store'
-        ]]);
-
-        Route::resource('label', 'LabelsController', ['only' => [
-            'store'
-        ]]);
-
     });
 });

@@ -40,17 +40,17 @@
                 </section>
 
                 <section class="content">
+                    @include('flash::custom')
+
                     <div class="row">
                         @yield('content')
                     </div>
-
                 </section>
             </div>
 
             <footer class="main-footer">
                 @include('layout-components.footer')
             </footer>
-
         </div>
 
         <div id="modals">
