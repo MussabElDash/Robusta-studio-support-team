@@ -26,41 +26,36 @@
     </script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header class="main-header">
+                @include('layout-components.header')
+            </header>
 
-    <header class="main-header">
-        @include('layout-components.header')
-    </header>
+            @include('layout-components.sidebar.sidebar')
 
-    @include('layout-components.sidebar.sidebar')
+            <div class="content-wrapper">
+                <section class="content-header">
+                  @yield('content_header')
+                </section>
 
-    <div class="content-wrapper">
-        <section class="content-header">
-<<<<<<< HEAD
-          @yield('content_header')
-=======
-            @include('layout-components.content_header')
->>>>>>> 02f1253f1a9f721c07f52ee76cc736d04b673a73
-        </section>
+                <section class="content">
+                    <div class="row">
+                        @yield('content')
+                    </div>
 
-        <section class="content">
-            <div class="row">
-                @yield('content')
+                </section>
             </div>
 
-        </section>
-    </div>
+            <footer class="main-footer">
+                @include('layout-components.footer')
+            </footer>
 
-    <footer class="main-footer">
-        @include('layout-components.footer')
-    </footer>
+        </div>
 
-</div>
-
-<div id="modals">
-    @section('modals')
-    @show
-</div>
-</body>
+        <div id="modals">
+            @section('modals')
+            @show
+        </div>
+    </body>
 </html>
