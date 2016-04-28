@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\User;
 use Auth;
+use Log;
 use Flash;
 use Input;
 use Redirect;
@@ -19,7 +20,10 @@ class AgentsController extends Controller
      */
     public function store()
     {
+        Log::info("creating agent ... \n".implode(",", Input::all()));
         $user = new User(Input::all());
+        // $user->department_id = Input::get('department_id');
+        Log::info($user);
         // process
         if ($user->save()) {
             // redirect
