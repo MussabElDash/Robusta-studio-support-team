@@ -9,21 +9,15 @@ use Cache;
 use Carbon;
 use Input;
 use Redirect;
+use Illuminate\Http\Request;
+use Log;
+
+use App\Models\Department;
 use Session;
 use Twitter;
 
-
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -32,11 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        Log::info('Showing user profile for user: ');
         try {
             $tweets = Cache::remember('tweets', 1, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
-        } catch (\Exception $e) {
+        }catch(\Exception $e) {
         }
         if (!empty($tweets)) {
             return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);

@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
+use Flash;
+use Session;
+use Redirect;
+use Auth;
+use Log;
+use Response;
 
 class DepartmentsController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -17,17 +25,8 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $departments = Department::all();
+        return view('departments.index', ['departments' => $departments]);
     }
 
     /**
@@ -38,8 +37,26 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info("Creating dep ... \n".implode(",", Input::all()));
         $department = Department::create(Input::all());
-        $department->save();
+        if( $department->save() ){
+            Flash::success('Successfully created department');
+            $response = array(
+                            'success' => true,
+                            'status' => 'success',
+                            'slug' => $department->slug,
+                            'msg' => 'department created successfully!',
+                        );
+            return Response::json( $response , 200);
+        }else {
+            $response = array(
+                            'success' => false,
+                            'status' => 'error',
+                            'errors' => $department->getErrors(),
+                            'msg' => 'Error While creating department!',
+                        );
+            return Response::json( $response , 400);
+        }
     }
 
     /**
@@ -48,9 +65,11 @@ class DepartmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        Log::info('dep slug: '.$slug);
+        $department = Department::where('slug', $slug)->first();
+        return view('departments.show', ['department' => $department]);
     }
 
     /**
@@ -59,9 +78,10 @@ class DepartmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $department = Department::where('slug', $slug)->first();
+        return view('departments.edit', ['department' => $department]);
     }
 
     /**
@@ -71,9 +91,18 @@ class DepartmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        Log::info("updating dep ... \n".implode(",", Input::all()));
+        $department = Department::where('slug', $slug)->first();
+        if ($department->update(Input::all())) {
+            $slug = $department->slug ? $department->slug : $slug;
+            Flash::success('Successfully updated the department');
+            return Redirect::route("departments.show" , [$slug]);
+        } else {
+            Flash::error($department->getErrors());
+            return Redirect::back()->with('errors', $department->getErrors());
+        }
     }
 
     /**

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyRelationToUsersTable extends Migration
+class AddingDepartmentsForeignKeyToTickets extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddForeignKeyRelationToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('department_id')->references('id')->on('departments');
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
         });
     }
 
@@ -24,9 +24,9 @@ class AddForeignKeyRelationToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('tickets', function (Blueprint $table) {
             $table->dropForeign(['department_id']);
+            $table->dropColumn('department_id');
         });
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
 use App\Models\Ticket;
 use App\Models\User;
 
-
 class Department extends BaseModel implements SluggableInterface
 {
     use SluggableTrait;
+    // use BaseModel;
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',
@@ -24,8 +24,8 @@ class Department extends BaseModel implements SluggableInterface
      * @var array
      */
     protected static $rules = [
-        'name' => 'required'
-
+        'name' => 'required',
+        'description' => 'required'
     ];
     /**
      * The attributes that are mass assignable.
@@ -44,9 +44,9 @@ class Department extends BaseModel implements SluggableInterface
     protected $hidden = [
 
     ];
-    public function head(){
-        return $this->belongsTo(User::class,'user_id');
-    }
+    // public function head(){
+    //     return $this->belongsTo(User::class,'user_id');
+    // }
 
     // Relations
     public function tickets()
