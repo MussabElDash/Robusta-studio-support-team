@@ -30,8 +30,8 @@ class BaseModel extends Model
         });
 
         static::updating(function ($model) {
-            if ($model instanceof SluggableInterface && is_null($model->getSlug())) {
-                $model->sluggify();
+            if ($model instanceof SluggableInterface) {
+                $model->resluggify();
             }
             $model->fixAttributes();
             $valid = $model->validate(true);
