@@ -18,15 +18,6 @@ use Twitter;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -42,11 +33,10 @@ class HomeController extends Controller
             });
         }catch(\Exception $e) {
         }
-        $departments = Department::lists('name', 'id');
         if (!empty($tweets)) {
-            return view('home', ['user' => Auth::user(), 'tweets' => $tweets, 'departments' => $departments]);
+            return view('home', ['user' => Auth::user(), 'tweets' => $tweets]);
         } else {
-            return view('home', ['user' => Auth::user(), 'tweets' => [], 'departments' => $departments]);
+            return view('home', ['user' => Auth::user(), 'tweets' => []]);
         }
     }
 
