@@ -39,13 +39,14 @@ class AgentsController extends Controller
      */
     public function update($agent)
     {
-        $user = User::find($agent);
+        $user = User::findBySlug($agent);
         if (is_null($user)) {
             return Redirect::back();
         }
         // process
         if ($user->update(Input::all())) {
             // redirect
+            $agent = $user->slug ? $user->slug : $agent;
             Flash::success('Successfully updated an Agent!');
             return Redirect::route('agent.show', $agent);
         } else {
@@ -64,7 +65,7 @@ class AgentsController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::findBySlug($id);
         if (is_null($user)) {
             return Redirect::to('home');
         }
@@ -80,7 +81,7 @@ class AgentsController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findBySlug($id);
         if (is_null($user)) {
             Flash::error('No such Agent');
             return Redirect::to('home');
