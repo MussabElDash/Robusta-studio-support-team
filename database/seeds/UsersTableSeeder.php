@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,37 +13,38 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         //
-//        DB::table('users')->delete();
+        DB::table('users')->delete();
         $users = [
             [
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@admin.com',
-                'password' => Hash::make('mussab'),
+                'name' => 'Admin User',
+                'email' => 'admin@admin.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Admin',
                 'gender' => true,
-                'slug'=>'x'
-            ],[
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@super.com',
-                'password' => Hash::make('mussab'),
+            ], [
+
+                'name' => 'Super User',
+                'email' => 'super@super.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Supervisor',
                 'gender' => true,
-                'slug'=>'y'
-
-            ],[
-                'name' => 'Mussab ElDash',
-                'email' => 'mussab@agent.com',
-                'password' => Hash::make('mussab'),
+            ], [
+                'name' => 'Agent User',
+                'email' => 'agent@agent.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
                 'role' => 'Agent',
                 'gender' => true,
-                'slug'=>'z'
-
             ]
         ];
 
-        foreach ($users as $user)
-        {
-            User::create($user);
+        foreach ($users as $user) {
+            $user = User::create($user);
+            if ($user->hasErrors()) {
+                echo json_encode($user->getErrors()) . "\n";
+            }
         }
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Hash;
 use Illuminate\Database\Eloquent\Model;
+use Log;
 use Validator;
 
 class BaseModel extends Model
@@ -11,30 +14,88 @@ class BaseModel extends Model
 
     protected $errors;
 
+    protected $passwordAttributes = array();
+
     protected static function boot()
     {
         parent::boot();
 
-        static::saving(function($model)
-        {
-            return $model->validate();
+        static::creating(function ($model) {
+            if ($model instanceof SluggableInterface) {
+                $model->sluggify();
+            }
+            $valid = $model->validate();
+            $model->fixPassword();
+            return $valid;
+        });
+
+        static::updating(function ($model) {
+            if ($model instanceof SluggableInterface && is_null($model->getSlug())) {
+                $model->sluggify();
+            }
+            $model->fixAttributes();
+            $valid = $model->validate(true);
+            $model->fixPassword();
+            return $valid;
         });
     }
 
-    public function validate()
+    public function validate($update = false)
     {
-        $validator = Validator::make($this->attributes, static::$rules);
+        if ($update) {
+            foreach ($this->passwordAttributes as $key => $value) {
+                if (!$value) {
+                    array_forget(static::$rules, $key);
+                }
+            }
+        }
 
+        $validator = Validator::make($this->attributes, static::$rules);
         if ($validator->fails()) {
             $this->errors = $validator->messages();
+            Log::error($validator->messages());
             return false;
         }
 
         return true;
     }
 
+    public function fixPassword()
+    {
+        foreach ($this->attributes as $key => $value) {
+            // Remove any confirmation fields
+            if (ends_with($key, '_confirmation')) {
+                array_forget($this->attributes, $key);
+                continue;
+            }
+            // Check if this one of our password attributes and if it's been changed.
+            if (array_key_exists($key, $this->passwordAttributes) && $value !== $this->getOriginal($key)
+                && !Hash::check($value, $this->getOriginal($key))
+            ) {
+                // Hash it
+                $this->attributes[$key] = Hash::make($value);
+                continue;
+            }
+        }
+    }
+
+    public function fixAttributes()
+    {
+        foreach ($this->attributes as $key => $value) {
+            if ((empty($value) && $this->getOriginal($key) === NULL) || ($value === $this->getOriginal($key))) {
+                array_forget($this->attributes, $key);
+                array_forget(static::$rules, $key);
+            }
+        }
+    }
+
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function hasErrors()
+    {
+        return !empty($this->errors);
     }
 }

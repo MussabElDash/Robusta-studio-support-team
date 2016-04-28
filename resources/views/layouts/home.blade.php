@@ -39,12 +39,13 @@
         <section class="content-header">
             @include('layout-components.content_header')
         </section>
-
         <section class="content">
+
+            @include('flash::custom')
+
             <div class="row">
                 @yield('content')
             </div>
-
         </section>
     </div>
 
