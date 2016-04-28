@@ -1,31 +1,4 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-// Single Routes
-Route::get('/', ['middleware' => 'web', function () {
-    return view('landing');
-}]);
-
-Route::get('/home', ['middleware' => 'web', 'uses' => 'HomeController@index']);
-
-Route::get('/get-skin', function () {
-    return response(view('skin'))->header('Content-Type', 'text/css');
-});
-
-Route::post('/home', ['middleware' => 'web', 'uses' => 'HomeController@store']);
-
-Route::get('/twitter', function () {
-    return Twitter::getHomeTimeline(['count' => 1, 'format' => 'json']);
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -45,13 +18,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', [function () {
         return view('landing');
     }]);
-    Route::get('/home', ['uses' => 'HomeController@index']);
+
     Route::get('/get-skin', function () {
         return response(view('skin'))->header('Content-Type', 'text/css');
     });
-    Route::post('/home', ['uses' => 'HomeController@store']);
+
 
     Route::group(['middleware' => ['auth']], function () {
+
+        Route::get('/home', ['uses' => 'HomeController@index']);
+        Route::post('/home', ['uses' => 'HomeController@store']);
+
         // Resources
         Route::resource('departments', 'DepartmentsController');
 
