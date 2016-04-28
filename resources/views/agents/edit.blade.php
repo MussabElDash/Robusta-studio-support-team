@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit Agent</div>
                     <div class="panel-body">
-                        {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'PATCH', 'route' => array('agent.update', $agent->id))) }}
+                        {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'PATCH', 'route' => array('agents.update', $agent->slug))) }}
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -92,7 +92,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                {{ link_to_route('agent.show', 'Cancel', $agent->id, array('class' => 'btn pull-right')) }}
+                                {{ link_to_route('agents.show', 'Cancel', $agent->id, array('class' => 'btn pull-right')) }}
                                 <button type="submit" class="btn btn-primary pull-right">
                                     <i class="fa fa-btn fa-user"></i>Update
                                 </button>

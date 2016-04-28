@@ -52,7 +52,7 @@
                     <div class="panel-heading">Show Agent</div>
                     <div class="panel-body">
                         @if($agent->editable())
-                            {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
+                            {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agents.edit', $agent->slug))) }}
                             @yield('form_content')
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">

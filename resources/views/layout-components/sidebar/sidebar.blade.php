@@ -20,6 +20,9 @@
             <li class="active"><a href="../Statics/feed.html"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
             <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
+            <li class="{{-- isActiveRoute('agents') --}}">
+                <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
+            </li>
             <li>
                 <a href="{{ route('tickets.pool') }}">
                     <i class="fa fa-sticky-note-o"></i>
