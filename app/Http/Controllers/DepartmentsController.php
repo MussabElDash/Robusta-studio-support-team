@@ -95,11 +95,10 @@ class DepartmentsController extends Controller
     {
         Log::info("updating dep ... \n".implode(",", Input::all()));
         $department = Department::where('slug', $slug)->first();
-        $id = $department->id;
         if ($department->update(Input::all())) {
-            $department = Department::find($id);
+            $slug = $department->slug ? $department->slug : $slug;
             Flash::success('Successfully updated the department');
-            return Redirect::route("departments.show" , [$department->slug]);
+            return Redirect::route("departments.show" , [$slug]);
         } else {
             Flash::error($department->getErrors());
             return Redirect::back()->with('errors', $department->getErrors());
