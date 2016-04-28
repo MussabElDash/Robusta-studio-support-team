@@ -14,20 +14,20 @@ class Customer extends BaseModel implements SluggableInterface
         'save_to' => 'slug',
         'unique' => true,
     ];
-    /*
-        Mass Assignment
-    */
-
-    protected $fillable = ['twitter_id', 'name', 'notes', 'phone_number', 'profile_image_path'];
 
     /*
         Validations
     */
     protected static $rules = [
         'name' => 'required',
-        'twitter_id' => 'required'
+        'phone_number' => 'required',
     ];
 
+    /*
+        Mass Assignment
+    */
+
+    protected $fillable = ['twitter_id', 'name', 'notes', 'phone_number', 'profile_image_path'];
 
     // Relations
 

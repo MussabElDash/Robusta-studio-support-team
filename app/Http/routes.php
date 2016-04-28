@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
             'index', 'create'
         ]]);
         Route::post('/customer/{customer}/edit', function ($id) {
-            return redirect()->action('CustomersController@edit', [$id]);
+            return redirect()->route('customer.edit', [$id]);
         });
 
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);

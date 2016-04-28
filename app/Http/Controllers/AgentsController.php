@@ -7,6 +7,7 @@ use App\Models\User;
 use Auth;
 use Flash;
 use Input;
+use Log;
 use Redirect;
 use Session;
 
@@ -23,7 +24,7 @@ class AgentsController extends Controller
         // process
         if ($user->save()) {
             // redirect
-            Flash::success('Successfully created Agent!');
+            Flash::success('Successfully created an Agent!');
             return Redirect::route('agent.show', $user);
         } else {
             // redirect
@@ -41,6 +42,7 @@ class AgentsController extends Controller
     {
         $user = User::find($agent);
         if (is_null($user)) {
+            Flash::error('No such Agent');
             return Redirect::back();
         }
         // process
@@ -66,6 +68,7 @@ class AgentsController extends Controller
     {
         $user = User::find($id);
         if (is_null($user)) {
+            Flash::error('No such Agent');
             return Redirect::to('home');
         }
         return view('agents.show', ['user' => Auth::user(), 'agent' => $user]);

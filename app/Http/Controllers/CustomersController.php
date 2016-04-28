@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests;
 use App\Models\Customer;
 use Auth;
+use Flash;
 use Input;
+use Log;
 use Redirect;
 use Session;
-use Validator;
 
 class CustomersController extends Controller
 {
-    // validate
-
-    protected static $rules = [
-        'name' => 'required',
-        'phone_number' => 'required',
-    ];
-
     /**
      * Store a newly created resource in storage.
      *
@@ -28,25 +21,16 @@ class CustomersController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make(Input::all(), $this->rules);
+        $customer = new Customer(Input::all());
         // process
-        if ($validator->fails()) {
+        if ($customer->save()) {
             // redirect
-            Session::flash('message', 'Error While creating Customer!');
-            return Redirect::to('home');
+            Flash::success('Successfully created a Customer!');
+            return Redirect::route('customer.show', $customer);
         } else {
-            // store
-            $customer = new Customer;
-            $customer->name = Input::get('name');
-            $customer->notes = Input::get('notes');
-            $customer->phone_number = Input::get('phone_number');
-            if (!$customer->save()) {
-                return 'Error';
-            }
-
             // redirect
-            Session::flash('message', 'Successfully created Customer!');
-            return Redirect::action('CustomersController@show', $customer);
+            Flash::error($customer->getErrors());
+            return Redirect::back();
         }
     }
 
@@ -54,26 +38,18 @@ class CustomersController extends Controller
     {
         $customer = Customer::find($id);
         if (is_null($customer)) {
-            return 'Error';
+            Flash::error('No such Customer');
+            return Redirect::back();
         }
-        $validator = Validator::make(Input::all(), $this->rules);
         // process
-        if ($validator->fails()) {
+        if ($customer->update(Input::all())) {
             // redirect
-            Session::flash('message', 'Error While creating Customer!');
-            return Redirect::to('home');
+            Flash::success('Successfully updated a Customer!');
+            return Redirect::route('customer.show', $id);
         } else {
-            // store
-            $customer->name = Input::get('name');
-            $customer->notes = Input::get('notes');
-            $customer->phone_number = Input::get('phone_number');
-            if (!$customer->save()) {
-                return 'Error';
-            }
-
             // redirect
-            Session::flash('message', 'Successfully created Customer!');
-            return Redirect::action('CustomersController@show', $customer);
+            Flash::error($customer->getErrors());
+            return Redirect::back()->with('errors', $customer->getErrors());
         }
     }
 
@@ -87,7 +63,8 @@ class CustomersController extends Controller
     {
         $customer = Customer::find($id);
         if (is_null($customer)) {
-            return 'Error';
+            Flash::error('No such Customer');
+            return Redirect::to('home');
         }
         return view('customers.show', ['user' => Auth::user(), 'customer' => $customer]);
     }
@@ -102,7 +79,8 @@ class CustomersController extends Controller
     {
         $customer = Customer::find($id);
         if (is_null($customer)) {
-            return 'Error';
+            Flash::error('No such Customer');
+            return Redirect::to('home');
         }
         return view('customers.edit', ['user' => Auth::user(), 'customer' => $customer]);
     }
