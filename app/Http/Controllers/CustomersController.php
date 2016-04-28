@@ -13,23 +13,12 @@ use Validator;
 
 class CustomersController extends Controller
 {
-    //
     // validate
-    protected $rules = [
+
+    protected static $rules = [
         'name' => 'required',
         'phone_number' => 'required',
     ];
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-        $this->middleware('auth');
-    }
 
     /**
      * Store a newly created resource in storage.
