@@ -29,8 +29,12 @@ $(document).on('click', "[id$='show']", function (e) {
                 $("#modals").append(data['html']);
                 $("#show-ticket-modal-" + data['id']).modal("show");
                 $("#comment-form-" + data['id']).submit(function (e) {
-                    e.preventDefault();
 
+                    e.preventDefault();
+                    if ( $("#comment-form-" + data['id']).find('input[type=text]')
+                            .filter(':visible:first').val() == ""){
+                        return;
+                    }
                     $.ajax({
                         url: this.action,
                         type: "post",
