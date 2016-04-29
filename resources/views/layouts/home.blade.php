@@ -9,6 +9,7 @@
     {!! Html::style('assets/css/font-awesome.min.css') !!}
     {!! Html::style('assets/colorpicker/bootstrap-colorpicker.css') !!}
     {!! Html::style('/get-skin') !!}
+    {!! Html::style('assets/css/our-css.css') !!}
     @section('styles')
     @show
 
@@ -17,6 +18,7 @@
     {!! Html::script('assets/js/bootstrap.min.js') !!}
     {!! Html::script('assets/js/AdminLTE.min.js') !!}
     {!! Html::script('assets/colorpicker/bootstrap-colorpicker.js') !!}
+    {!! Html::script('js/tickets.js') !!}
 
     @section('scripts')
     @show

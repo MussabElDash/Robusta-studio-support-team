@@ -19,8 +19,14 @@
                             @foreach ($tweets as $tweet)
                                 <li class="media">
                                     <div class="profile-img-container pull-left">
-                                        <a style="cursor: pointer;" class="add-icon"><span
-                                                    class="glyphicon glyphicon-plus"></span></a>
+                                        <button type="button" class="btn btn-info fa fa-ticket"
+                                                data-toggle="modal"
+                                                data-target="#create-ticket-from-feed-modal"
+                                                data-customer-twitter-id="{{$tweet['user']['id']}}"
+                                                data-customer-twitter-id="{{$tweet['user']['id']}}"
+                                                data-customer-profile-image-path="{{$tweet['user']['profile_image_url']}}"
+                                                data-customer-name="{{$tweet['user']['screen_name']}}"
+                                                data-tweet-text="{{$tweet['text']}}"></button>
                                         <img src="{{ $tweet['user']['profile_image_url'] }}" alt="" class="img-circle">
                                     </div>
                                     <div class="media-body">
