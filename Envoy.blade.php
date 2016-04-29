@@ -14,11 +14,14 @@
     echo "starting"
     cd {{ $project_dir }}
     git checkout {{ $branch }}
+    git checkout -- .
     git pull origin {{ $branch }}
+    sudo chmod -R 777 storage
     echo "done pulling"
 
     cd {{ $project_dir }}
     sudo composer install --prefer-dist
+    sudo composer update
     echo "done installing dependencies"
 
     cd {{ $project_dir }}
@@ -29,9 +32,14 @@
 
     cd {{ $project_dir }}
     echo "migrating ...."
+    php artisan migrate:rollback
     php artisan migrate
     sudo composer dumpautoload -o
     echo "done migrating (Y)"
+
+    echo "seeding ...."
+    php artisan db:seed
+    echo "done seeding (Y)"
 @endtask
 
 @task('pulling_changes')

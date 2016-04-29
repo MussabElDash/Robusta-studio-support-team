@@ -1,5 +1,17 @@
 @extends('layouts.home')
 
+@section('content_header')
+    <h1>
+      Feed <small>Control Panel</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+          <a href="/home"><i class="fa fa-dashboard"></i> Home</a>
+      </li>
+      <li class="active">Feed</li>
+    </ol>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-m-offset-1 col-sm-10 col-sm-offset-1">
