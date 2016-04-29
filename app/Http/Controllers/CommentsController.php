@@ -48,6 +48,7 @@ class CommentsController extends Controller
 
         if ($comment->save()) {
             if ($request->ajax()) {
+//                Twitter::postTweet(['status' => "@".$comment->ticket->customer->name." ".$comment->body, 'in_reply_to_status_id'=>  ,'format' => 'json']);
                 return Response::json(["html" => view("comments._comment", ["user" => $current_user, "comment" => $comment])->render(), "id" => $id]);
             }
         } else {

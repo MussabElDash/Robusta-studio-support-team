@@ -20,6 +20,11 @@
             <li class="{{ isActiveRoute('home') }}">
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
+            @if($user->role == 'Agent')
+            <li>
+                <a href={{route('agents.workspace')}}><i class="fa fa-cogs"></i> <span>Workspace</span></a>
+            </li>
+            @endif
             <li class="{{ isActiveRoute('departments') }}">
                 <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
             </li>

@@ -1,5 +1,5 @@
 // DELETE AJAX
-$(document).on('click', "[id$='destroy']", function(e){
+$(document).on('click', "[id$='destroy']", function (e) {
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_token"]').attr('content')}
     });
@@ -20,7 +20,7 @@ $(document).on('click', "[id$='destroy']", function(e){
 })
 
 // SHOW modal AJAX
-$(document).on('click',"[id$='show']" , function (e){
+$(document).on('click', "[id$='show']", function (e) {
     if ($("#show-ticket-modal-" + $(this)[0].dataset["id"]).length == 0) {
         $.ajax({
             url: $(this)[0].dataset["route"],
@@ -53,11 +53,11 @@ $(document).on('click',"[id$='show']" , function (e){
     } else {
         $("#show-ticket-modal-" + $(this)[0].dataset["id"]).modal("show");
     }
-})
+});
 
 // EDIT Modal AJAX
-$(document).on('click', "[id$='edit']", function (e){
-    if( $("#edit-ticket-modal-" + $(this)[0].dataset["id"]).length == 0){
+$(document).on('click', "[id$='edit']", function (e) {
+    if ($("#edit-ticket-modal-" + $(this)[0].dataset["id"]).length == 0) {
         $.ajax({
             url: $(this)[0].dataset["route"],
             type: "get",
@@ -76,7 +76,7 @@ $(document).on('click', "[id$='edit']", function (e){
                             $("#ticket-" + data['id']).html(data["html"]);
                             $("#edit-ticket-modal-" + data["id"]).modal('hide');
 
-                            if( $("#show-ticket-modal-" + data["id"]).length > 0 ){
+                            if ($("#show-ticket-modal-" + data["id"]).length > 0) {
                                 $("#show-ticket-modal-" + data["id"]).remove();
                             }
                             e.preventDefault();
@@ -96,7 +96,7 @@ $(document).on('click', "[id$='edit']", function (e){
     }
 });
 
-$(document).on('click', "[id$='claim']", function(e){
+$(document).on('click', "[id$='claim']", function (e) {
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_token"]').attr('content')}
     });
@@ -146,3 +146,27 @@ $(document).on('click', "[id$='claim']", function(e){
 //        alert('Tickets could not be loaded.');
 //    });
 //}
+$(function () {
+    $('#comment-form').submit(function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            header: $('meta[name="_token"]').attr('content')
+        });
+        post = $(this);
+        $.ajax({
+
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function () {
+                post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
+                post.find('input.form-control').val("");
+
+            },
+            error: function () {
+                alert("request failed");
+            }
+        });
+    });
+});

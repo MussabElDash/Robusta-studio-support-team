@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -79,5 +80,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('{id}/comment', ['as' => 'tickets.comment.store', 'uses' => 'CommentsController@store'])
                 ->where('id', '[1-9][0-9]*');
         });
+        Route::get('workspace',['as'=> 'agents.workspace','uses'=>'AgentsController@workspace']);
     });
 });

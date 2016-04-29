@@ -10,6 +10,7 @@ use Flash;
 use Input;
 use Redirect;
 use Session;
+use Request;
 
 class AgentsController extends Controller
 {
@@ -96,4 +97,9 @@ class AgentsController extends Controller
         return view('agents.edit', ['user' => Auth::user(), 'agent' => $user]);
     }
 
+    public function workspace(Request $request)
+    {
+        $current_user = Auth::user();
+        return view('agents.workspace',['agent' => $current_user,'tickets'=> $current_user->tickets]);
+    }
 }
