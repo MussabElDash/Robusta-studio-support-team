@@ -1,9 +1,5 @@
 @extends('layouts.home')
 
-@section('content_header')
-    @parent
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-m-offset-1 col-sm-10 col-sm-offset-1">
