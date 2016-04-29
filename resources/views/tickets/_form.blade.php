@@ -17,12 +17,12 @@
         </div>
     </div>
 
-    {{--<div class="form-group">--}}
-    {{--{!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}--}}
-    {{--<div class="col-sm-10">--}}
-    {{--{{ Form::select('color', ['Payments', 'Subscribtions', 'DSL Plus', 'Technical Support'], '2', ['class' => 'form-control']) }}--}}
-    {{--</div>--}}
-    {{--</div>--}}
+    <div class="form-group">
+        {!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-10">
+            {{ Form::select('department_id', DB::table('departments')->lists('name','id'), '2', ['class' => 'form-control']) }}
+        </div>
+    </div>
 </div>
 
 <div class="box-footer">
