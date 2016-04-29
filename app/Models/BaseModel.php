@@ -16,6 +16,8 @@ class BaseModel extends Model
 
     protected $passwordAttributes = array();
 
+    protected $emptyIsNull = array();
+
     protected static function boot()
     {
         parent::boot();
@@ -85,6 +87,10 @@ class BaseModel extends Model
             if ((empty($value) && $this->getOriginal($key) === NULL) || ($value === $this->getOriginal($key))) {
                 array_forget($this->attributes, $key);
                 array_forget(static::$rules, $key);
+                continue;
+            }
+            if (empty($value) && in_array($key, $this->emptyIsNull)) {
+                $this->attributes[$key] = null;
             }
         }
     }

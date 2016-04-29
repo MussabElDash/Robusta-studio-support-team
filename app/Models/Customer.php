@@ -3,10 +3,8 @@
 namespace App\Models;
 
 
-
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
-
 
 
 class Customer extends BaseModel implements SluggableInterface
@@ -14,8 +12,8 @@ class Customer extends BaseModel implements SluggableInterface
     use SluggableTrait;
     protected $sluggable = [
         'build_from' => 'name',
-        'save_to'    => 'slug',
-        'unique'     => true,
+        'save_to' => 'slug',
+        'unique' => true,
     ];
     /*
         Mass Assignment
@@ -31,26 +29,17 @@ class Customer extends BaseModel implements SluggableInterface
         'twitter_id' => 'required'
     ];
 
+    protected $emptyIsNull = ['twitter_id', 'notes'];
 
     // Relations
 
     public function creator()
     {
-        return  $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function tickets()
     {
-        return $this->hasMany( Ticket::class );
-    }
-
-    // Methods
-    public function setTwitterIdAttribute($value) {
-        // var_dump('Here' . $value . 'and Here');
-        if ( empty($value) ) { // will check for empty string, null values, see php.net about it
-            $this->attributes['twitter_id'] = NULL;
-        } else {
-            $this->attributes['twitter_id'] = $value;
-        }
+        return $this->hasMany(Ticket::class);
     }
 }
