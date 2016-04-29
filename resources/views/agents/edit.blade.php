@@ -1,9 +1,17 @@
 @extends('layouts.home')
 
+@section('breadcrumb')
+    Agents
+@endsection
+
+@section('breadcrumb1')
+    {{$agent->name}}
+@endsection
+
 @section('content')
-    <div class="margin-top container">
+    <div class="margin-top content">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-2 col-lg-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit Agent</div>
                     <div class="panel-body">
@@ -92,7 +100,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                {{ link_to_route('agents.show', 'Cancel', $agent->id, array('class' => 'btn pull-right')) }}
+                                {{ link_to_route('agents.show', 'Cancel', $agent->slug, array('class' => 'btn pull-right')) }}
                                 <button type="submit" class="btn btn-primary pull-right">
                                     <i class="fa fa-btn fa-user"></i>Update
                                 </button>

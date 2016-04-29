@@ -1,32 +1,19 @@
 @extends('layouts.home')
 
-@section('content_header')
-    <h1>
-        Agents
-        <small>Control Panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#"><i class="fa fa-dashboard"></i> Home</a>
-        </li>
-        <li class="active">Agents</li>
-    </ol>
+@section('breadcrumb')
+    Agents
 @endsection
 
 @section('content')
-    <div class="margin-top container">
+    <div class="margin-top content">
         <div class="row">
-            <div class="col-xs-9 col-xs-offset-1">
+            <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">All our Agents</h3>
                     </div>
                     <div class="box-body">
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row">
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-6"></div>
-                            </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid"

@@ -1,5 +1,13 @@
 @extends('layouts.home')
 
+@section('breadcrumb')
+    Agents
+@endsection
+
+@section('breadcrumb1')
+    {{$agent->name}}
+@endsection
+
 @section('form_content')
     <div class="form-group">
         <label class="col-md-4 control-label">Name</label>
@@ -45,9 +53,9 @@
 @endsection
 
 @section('content')
-    <div class="margin-top container">
+    <div class="margin-top content">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-2 col-lg-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Show Agent</div>
                     <div class="panel-body">
