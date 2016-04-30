@@ -122,6 +122,24 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
 
+    public function setDateOfBirthAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
+        }
+    }
+
+
+    public function setDepartmentIdAttribute($value)
+    {
+        // var_dump('Here' . $value . 'and Here');
+        if (empty($value)) { // will check for empty string, null values, see php.net about it
+            $this->attributes['department_id'] = NULL;
+        } else {
+            $this->attributes['department_id'] = $value;
+        }
+    }
+
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
