@@ -129,6 +129,11 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         }
     }
 
+    public function getDateOfBirthAttribute()
+    {
+        return date("m/d/Y", strtotime($this->attributes['date_of_birth']));
+    }
+
 
     public function setDepartmentIdAttribute($value)
     {
