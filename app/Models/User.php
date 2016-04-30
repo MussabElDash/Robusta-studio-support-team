@@ -121,25 +121,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
-
-    public function setDateOfBirthAttribute($value)
-    {
-        if (empty($value)) {
-            $this->attributes['date_of_birth'] = null;
-        } else {
-            $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
-        }
-    }
-
-    public function getDateOfBirthAttribute()
-    {
-        $value = $this->attributes['date_of_birth'];
-        if (!empty($value)) {
-            return date("m/d/Y", strtotime($value));
-        }
-        return $value;
-    }
-
+    
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
