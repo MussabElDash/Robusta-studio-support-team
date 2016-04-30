@@ -33,7 +33,7 @@
     <div class="form-group">
         {!! Form::label('department_id', 'Department ID', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
-            {{ Form::label('department_id', $agent->department_id, ['class' => 'form-control']) }}
+            {{ Form::label('department_id', $agent_departments[$agent->department_id], ['class' => 'form-control']) }}
         </div>
     </div>
 
