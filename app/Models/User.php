@@ -134,17 +134,6 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return date("m/d/Y", strtotime($this->attributes['date_of_birth']));
     }
 
-
-    public function setDepartmentIdAttribute($value)
-    {
-        // var_dump('Here' . $value . 'and Here');
-        if (empty($value)) { // will check for empty string, null values, see php.net about it
-            $this->attributes['department_id'] = NULL;
-        } else {
-            $this->attributes['department_id'] = $value;
-        }
-    }
-
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
