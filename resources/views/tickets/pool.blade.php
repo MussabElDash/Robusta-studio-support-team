@@ -137,6 +137,4 @@
             </div>
         </div>
     </aside>
-
-    {!! Html::script('js/tickets.js') !!}
 @endsection

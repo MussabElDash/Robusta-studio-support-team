@@ -134,4 +134,5 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
     }
+
 }

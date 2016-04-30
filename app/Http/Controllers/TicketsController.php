@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
 
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 use DB;
@@ -130,5 +132,40 @@ class TicketsController extends Controller
         }
 
         return redirect()->to('tickets.index');
+    }
+
+    public function from_feed(Request $request)
+    {
+        $current_user = Auth::user();
+        if ($current_user->hasRole(['Admin', 'Supervisor'])) {
+            $twitter_id = Input::get('customer_twitter_id');
+            $customer = DB::table('customers')->where('twitter_id', $twitter_id)->first();
+            if ($customer == null) {
+                $customer = new Customer();
+                $customer->twitter_id = $twitter_id;
+                $customer->name = Input::get('customer_name');
+                $customer->profile_image_path = Input::get('customer_profile_image_path');
+                $customer->save();
+            }
+            $ticket = new Ticket();
+            $ticket->name = Input::get('name');
+            $ticket->description = Input::get('tweet_text');
+            if (Input::get('assigned_to') != -1)
+                $ticket->assigned_to= Input::get('assigned_to');
+            if (Input::get('department_id') != -1)
+                $ticket->department_id = Input::get('department_id');
+            $ticket->creator_id = $current_user->id;
+            $ticket->customer_id = $customer->id;
+            if (Input::get('priority_id') != -1)
+                $ticket->priority_id = Input::get('priority_id');
+            $ticket->tweet_id = Input::get('tweet_id');
+            $ticket->save();
+            $labels = array_filter(Input::get('label'), function ($id) {
+                return $id != -1;
+            });
+            if (count($labels) > 0)
+                $ticket->labels()->attach(Input::get('label'));
+            return Response::json(["success" => true]);
+        }
     }
 }

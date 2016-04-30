@@ -1,4 +1,18 @@
-.comment{
+.btn-info{
+    border-radius: 20px;
+}
+#dynamic-fields label{
+    text-align: center;
+    margin-bottom: 5px;
+}
+#dynamic-fields .entry:not(:first-of-type) {
+    margin-top: 10px;
+}
+
+#dynamic-fields .glyphicon {
+    font-size: 12px;
+}
+.comment {
     margin-left: 55px;
     margin-top: -10px;
 }

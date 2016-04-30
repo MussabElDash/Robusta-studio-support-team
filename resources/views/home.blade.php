@@ -2,13 +2,14 @@
 
 @section('content_header')
     <h1>
-      Feed <small>Control Panel</small>
+        Feed
+        <small>Control Panel</small>
     </h1>
     <ol class="breadcrumb">
-      <li>
-          <a href="/home"><i class="fa fa-dashboard"></i> Home</a>
-      </li>
-      <li class="active">Feed</li>
+        <li>
+            <a href="/home"><i class="fa fa-dashboard"></i> Home</a>
+        </li>
+        <li class="active">Feed</li>
     </ol>
 @endsection
 
@@ -29,10 +30,23 @@
                         <hr/>
                         <ul class="media-list">
                             @foreach ($tweets as $tweet)
+                                {{--we can just hide tweets that already have tickets--}}
+                                {{--@if(DB::table('tickets')->where('tweet_id','=',$tweet['id'])->exists())--}}
+                                    {{--@continue--}}
+                                {{--@endif--}}
                                 <li class="media">
                                     <div class="profile-img-container pull-left">
-                                        <a style="cursor: pointer;" class="add-icon"><span
-                                                    class="glyphicon glyphicon-plus"></span></a>
+                                        <button type="button" class="btn btn-info fa fa-ticket"
+                                                data-toggle="modal"
+                                                data-target="#create-ticket-from-feed-modal"
+                                                data-customer-twitter-id="{{$tweet['user']['id']}}"
+                                                data-customer-profile-image-path="{{$tweet['user']['profile_image_url']}}"
+                                                data-customer-name="{{$tweet['user']['screen_name']}}"
+                                                data-tweet-text="{{$tweet['text']}}"
+                                                data-tweet-id="{{$tweet['id']}}"
+                                                id="{{$tweet['id']}}"
+                                                {{(DB::table('tickets')->where('tweet_id','=',$tweet['id'])->exists())?'disabled':''}}>
+                                        </button>
                                         <img src="{{ $tweet['user']['profile_image_url'] }}" alt="" class="img-circle">
                                     </div>
                                     <div class="media-body">

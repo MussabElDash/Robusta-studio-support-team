@@ -227,6 +227,8 @@ return [
         'Flash' => 'Laracasts\Flash\Flash',
 
         'Carbon' => 'Carbon\Carbon',
+
+        'Helpers'   => 'App\Helpers\helper',
     ],
 
 ];
