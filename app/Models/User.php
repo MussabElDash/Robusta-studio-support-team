@@ -124,14 +124,20 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     public function setDateOfBirthAttribute($value)
     {
-        if (!empty($value)) {
+        if (empty($value)) {
+            $this->attributes['date_of_birth'] = null;
+        } else {
             $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
         }
     }
 
     public function getDateOfBirthAttribute()
     {
-        return date("m/d/Y", strtotime($this->attributes['date_of_birth']));
+        $value = $this->attributes['date_of_birth'];
+        if (!empty($value)) {
+            return date("m/d/Y", strtotime($value));
+        }
+        return $value;
     }
 
     public function editable()
