@@ -163,7 +163,7 @@ $(function () {
         e.preventDefault();
         var controlForm = $('#dynamic-fields');
         var currentEntry = $(this).parents('.entry:first');
-        if(currentEntry.find(':selected').val()==-1)
+        if (currentEntry.find(':selected').val() == -1)
             return;
         var newEntry = $(currentEntry.clone()).appendTo(controlForm);
         newEntry.find('option[value=' + currentEntry.find(':selected').val() + ']').remove();
@@ -201,8 +201,8 @@ $(function () {
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function () {
-                    console.log('#'+ticket_button_id);
-                    $('#'+ticket_button_id).prop('disabled',true);
+                    console.log('#' + ticket_button_id);
+                    $('#' + ticket_button_id).prop('disabled', true);
                 },
                 error: function () {
                     console.log('fail');
@@ -213,19 +213,20 @@ $(function () {
             empty.css('background', '#D43F3A');
         }
     });
-    $('#comment-form').submit(function (e) {
+    $('.comment-form').submit(function (e) {
         e.preventDefault();
+        post = $(this);
         $.ajaxSetup({
             header: $('meta[name="_token"]').attr('content')
         });
-        post = $(this);
         $.ajax({
-
             type: "POST",
             url: $(this).attr('action'),
             data: $(this).serialize(),
             dataType: 'json',
             success: function () {
+                post.parent().siblings('div.chat').find('img.online').attr('src', post.find('#commenter_image').val());
+                post.parent().siblings('div.chat').find('span.name').text(post.find('#commenter_name').val());
                 post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
                 post.find('input.form-control').val("");
 
@@ -234,5 +235,31 @@ $(function () {
                 alert("request failed");
             }
         });
+        return false;
     });
+    $('#department_select').change(function (e) {
+        $('#agent_select').html("<option value='-1'>Please select a department to load free agents</option>");
+        e.preventDefault();
+        var department = $(this).val();
+        if (department != -1) {
+            $.ajaxSetup({
+                header: $('meta[name="_token"]').attr('content')
+            });
+            $.ajax({
+                type: "GET",
+                url: "department/free/" +department,
+                dataType: 'json',
+                success: function (response) {
+                    $.each(response['agents'],function(key,value){
+                        $('#agent_select').append($("<option></option>")
+                            .attr("value",key)
+                            .text(value));
+                    });
+                },
+                error: function (jqxhr) {
+                    alert('failed');
+                }
+            });
+        }
+    })
 });

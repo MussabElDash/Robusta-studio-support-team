@@ -6,9 +6,11 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 use Auth;
+use Twitter;
 
 class CommentsController extends Controller
 {
@@ -43,12 +45,13 @@ class CommentsController extends Controller
         $current_user = Auth::user();
         $comment = new Comment;
         $comment->user_id = $current_user->id;
+        $comment->user_type = get_class($current_user);
         $comment->body = $request->get("body");
         $comment->ticket_id = $id;
-
+        $tweet=json_decode(Twitter::postTweet(['status' => "@".$comment->ticket->customer->name." ".$comment->body, 'in_reply_to_status_id'=> Input::get('last_status_id')   ,'format' => 'json']),true);
+        $comment->status_id = $tweet['id'];
         if ($comment->save()) {
             if ($request->ajax()) {
-//                Twitter::postTweet(['status' => "@".$comment->ticket->customer->name." ".$comment->body, 'in_reply_to_status_id'=>  ,'format' => 'json']);
                 return Response::json(["html" => view("comments._comment", ["user" => $current_user, "comment" => $comment])->render(), "id" => $id]);
             }
         } else {

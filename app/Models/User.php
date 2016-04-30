@@ -56,7 +56,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
      */
     protected $fillable = [
         'name', 'email', 'password', 'password_confirmation',
-        'gender', 'date_of_birth', 'image_url', 'department_id', 'role'
+        'gender', 'date_of_birth', 'profile_image_path', 'department_id', 'role'
     ];
 
     /**

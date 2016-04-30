@@ -11,8 +11,8 @@ use DB;
  */
 class helper
 {
-    public static function freeAgents(){
-        return User::where('role','Agent')->has('tickets','<','3')->lists('name','id')->toArray();
+    public static function freeAgents($department){
+        return User::where('role','Agent')->where('department_id',$department)->has('tickets','<','3')->lists('name','id')->toArray();
     }
 
 }

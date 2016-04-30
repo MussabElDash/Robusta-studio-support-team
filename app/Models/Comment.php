@@ -11,7 +11,7 @@ class Comment extends BaseModel
         Mass Assignment
     */
 
-    protected $fillable = ['body'];
+    protected $fillable = ['body','user_id','user_type','status_id','ticket_id'];
 
     /*
         Validations
@@ -29,7 +29,7 @@ class Comment extends BaseModel
 
     public function owner()
     {
-        return $this->belongsTo( User::class, 'user_id');
+        return $this->morphTo('user');
     }
 
     public function ticket()

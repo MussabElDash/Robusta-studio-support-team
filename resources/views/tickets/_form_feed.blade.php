@@ -15,7 +15,7 @@
     <div class="form-group">
         {!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('department_id', array(-1=>'Select department')+DB::table('departments')->lists('name','id'), '-1', ['class' => 'form-control']) }}
+            {{ Form::select('department_id', array(-1=>'Select department')+DB::table('departments')->lists('name','id'), '-1', ['class' => 'form-control','id'=>'department_select']) }}
         </div>
     </div>
     <div class="form-group">
@@ -27,7 +27,7 @@
     <div class="form-group">
         {!! Form::label('agent', 'Agent', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('assigned_to', array(-1=>'Select agent')+Helpers::freeAgents(), '-1', ['class' => 'form-control']) }}
+            {{ Form::select('assigned_to', array(-1=>'Please select a department to load free agents'), '-1', ['class' => 'form-control','id'=>'agent_select']) }}
         </div>
     </div>
     <div class="form-group" id="dynamic-fields">
