@@ -18,6 +18,8 @@ class BaseModel extends Model
 
     protected $emptyIsNull = array();
 
+    private $removedAttributes = array();
+
     protected static function boot()
     {
         parent::boot();
@@ -39,6 +41,10 @@ class BaseModel extends Model
             $valid = $model->validate(true);
             $model->fixPassword();
             return $valid;
+        });
+
+        static::updated(function ($model) {
+            $model->unFixAttributes();
         });
     }
 
@@ -62,7 +68,7 @@ class BaseModel extends Model
         return true;
     }
 
-    public function fixPassword()
+    private function fixPassword()
     {
         foreach ($this->attributes as $key => $value) {
             // Remove any confirmation fields
@@ -81,10 +87,11 @@ class BaseModel extends Model
         }
     }
 
-    public function fixAttributes()
+    private function fixAttributes()
     {
         foreach ($this->attributes as $key => $value) {
             if ((empty($value) && $this->getOriginal($key) === NULL) || ($value === $this->getOriginal($key))) {
+                $this->removedAttributes[$key] = $this->attributes[$key];
                 array_forget($this->attributes, $key);
                 array_forget(static::$rules, $key);
                 continue;
@@ -93,6 +100,13 @@ class BaseModel extends Model
                 $this->attributes[$key] = null;
             }
         }
+    }
+
+    private function unFixAttributes(){
+        foreach ($this->removedAttributes as $key => $value){
+            $this->attributes[$key] = $value;
+        }
+        $this->removedAttributes = array();
     }
 
     public function getErrors()
