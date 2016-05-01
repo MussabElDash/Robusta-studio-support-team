@@ -17,11 +17,15 @@
                 MAIN NAVIGATION
             </li>
             <!-- Common tabs -->
-            <li class="{{ isActiveRoute('home') }}">
+
+            <li class="{{ active('home') }}">
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
-            <li class="{{ isActiveRoute('departments') }}">
+            <li class="{{ active('departments.*') }}">
                 <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
+            </li>
+            <li class="{{ active('agents.*') }}">
+                <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
             </li>
             <li>
                 <a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a>

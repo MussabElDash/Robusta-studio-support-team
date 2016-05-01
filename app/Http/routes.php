@@ -32,11 +32,11 @@ Route::group(['middleware' => ['web']], function () {
         // Resources
         Route::resource('departments', 'DepartmentsController');
 
-        Route::resource('agent', 'AgentsController', ['except' => [
-            'index', 'create'
+        Route::resource('agents', 'AgentsController', ['except' => [
+            'create'
         ]]);
-        Route::post('/agent/{agent}/edit', function ($id) {
-            return redirect()->route('agent.edit', [$id]);
+        Route::post('/agents/{agent}/edit', function ($id) {
+            return redirect()->route('agents.edit', [$id]);
         });
 
         Route::resource('priority', 'PrioritiesController', ['only' => [
