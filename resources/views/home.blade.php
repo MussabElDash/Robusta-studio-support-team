@@ -1,4 +1,10 @@
-@extends('layouts.home')
+@extends('layouts.home', [
+    'headers' => ['Feed', 'Control Panel'],
+    'footers' => [
+        'home' => ['href' => '#', 'class' => 'fa-dashboard'],
+        'Feed' => ['active' => true]
+        ]
+    ])
 
 @section('content')
     <div class="row">

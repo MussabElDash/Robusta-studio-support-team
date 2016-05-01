@@ -1,12 +1,4 @@
-@extends('layouts.home')
-
-@section('breadcrumb')
-    Agents
-@endsection
-
-@section('breadcrumb1')
-    {{$agent->name}}
-@endsection
+@extends('agents.shared')
 
 @section('form_content')
     <div class="form-group">

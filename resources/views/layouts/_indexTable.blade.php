@@ -1,8 +1,10 @@
-@extends('layouts.home')
-
-@section('breadcrumb')
-    {{ $breadcrumb }}
-@endsection
+@extends('layouts.home', [
+    'headers' => [$breadcrumb, 'Control Panel'],
+    'footers' => [
+        'home' => ['href' => '/home', 'class' => 'fa-dashboard'],
+        $breadcrumb => ['active' => true]
+        ]
+    ])
 
 @section('box-body')
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
