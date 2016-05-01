@@ -7,9 +7,9 @@
     {!! Form::hidden('tweet_text','',array('id' => 'tweet_text')) !!}
     {!! Form::hidden('tweet_id','',array('id' => 'tweet_id')) !!}
     <div class="form-group">
-        {!! Form::label('name', 'Name', ['class' => 'col-sm-2 control-label','required' => 'required']) !!}
+        {!! Form::label('name', 'Title', ['class' => 'col-sm-2 control-label','required' => 'required']) !!}
         <div class="col-sm-10">
-            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Phone number or twitter handle']) !!}
+            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ticket title']) !!}
         </div>
     </div>
     <div class="form-group">

@@ -33,7 +33,7 @@ class BaseModel extends Model
             if ($model instanceof SluggableInterface) {
                 $model->resluggify();
             }
-            $model->fixAttributes();
+//            $model->fixAttributes();
             $valid = $model->validate(true);
             $model->fixPassword();
             return $valid;
