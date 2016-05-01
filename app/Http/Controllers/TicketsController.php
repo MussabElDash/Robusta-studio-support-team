@@ -18,6 +18,7 @@ class TicketsController extends Controller
 
     function __construct()
     {
+        parent::__construct();
         DB::enableQueryLog();
     }
 
