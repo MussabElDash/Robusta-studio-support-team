@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\User;
 use Auth;
-use Log;
 use Flash;
 use Input;
+use Log;
 use Redirect;
 use Session;
 use Request;
@@ -21,7 +21,7 @@ class AgentsController extends Controller
      */
     public function store()
     {
-        Log::info("creating agent ... \n".implode(",", Input::all()));
+        Log::info("creating agent ... \n" . implode(",", Input::all()));
         $user = new User(Input::all());
         // $user->department_id = Input::get('department_id');
         Log::info($user);
@@ -29,7 +29,7 @@ class AgentsController extends Controller
         if ($user->save()) {
             // redirect
             Flash::success('Successfully created Agent!');
-            return Redirect::route('agent.show', $user);
+            return Redirect::route('agents.show', $user);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -44,15 +44,16 @@ class AgentsController extends Controller
      */
     public function update($agent)
     {
-        $user = User::find($agent);
+        $user = User::findBySlug($agent);
         if (is_null($user)) {
             return Redirect::back();
         }
         // process
         if ($user->update(Input::all())) {
             // redirect
+            $agent = $user->slug ? $user->slug : $agent;
             Flash::success('Successfully updated an Agent!');
-            return Redirect::route('agent.show', $agent);
+            return Redirect::route('agents.show', $agent);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -67,13 +68,13 @@ class AgentsController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show($agent)
     {
-        $user = User::find($id);
+        $user = User::findBySlug($agent);
         if (is_null($user)) {
             return Redirect::to('home');
         }
-        return view('agents.show', ['user' => Auth::user(), 'agent' => $user]);
+        return view('agents.show', ['agent' => $user]);
     }
 
 
@@ -83,9 +84,9 @@ class AgentsController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($agent)
     {
-        $user = User::find($id);
+        $user = User::findBySlug($agent);
         if (is_null($user)) {
             Flash::error('No such Agent');
             return Redirect::to('home');
@@ -94,7 +95,13 @@ class AgentsController extends Controller
             Flash::error('You have no permission to edit this Agent');
             return Redirect::to('home');
         }
-        return view('agents.edit', ['user' => Auth::user(), 'agent' => $user]);
+        return view('agents.edit', ['agent' => $user]);
+    }
+
+    public function index()
+    {
+        $agents = User::all();
+        return view('agents.index', ['agents' => $agents]);
     }
 
     public function workspace(Request $request)

@@ -247,12 +247,12 @@ $(function () {
             });
             $.ajax({
                 type: "GET",
-                url: "department/free/" +department,
+                url: "department/free/" + department,
                 dataType: 'json',
                 success: function (response) {
-                    $.each(response['agents'],function(key,value){
+                    $.each(response['agents'], function (key, value) {
                         $('#agent_select').append($("<option></option>")
-                            .attr("value",key)
+                            .attr("value", key)
                             .text(value));
                     });
                 },
@@ -261,5 +261,8 @@ $(function () {
                 }
             });
         }
-    })
+    });
+    $('.modal').on('hidden.bs.modal', function (e) {
+        $(this).find('form').trigger('reset');
+    });
 });

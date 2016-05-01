@@ -38,7 +38,26 @@
 
             <div class="content-wrapper">
                 <section class="content-header">
-                  @yield('content_header')
+                    @section('content_header')
+                        <h1>
+                            @section('breadcrumb')
+                                Feed
+                            @show
+                            <small>
+                                @section('breadcrumb1')
+                                    Control Panel
+                                @show
+                            </small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{{is_active('home') ? '#' : '/home' }}"><i class="fa fa-dashboard"></i> Home</a>
+                            </li>
+                            <li class="active">
+                                @yield('breadcrumb')
+                            </li>
+                        </ol>
+                    @show
                 </section>
 
                 <section class="content">

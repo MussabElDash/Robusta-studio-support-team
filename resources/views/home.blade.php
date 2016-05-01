@@ -1,5 +1,6 @@
 @extends('layouts.home')
 
+
 @section('content_header')
     <h1>
         Feed

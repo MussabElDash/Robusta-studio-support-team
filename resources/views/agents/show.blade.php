@@ -1,5 +1,13 @@
 @extends('layouts.home')
 
+@section('breadcrumb')
+    Agents
+@endsection
+
+@section('breadcrumb1')
+    {{$agent->name}}
+@endsection
+
 @section('form_content')
     <div class="form-group">
         <label class="col-md-4 control-label">Name</label>
@@ -25,7 +33,7 @@
     <div class="form-group">
         {!! Form::label('department_id', 'Department ID', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
-            {{ Form::label('department_id', $agent->department_id, ['class' => 'form-control']) }}
+            {{ Form::label('department_id', $agent_departments[$agent->department_id], ['class' => 'form-control']) }}
         </div>
     </div>
 
@@ -45,14 +53,14 @@
 @endsection
 
 @section('content')
-    <div class="margin-top container">
+    <div class="margin-top content">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-2 col-lg-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Show Agent</div>
                     <div class="panel-body">
                         @if($agent->editable())
-                            {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agent.edit', $agent->id))) }}
+                            {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agents.edit', $agent->slug))) }}
                             @yield('form_content')
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
