@@ -68,7 +68,7 @@ class BaseModel extends Model
         return true;
     }
 
-    private function fixPassword()
+    protected function fixPassword()
     {
         foreach ($this->attributes as $key => $value) {
             // Remove any confirmation fields
@@ -87,7 +87,7 @@ class BaseModel extends Model
         }
     }
 
-    private function fixAttributes()
+    protected function fixAttributes()
     {
         foreach ($this->attributes as $key => $value) {
             if ((empty($value) && $this->getOriginal($key) === NULL) || ($value === $this->getOriginal($key))) {
@@ -102,8 +102,9 @@ class BaseModel extends Model
         }
     }
 
-    private function unFixAttributes(){
-        foreach ($this->removedAttributes as $key => $value){
+    protected function unFixAttributes()
+    {
+        foreach ($this->removedAttributes as $key => $value) {
             $this->attributes[$key] = $value;
         }
         $this->removedAttributes = array();
