@@ -24,7 +24,7 @@ class CreateTicketsTable extends Migration
 
             // Required
             $table->integer('creator_id')->unsigned();
-            $table->integer('department_id')->unsigned();
+            $table->integer('department_id')->unsigned()->nullable();
             $table->integer('customer_id')->unsigned();
 
             // Optional
@@ -34,7 +34,6 @@ class CreateTicketsTable extends Migration
             // DB Relations
             $table->foreign('priority_id')->references('id')->on('priorities');
             $table->foreign('creator_id')->references('id')->on('users');
-            $table->foreign('department_id')->references('id')->on('departments');
             $table->foreign('assigned_to')->references('id')->on('users');
 
             // Cascading

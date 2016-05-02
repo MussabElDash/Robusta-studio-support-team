@@ -29,6 +29,8 @@ class Customer extends BaseModel implements SluggableInterface
 
     protected $fillable = ['twitter_id', 'name', 'notes', 'phone_number', 'profile_image_path'];
 
+    protected $emptyIsNull = ['twitter_id', 'notes'];
+
     // Relations
 
     public function creator()
@@ -39,15 +41,5 @@ class Customer extends BaseModel implements SluggableInterface
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
-    }
-
-    // Methods
-    public function setTwitterIdAttribute($value)
-    {
-        if (empty($value)) { // will check for empty string, null values, see php.net about it
-            $this->attributes['twitter_id'] = NULL;
-        } else {
-            $this->attributes['twitter_id'] = $value;
-        }
     }
 }

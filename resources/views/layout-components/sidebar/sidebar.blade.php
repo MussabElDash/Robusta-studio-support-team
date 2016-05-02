@@ -17,10 +17,20 @@
                 MAIN NAVIGATION
             </li>
             <!-- Common tabs -->
-            <li class="active"><a href="../Statics/feed.html"><i class="fa fa-dashboard"></i> <span>Feed</span></a></li>
-            <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
 
-            <li>
+            <li class="{{ active('home') }}">
+                <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
+            </li>
+            <li class="{{ active('departments.*') }}">
+                <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
+            </li>
+            <li class="{{ active(['agents.*', 'not:agents/' . $user->slug]) }}">
+                <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
+            </li>
+            <li class="{{ active('agents/' . $user->slug) }}">
+                <a href="/agents/{{$user->slug}}"><i class="fa fa-user"></i> <span>Profile</span></a>
+            </li>
+            <li class="{{ active('tickets.pool') }}">
                 <a href="{{ route('tickets.pool') }}">
                     <i class="fa fa-sticky-note-o"></i>
                     <span>Tickets Pool</span>

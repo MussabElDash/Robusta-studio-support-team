@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>@yield('title', 'Robusta')</title>
-
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/AdminLTE.min.css') !!}
 
@@ -23,12 +22,12 @@
 
     <script>
         $.widget.bridge('uibutton', $.ui.button);
+        $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
     </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
     <header class="main-header">
         @include('layout-components.header')
     </header>
@@ -37,10 +36,18 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            @include('layout-components.content_header')
+            @section('content_header')
+                @if(empty($headers))
+                    {{--*/ $headers = [] /*--}}
+                @endif
+                @if(empty($footers))
+                    {{--*/ $footers = [] /*--}}
+                @endif
+                @include('layout-components.breadcrumb', ['headers' => $headers, 'footers' => $footers])
+            @show
         </section>
-        <section class="content">
 
+        <section class="content">
             @include('flash::custom')
 
             <div class="row">
@@ -52,7 +59,6 @@
     <footer class="main-footer">
         @include('layout-components.footer')
     </footer>
-
 </div>
 
 <div id="modals">

@@ -18,6 +18,7 @@ class AddGenderAndDateOfBirthAndDepartmentIdAndImageUrlToUserTable extends Migra
             $table->date('date_of_birth')->nullable();
 
             $table->integer('department_id')->unsigned()->nullable();
+
             $table->string('image_url')->unique()->nullable();
 
             $table->string('slug')->unique();

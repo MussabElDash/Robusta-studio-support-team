@@ -70,6 +70,8 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     protected $passwordAttributes = ['password' => false];
 
+    protected $emptyIsNull = ['date_of_birth', 'department_id'];
+
     // Relations
     public function department()
     {
@@ -119,17 +121,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
-
-    public function setDateOfBirthAttribute($value)
-    {
-        // var_dump('Here' . $value . 'and Here');
-        if (empty($value)) { // will check for empty string, null values, see php.net about it
-            $this->attributes['date_of_birth'] = NULL;
-        } else {
-            $this->attributes['date_of_birth'] = date("Y-m-d", strtotime($value));
-        }
-    }
-
+    
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
