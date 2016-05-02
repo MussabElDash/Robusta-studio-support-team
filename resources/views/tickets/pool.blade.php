@@ -1,23 +1,21 @@
-@extends('layouts.home')
-
-@section('content-header-main', 'Tickets')
-@section('content-header-sub', 'pool')
-
-@section('breadcrumb')
-    <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Tickets Pool</li>
-@endsection
+@extends('layouts.home', [
+    'headers' => ['Tickets Pool', 'Control Panel'],
+    'footers' => [
+        'home' => ['href' => '#', 'class' => 'fa-dashboard'],
+        'Tickets Pool' => ['active' => true]
+        ]
+    ])
 
 @section('content')
     <meta name="_token" content="{!! csrf_token() !!}"/>
 
     {{--<div class="row" style="margin-bottom: 10px">--}}
-        {{--<div class="col-md-4 col-md-offset-4">--}}
-            {{--<button class="btn btn-default btn-block">Refresh</button>--}}
-        {{--</div>--}}
+    {{--<div class="col-md-4 col-md-offset-4">--}}
+    {{--<button class="btn btn-default btn-block">Refresh</button>--}}
+    {{--</div>--}}
     {{--</div>--}}
 
-    <div class="col-md-12" >
+    <div class="col-md-12">
         <ul class="timeline" id="tickets-pool">
             @include('tickets._tickets_pool')
         </ul>
@@ -31,7 +29,7 @@
         </div>
     </div>
 
-{{--    {{dd(DB::getQueryLog())}}--}}
+    {{--    {{dd(DB::getQueryLog())}}--}}
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">

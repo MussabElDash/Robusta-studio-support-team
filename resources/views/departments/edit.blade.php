@@ -1,12 +1,4 @@
-@extends('layouts.home')
-
-@section('breadcrumb')
-    Departments
-@endsection
-
-@section('breadcrumb1')
-    {{$department['name']}}
-@endsection
+@extends('departments.shared')
 
 @section('content')
     <div class="" style="margin-left: 5%">
