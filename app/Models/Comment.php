@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Ticket;
-
 class Comment extends BaseModel
 {
     /*
@@ -27,9 +24,9 @@ class Comment extends BaseModel
      *   Relations
     */
 
-    public function owner()
+    public function user()
     {
-        return $this->morphTo('user');
+        return $this->morphTo();
     }
 
     public function ticket()

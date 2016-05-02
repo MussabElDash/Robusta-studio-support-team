@@ -76,7 +76,7 @@ class TicketsController extends Controller
     public function show(Request $request, $id)
     {
         $ticket = Ticket::with('department',
-            'creator', 'labels', 'priority', 'comments.owner')->find($id);
+            'creator', 'labels', 'priority', 'comments.user')->find($id);
         Log::info(DB::getQueryLog());
         if ($request->ajax()) {
             return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);

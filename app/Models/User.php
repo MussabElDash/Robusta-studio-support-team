@@ -98,6 +98,11 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return $this->hasMany(Invitation::class, 'inviter_id');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'user');
+    }
+
     public function ticketsCount()
     {
         return $this->hasOne(Ticket::class, 'assigned_to')
