@@ -26,7 +26,7 @@ class CustomersController extends Controller
         if ($customer->save()) {
             // redirect
             Flash::success('Successfully created a Customer!');
-            return Redirect::route('customer.show', $customer);
+            return Redirect::route('customers.show', $customer);
         } else {
             // redirect
             Flash::error($customer->getErrors());
@@ -34,22 +34,23 @@ class CustomersController extends Controller
         }
     }
 
-    public function update($id)
+    public function update($customer)
     {
-        $customer = Customer::find($id);
-        if (is_null($customer)) {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
             Flash::error('No such Customer');
             return Redirect::back();
         }
         // process
-        if ($customer->update(Input::all())) {
+        if ($custom->update(Input::all())) {
             // redirect
+            $customer = $custom->slug ? $custom->slug : $customer;
             Flash::success('Successfully updated a Customer!');
-            return Redirect::route('customer.show', $id);
+            return Redirect::route('customers.show', $customer);
         } else {
             // redirect
-            Flash::error($customer->getErrors());
-            return Redirect::back()->with('errors', $customer->getErrors());
+            Flash::error($custom->getErrors());
+            return Redirect::back()->with('errors', $custom->getErrors());
         }
     }
 
@@ -59,14 +60,14 @@ class CustomersController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show($customer)
     {
-        $customer = Customer::find($id);
-        if (is_null($customer)) {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
             Flash::error('No such Customer');
             return Redirect::to('home');
         }
-        return view('customers.show', ['user' => Auth::user(), 'customer' => $customer]);
+        return view('customers.show', ['customer' => $custom]);
     }
 
     /**
@@ -75,13 +76,13 @@ class CustomersController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($customer)
     {
-        $customer = Customer::find($id);
-        if (is_null($customer)) {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
             Flash::error('No such Customer');
             return Redirect::to('home');
         }
-        return view('customers.edit', ['user' => Auth::user(), 'customer' => $customer]);
+        return view('customers.edit', ['customer' => $custom]);
     }
 }

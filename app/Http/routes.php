@@ -47,11 +47,11 @@ Route::group(['middleware' => ['web']], function () {
             'store'
         ]]);
 
-        Route::resource('customer', 'CustomersController', ['except' => [
+        Route::resource('customers', 'CustomersController', ['except' => [
             'index', 'create'
         ]]);
-        Route::post('/customer/{customer}/edit', function ($id) {
-            return redirect()->route('customer.edit', [$id]);
+        Route::post('/customers/{customer}/edit', function ($id) {
+            return redirect()->route('customers.edit', [$id]);
         });
 
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);

@@ -9,7 +9,7 @@
     </script>
 @append
 
-{!! Form::model(null, ['route' => 'customer.store', 'class' => 'form-horizontal']) !!}
+{!! Form::model(null, ['route' => 'customers.store', 'class' => 'form-horizontal']) !!}
 <div class="box-body">
     <div class="form-group">
         {!! Form::label('name', 'Name', ['class' => 'col-sm-2 control-label']) !!}

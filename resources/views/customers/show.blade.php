@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('customers.shared')
 
 @section('form_content')
     <div class="form-group">
@@ -11,27 +11,23 @@
     <div class="form-group">
         <label class="col-md-4 control-label">Phone Number</label>
         <div class="col-md-6">
-            {{ Form::label('email', $customer->phone_number, ['class' => 'form-control']) }}
+            {{ Form::label('phone_number', $customer->phone_number, ['class' => 'form-control']) }}
         </div>
     </div>
 
-    @unless(empty($customer->twitter_id))
-        <div class="form-group">
-            {!! Form::label('twitter_id', 'Twitter ID', ['class' => 'col-md-4 control-label']) !!}
-            <div class="col-md-6">
-                {{ Form::label('twitter_id', $customer->twitter_id, ['class' => 'form-control']) }}
-            </div>
+    <div class="form-group">
+        {!! Form::label('twitter_id', 'Twitter ID', ['class' => 'col-md-4 control-label']) !!}
+        <div class="col-md-6">
+            {{ Form::label('twitter_id', $customer->twitter_id, ['class' => 'form-control']) }}
         </div>
-    @endunless
+    </div>
 
-    @unless(empty($customer->notes))
-        <div class="form-group">
-            {!! Form::label('notes', 'Notes', ['class' => 'col-md-4 control-label']) !!}
-            <div class="col-md-6">
-                {{ Form::label('date_of_birth', $customer->notes, ['class' => 'form-control']) }}
-            </div>
+    <div class="form-group">
+        {!! Form::label('notes', 'Notes', ['class' => 'col-md-4 control-label']) !!}
+        <div class="col-md-6">
+            {{ Form::label('notes', $customer->notes, ['class' => 'form-control']) }}
         </div>
-    @endunless
+    </div>
 @endsection
 
 @section('content')
@@ -41,7 +37,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Show Customer</div>
                     <div class="panel-body">
-                        {{ Form::model($customer, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('customer.edit', $customer->id))) }}
+                        {{ Form::model($customer, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('customers.edit', $customer->slug))) }}
                         @yield('form_content')
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -10,7 +10,7 @@ class Customer extends BaseModel implements SluggableInterface
 {
     use SluggableTrait;
     protected $sluggable = [
-        'build_from' => 'name',
+        'build_from' => 'phone_number',
         'save_to' => 'slug',
         'unique' => true,
     ];
@@ -20,7 +20,7 @@ class Customer extends BaseModel implements SluggableInterface
     */
     protected static $rules = [
         'name' => 'required',
-        'phone_number' => 'required',
+        'phone_number' => 'required|unique:customers,phone_number,',
     ];
 
     /*

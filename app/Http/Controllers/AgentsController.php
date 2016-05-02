@@ -20,15 +20,12 @@ class AgentsController extends Controller
      */
     public function store()
     {
-        Log::info("creating agent ... \n" . implode(",", Input::all()));
         $user = new User(Input::all());
-        // $user->department_id = Input::get('department_id');
-        Log::info($user);
         // process
         if ($user->save()) {
             // redirect
             Flash::success('Successfully created an Agent!');
-            return Redirect::route('agent.show', $user);
+            return Redirect::route('agents.show', $user);
         } else {
             // redirect
             Flash::error($user->getErrors());
