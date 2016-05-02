@@ -1,8 +1,8 @@
 {{--*/ $comments = $ticket->comments/*--}}
 @if($comments->count()>0)
     {{--*/ $comment_text = $comments->last()->body/*--}}
-    {{--*/ $commenter_name = $comments->last()->owner->name/*--}}
-    {{--*/ $commenter_image = $comments->last()->owner->profile_image_path/*--}}
+    {{--*/ $commenter_name = $comments->last()->user->name/*--}}
+    {{--*/ $commenter_image = $comments->last()->user->profile_image_path/*--}}
     {{--*/ $last_status_id = $comments->last()->status_id/*--}}
 
 @else
