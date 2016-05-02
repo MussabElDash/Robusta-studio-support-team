@@ -56,7 +56,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
      */
     protected $fillable = [
         'name', 'email', 'password', 'password_confirmation',
-        'gender', 'date_of_birth', 'image_url', 'department_id', 'role'
+        'gender', 'date_of_birth', 'profile_image_path', 'department_id', 'role'
     ];
 
     /**
@@ -98,6 +98,11 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return $this->hasMany(Invitation::class, 'inviter_id');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'user');
+    }
+
     public function ticketsCount()
     {
         return $this->hasOne(Ticket::class, 'assigned_to')
@@ -126,4 +131,5 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
     }
+
 }

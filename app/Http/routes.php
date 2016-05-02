@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -57,6 +58,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('label', 'LabelsController', ['only' => [
             'store'
         ]]);
+        Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
+            Route::get('department/free/{id}', ['as' => 'departments.free', 'uses' => 'DepartmentsController@freeAgents'])->where('id', '[1-9][0-9]*');
+        });
 
         Route::group(['prefix' => 'tickets'], function () {
 
@@ -78,6 +82,8 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::post('{id}/comment', ['as' => 'tickets.comment.store', 'uses' => 'CommentsController@store'])
                 ->where('id', '[1-9][0-9]*');
+            Route::post('feed', ['as' => 'tickets.feed', 'uses' => 'TicketsController@from_feed']);
         });
+        Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
     });
 });

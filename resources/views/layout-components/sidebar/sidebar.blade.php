@@ -21,7 +21,15 @@
             <li class="{{ active('home') }}">
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
+            @if($user->role == 'Agent')
+            <li>
+                <a href={{route('agents.workspace')}}><i class="fa fa-cogs"></i> <span>Workspace</span></a>
+            </li>
+            @endif
+
+
             <li class="{{ active('departments.*') }}">
+
                 <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
             </li>
             <li class="{{ active(['agents.*', 'not:agents/' . $user->slug]) }}">
@@ -64,11 +72,6 @@
                         <li><a href="#" data-toggle="modal" data-target="#change-theme"><i class="fa fa-plus"></i>
                                 <span>Change Theme</span></a></li>
                         @endif
-                        @if ($user->role == 'Supervisor' || $user->role == 'Admin')
-                                <!-- TODO Modal-->
-                        <li><a href="#" data-toggle="modal" data-target="#"><i class="fa fa-plus"></i> <span>Ticket from Feed</span></a>
-                        </li>
-                    @endif
                     <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i>
                             <span>Create Customer</span></a></li>
                     <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i>
@@ -94,5 +97,6 @@
     @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
     @include('shared.modals.basic_modal', ['id' => 'create-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
     @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
+    @include('shared.modals.basic_modal', ['id' => 'create-ticket-from-feed-modal', 'body' => 'tickets._form_feed', 'title' => 'Create Ticket'])
 
 @endsection

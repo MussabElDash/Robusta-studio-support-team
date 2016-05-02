@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Ticket;
-
 class Comment extends BaseModel
 {
     /*
         Mass Assignment
     */
 
-    protected $fillable = ['body'];
+    protected $fillable = ['body','user_id','user_type','status_id','ticket_id'];
 
     /*
         Validations
@@ -27,9 +24,9 @@ class Comment extends BaseModel
      *   Relations
     */
 
-    public function owner()
+    public function user()
     {
-        return $this->belongsTo( User::class, 'user_id');
+        return $this->morphTo();
     }
 
     public function ticket()

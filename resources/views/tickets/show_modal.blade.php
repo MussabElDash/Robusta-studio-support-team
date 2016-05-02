@@ -48,7 +48,7 @@
 
                 <div class="box-footer box-comments" id="ticket-{{$ticket->id}}-comments">
                     @foreach( $ticket->comments as $comment)
-                        @include('comments._comment', ['user' => $comment->owner])
+                        @include('comments._comment', ['user' => $comment->user])
                     @endforeach
                 </div>
 
