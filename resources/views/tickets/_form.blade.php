@@ -1,6 +1,14 @@
 <!-- Can be used for edit - create -->
-{!! Form::model(isset($ticket) ? $ticket : null, ['route' => isset($ticket) ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store',
- 'method' => isset($ticket) ? 'put': 'post', 'id' => isset($ticket) ? 'ticket-form-' . $ticket->id : '', 'class' => 'form-horizontal']) !!}
+
+{{--*/ $flag = isset($ticket) && isset($autoFill) && $autoFill /*--}}
+{{--*/ $form_object = $flag ? $ticket : null /*--}}
+{{--*/ $form_route  = $flag ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store' /*--}}
+{{--*/ $form_method = $flag ? 'put': 'post' /*--}}
+{{--*/ $form_id     = $flag ? 'ticket-form-' . $ticket->id : '' /*--}}
+
+
+{!! Form::model( $form_object, ['route' => $form_route,
+ 'method' => $form_method, 'id' => $form_id, 'class' => 'form-horizontal']) !!}
 <div class="box-body">
 
     <div class="form-group">
