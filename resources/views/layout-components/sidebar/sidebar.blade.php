@@ -22,7 +22,7 @@
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
             @if($user->role == 'Agent')
-            <li>
+            <li class="{{ active('agents.workspace') }}">
                 <a href={{route('agents.workspace')}}><i class="fa fa-cogs"></i> <span>Workspace</span></a>
             </li>
             @endif
@@ -32,7 +32,7 @@
 
                 <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
             </li>
-            <li class="{{ active(['agents.*', 'not:agents/' . $user->slug]) }}">
+            <li class="{{ active(['agents.index', 'not:agents/' . $user->slug]) }}">
                 <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
             </li>
             <li class="{{ active('agents/' . $user->slug) }}">
