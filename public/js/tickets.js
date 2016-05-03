@@ -237,7 +237,7 @@ $(function () {
         });
         return false;
     });
-    $('#department_select').change(function (e) {
+    $('#department_select_free_agents').change(function (e) {
         $('#agent_select').html("<option value='-1'>Please select a department to load free agents</option>");
         e.preventDefault();
         var department = $(this).val();
@@ -264,5 +264,57 @@ $(function () {
     });
     $('.modal').on('hidden.bs.modal', function (e) {
         $(this).find('form').trigger('reset');
+    });
+    $('#create-department-modal').on('show.bs.modal', function (e) {
+        if ($(this).find('option').length == 1) {
+            $.ajaxSetup({
+                header: $('meta[name="_token"]').attr('content')
+            });
+            $.ajax({
+                type: "GET",
+                url: "department/supervisor",
+                dataType: 'json',
+                success: function (response) {
+                    $.each(response['supervisors'], function (key, value) {
+                        $('#supervisor_select').append($("<option></option>")
+                            .attr("value", key)
+                            .text(value));
+                    });
+                },
+                error: function (jqxhr) {
+                    alert('failed');
+                }
+            });
+        }
+    });
+    $('#form-add-department').on('submit', function () {
+        //.....
+        //show some spinner etc to indicate operation in progress
+        //.....
+        $.ajax({
+            url: '/departments',
+            type: "post",
+            data: {
+                "name": $('#department-name').val(),
+                "description": $('#department-description').val()
+            },
+            success: function (data) {
+                console.log(data);
+                $('.modal').modal('hide')
+                window.location.href = '/departments/' + data.slug;
+            },
+            error: function (err) {
+                if (err.responseJSON.errors.description) {
+                    $('#descriptionError').css('display', 'block');
+                    $('#descriptionError').html(err.responseJSON.errors.description);
+                }
+                if (err.responseJSON.errors.name) {
+                    $('#nameError').css('display', 'block');
+                    $('#nameError').html(err.responseJSON.errors.name);
+                }
+            }
+        });
+        //prevent the form from actually submitting in browser
+        return false;
     });
 });

@@ -27,14 +27,11 @@
             <div class="twt-wrapper">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        @company feed
+                        <p>@company feed</p>
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" placeholder="Enter here for tweet..." rows="3"></textarea>
-                        <br/>
-                        <a href="#" class="btn btn-primary btn-sm pull-right">Tweet</a>
-                        <div class="clearfix"></div>
-                        <hr/>
+
+
                         <ul class="media-list">
                             @foreach ($tweets as $tweet)
                                 {{--we can just hide tweets that already have tickets--}}
