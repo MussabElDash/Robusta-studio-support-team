@@ -247,7 +247,7 @@ $(function () {
             });
             $.ajax({
                 type: "GET",
-                url: "department/free/" + department,
+                url: "/department/free/" + department,
                 dataType: 'json',
                 success: function (response) {
                     $.each(response['agents'], function (key, value) {
@@ -272,7 +272,7 @@ $(function () {
             });
             $.ajax({
                 type: "GET",
-                url: "department/supervisor",
+                url: "/department/supervisor",
                 dataType: 'json',
                 success: function (response) {
                     $.each(response['supervisors'], function (key, value) {

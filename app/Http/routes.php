@@ -48,8 +48,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
-        Route::group(['prefix' => 'agent'], function () {
-            Route::post('/agents/{agent}/edit', function ($id) {
+        Route::group(['prefix' => 'agents'], function () {
+            Route::post('/{agent}/edit', function ($id) {
                 return redirect()->route('agents.edit', [$id]);
             });
         });
