@@ -40,7 +40,7 @@ class HomeController extends Controller
         }
         if (!empty($tweets)) {
             $tweets_filter = array();
-            $i=0;
+            $i = 0;
             foreach ($tweets as $tweet) {
                 if ($tweet['in_reply_to_status_id'] != null) {
                     if (!Comment::where('status_id', '=', $tweet['id'])->exists()) {
@@ -63,7 +63,7 @@ class HomeController extends Controller
                             error_log($e->getMessage());
                         }
                     }
-                }else{
+                } else {
                     $tweets_filter[$i] = $tweet;
                     $i++;
                 }
@@ -81,6 +81,26 @@ class HomeController extends Controller
         }
         Setting::save();
         Session::flash('message', 'Theme successfully saved !');
+        return Redirect::to('home');
+    }
+
+    public function twitterSettings(Request $request)
+    {
+        $settings = array('TWITTER_CONSUMER_KEY',
+            'TWITTER_CONSUMER_SECRET',
+            'TWITTER_ACCESS_TOKEN',
+            'TWITTER_ACCESS_TOKEN_SECRET');
+        $path = base_path('.env');
+        $old = "";
+        $new = "";
+        if (file_exists($path)) {
+            foreach ($settings as $setting) {
+                file_put_contents($path, str_replace(
+                    $setting . ' = ' . getenv($setting), $setting . ' = ' . Input::get($setting), file_get_contents($path)));
+//                $old = $old.$setting . ' = ' . getenv($setting)."\n";
+//                $new = $new.$setting . '=' . Input::get($setting)."\n";
+            }
+        }
         return Redirect::to('home');
     }
 }

@@ -88,6 +88,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('label', 'LabelsController', ['only' => [
                 'store'
             ]]);
+            Route::group(['prefix' => 'home'], function () {
+                Route::post('', ['uses' => 'HomeController@store']);
+                Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);
+
+            });
         });
 
         // ADMIN AND SUPERVISOR
@@ -95,9 +100,6 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::resource('departments', 'DepartmentsController');
 
-            Route::group(['prefix' => 'home'], function () {
-                Route::post('', ['uses' => 'HomeController@store']);
-            });
 
             Route::group(['prefix' => 'department'], function () {
                 Route::get('supervisor', ['as' => 'departments.supervisor', 'uses' => 'DepartmentsController@freeSupervisors'])->where('id', '[1-9][0-9]*');
