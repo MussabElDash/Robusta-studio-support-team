@@ -28,7 +28,7 @@
 
             <li class="{{ active('agents.closed') }}">
                 <a href="{{ route('agents.closed') }}">
-                    <i class="fa fa-sticky-note-o"></i>
+                    <i class="fa fa-close"></i>
                     <span>Closed Tickets</span>
                 </a>
             </li>
