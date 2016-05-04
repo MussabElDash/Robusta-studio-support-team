@@ -40,7 +40,7 @@
     <div class="form-group">
         {!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('department_id', $agent_departments, null, ['class' => 'form-control']) }}
+            {{ Form::select('department_id', $departments, null, ['class' => 'form-control']) }}
         </div>
     </div>
 

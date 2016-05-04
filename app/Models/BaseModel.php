@@ -34,6 +34,10 @@ class BaseModel extends Model
         });
 
         static::updating(function ($model) {
+            foreach ( $model->attributes as $k => $v ){
+                $model->attributes[$k] = $v === '-1' ? null : $v;
+            }
+
             if ($model instanceof SluggableInterface) {
                 $model->resluggify();
             }
@@ -118,5 +122,13 @@ class BaseModel extends Model
     public function hasErrors()
     {
         return !empty($this->errors);
+    }
+
+    public function __set($key, $value)
+    {
+        Log::info("assuty");
+        Log::info($key);
+        Log::info($value);
+        parent::__set($key,  $value === -1 ? null : $value);
     }
 }

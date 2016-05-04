@@ -71,7 +71,7 @@ $(document).on('click', "[id$='edit']", function (e) {
 
                 $("#ticket-form-" + data['id']).submit(function (e) {
                     e.preventDefault();
-
+                    //discardDefaultSelectTagValue(this.id);
                     $.ajax({
                         url: this.action,
                         type: "put",

@@ -5,6 +5,7 @@
 {{--*/ $form_route  = $flag ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store' /*--}}
 {{--*/ $form_method = $flag ? 'put': 'post' /*--}}
 {{--*/ $form_id     = $flag ? 'ticket-form-' . $ticket->id : '' /*--}}
+{{--*/ $form_department_select = $flag ? $ticket->department_id : -1 /*--}}
 
 
 {!! Form::model( $form_object, ['route' => $form_route,
@@ -28,7 +29,7 @@
     <div class="form-group">
         {!! Form::label('department_id', 'Department', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('department_id', DB::table('departments')->lists('name','id'), '2', ['class' => 'form-control']) }}
+            {{ Form::select('department_id', $departments, $form_department_select, ['class' => 'form-control']) }}
         </div>
     </div>
 </div>
