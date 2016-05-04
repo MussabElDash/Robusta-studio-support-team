@@ -16,8 +16,6 @@ class BaseModel extends Model
 
     protected $passwordAttributes = array();
 
-    protected $emptyIsNull = array();
-
     private $removedAttributes = array();
 
     protected static function boot()
@@ -25,35 +23,27 @@ class BaseModel extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            foreach ( $model->attributes as $k => $v ){
-                $model->attributes[$k] = $v === '-1' ? null : $v;
-            }
-
-            if ($model instanceof SluggableInterface) {
-                $model->sluggify();
-            }
-            $valid = $model->validate();
-            $model->fixPassword();
-            return $valid;
+            return $model->fixAndValidate();
         });
 
         static::updating(function ($model) {
-            foreach ( $model->attributes as $k => $v ){
-                $model->attributes[$k] = $v === '-1' ? null : $v;
-            }
-
-            if ($model instanceof SluggableInterface) {
-                $model->resluggify();
-            }
-//            $model->fixAttributes();
-            $valid = $model->validate(true);
-            $model->fixPassword();
-            return $valid;
+            return $model->fixAndValidate(true);
         });
 
-        static::updated(function ($model) {
+        static::saved(function ($model) {
             $model->unFixAttributes();
         });
+    }
+
+    protected function fixAndValidate($update = false)
+    {
+        if ($this instanceof SluggableInterface) {
+            $update ? $this->resluggify() : $this->sluggify();
+        }
+        $this->fixAttributes();
+        $valid = $this->validate($update);
+        $this->fixPassword();
+        return $valid;
     }
 
     public function validate($update = false)
@@ -98,13 +88,13 @@ class BaseModel extends Model
     protected function fixAttributes()
     {
         foreach ($this->attributes as $key => $value) {
-            if ((empty($value) && $this->getOriginal($key) === NULL) || ($value === $this->getOriginal($key))) {
+            if ((empty($value) && $this->getOriginal($key) == NULL) || ($value == $this->getOriginal($key))) {
                 $this->removedAttributes[$key] = $this->attributes[$key];
                 array_forget($this->attributes, $key);
                 array_forget(static::$rules, $key);
                 continue;
             }
-            if (empty($value) && in_array($key, $this->emptyIsNull)) {
+            if (empty($value)) {
                 $this->attributes[$key] = null;
             }
         }

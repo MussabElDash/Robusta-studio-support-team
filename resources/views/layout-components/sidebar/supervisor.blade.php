@@ -2,7 +2,7 @@
 <li class="{{ active('departments.*') }}">
     <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
 </li>
-<li class="{{ active(['agents.*', 'not:agents/' . $user->slug]) }}">
+<li class="{{ active(['agents.*', 'not:agents/' . $user->slug, 'not:agents.workspace']) }}">
     <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
 </li>
-
+@include('layout-components.sidebar.agent')
