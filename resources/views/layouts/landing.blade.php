@@ -7,6 +7,7 @@
 
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/AdminLTE.min.css') !!}
+    {!! Html::style('assets/css/font-awesome.min.css') !!}
     {!! Html::style('assets/css/_all-skins.min.css') !!}
     {!! Html::style('assets/css/our-css.css') !!}
     {!! Html::style('/get-skin') !!}
@@ -36,21 +37,24 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs"> {{ Auth::user()->name }}</span>
-                                <span class="caret"></span>
-                            </a>
+                    @if(!array_key_exists('guest',get_defined_vars()) || !$guest)
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @else
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="/assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
+                                    <span class="hidden-xs"> {{ Auth::user()->name }}</span>
+                                    <span class="caret"></span>
+                                </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     @endif
                 </ul>
             </div>

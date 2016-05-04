@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 
 use DB;
@@ -77,7 +79,7 @@ class TicketsController extends Controller
             'creator', 'labels', 'priority', 'comments.user')->find($id);
         Log::info(DB::getQueryLog());
         if ($request->ajax()) {
-            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket,"closed"=>!$ticket->open])->render(), 'id' => $ticket->id]);
+            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket, "closed" => !$ticket->open])->render(), 'id' => $ticket->id]);
         }
     }
 
@@ -102,7 +104,7 @@ class TicketsController extends Controller
         if ($request->ajax()) {
             return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets, 'closed' => false])->render());
         }
-        return view('tickets.pool', ['tickets' => $tickets,'closed' => false]);
+        return view('tickets.pool', ['tickets' => $tickets, 'closed' => false]);
     }
 
     public function claim(Request $request, $id)
@@ -184,12 +186,13 @@ class TicketsController extends Controller
         }
     }
 
-    public function toggle_vip( Request $request, $id)
+    public function toggle_vip(Request $request, $id)
     {
         $ticket = Ticket::find($id);
         if ($ticket->assigned_to == $this->user->id ||
             $this->user->hasRole(['Admin']) ||
-            $this->user->department_id == $ticket->department_id) {
+            $this->user->department_id == $ticket->department_id
+        ) {
             $ticket->vip = !$ticket->vip;
 
             $flag = $ticket->update();
@@ -199,6 +202,23 @@ class TicketsController extends Controller
             }
 
             return redirect()->back();
+        }
+    }
+
+    public function paypal(Request $request, $ticket_id)
+    {
+        return view('tickets.paypal', ['ticket' => $ticket_id, 'guest' => true]);
+
+    }
+
+    public function vip(Request $request)
+    {
+        $ticket = Ticket::find(Crypt::decrypt(Input::get('ticket')));
+        $ticket->vip = true;
+        if ($ticket->save()) {
+            return Redirect::to('home');
+        } else {
+            return view('tickets.paypal', ['ticket' => $ticket->id, 'guest' => true]);
         }
     }
 }

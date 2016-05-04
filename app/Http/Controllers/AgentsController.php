@@ -102,13 +102,17 @@ class AgentsController extends Controller
     public function index()
     {
         $agents = User::all();
+        foreach($agents as $agent)
+        {
+            $agent->open= Ticket::openTickets($agent->id)->count();
+            $agent->closed= Ticket::closedTickets($agent->id)->count();
+        }
         return view('agents.index', ['agents' => $agents]);
     }
 
     public function workspace(Request $request)
     {
-
-        return view('agents.workspace',['agent' => $this->user,'tickets'=> $this->user->tickets()->open()]);
+        return view('agents.workspace',['agent' => $this->user,'tickets'=> $this->user->tickets()->open()->get()]);
 
     }
     public function closedTickets(Request $request){

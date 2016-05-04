@@ -22,6 +22,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-skin', function () {
         return response(view('skin'))->header('Content-Type', 'text/css');
     });
+    Route::group(['prefix' => 'ticket'],function() {
+        Route::get('paypal/{id}', ['as' => 'tickets.paypal', 'uses' => 'TicketsController@paypal']);
+        Route::post('vip', ['as' => 'tickets.vip', 'uses' => 'TicketsController@vip']);
+    });
 
     Route::group(['middleware' => ['auth']], function () {
 

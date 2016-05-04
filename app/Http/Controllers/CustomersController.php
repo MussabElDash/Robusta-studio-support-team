@@ -45,4 +45,5 @@ class CustomersController extends Controller
 			return Redirect::to('home');
         }
     }
+
 }
