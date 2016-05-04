@@ -34,13 +34,13 @@
                         </tr>
                     @endforeach
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th rowspan="1" colspan="1">Name</th>
-                        <th rowspan="1" colspan="1">Description</th>
-                        <th rowspan="1" colspan="1">No. of agents</th>
-                    </tr>
-                    </tfoot>
+                    {{--<tfoot>--}}
+                    {{--<tr>--}}
+                        {{--<th rowspan="1" colspan="1">Name</th>--}}
+                        {{--<th rowspan="1" colspan="1">Description</th>--}}
+                        {{--<th rowspan="1" colspan="1">No. of agents</th>--}}
+                    {{--</tr>--}}
+                    {{--</tfoot>--}}
                 </table>
             </div>
         </div>

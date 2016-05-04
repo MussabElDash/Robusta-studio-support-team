@@ -90,16 +90,13 @@ class HomeController extends Controller
             'TWITTER_ACCESS_TOKEN',
             'TWITTER_ACCESS_TOKEN_SECRET');
         $path = base_path('.env');
-        $old = "";
-        $new = "";
         if (file_exists($path)) {
             foreach ($settings as $setting) {
                 file_put_contents($path, str_replace(
                     $setting . ' = ' . getenv($setting), $setting . ' = ' . Input::get($setting), file_get_contents($path)));
-//                $old = $old.$setting . ' = ' . getenv($setting)."\n";
-//                $new = $new.$setting . '=' . Input::get($setting)."\n";
             }
         }
         return Redirect::to('home');
     }
+
 }

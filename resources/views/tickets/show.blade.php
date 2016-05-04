@@ -60,7 +60,7 @@
                     {!! Form::close() !!}
                 </span>
                 <span style="margin-left: 35px;">
-                    {!! Form::open(['route' => ['tickets.toggle_vip', $ticket->id], 'method' => 'put']) !!}
+                    {!! Form::open(['route' => ['tickets.paypal', Crypt::encrypt($ticket->id)], 'method' => 'get']) !!}
                     {!! Form::submit($toggle_vip_text, ['class' => 'btn btn-success']) !!}
                     {!! Form::close() !!}
                 </span>

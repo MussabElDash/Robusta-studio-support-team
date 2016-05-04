@@ -12,9 +12,12 @@ use App\Http\Requests;
 use App\Models\Ticket;
 
 use Auth;
+use Illuminate\Support\Facades\Crypt;
 use DB;
 
+
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Log;
 
@@ -203,11 +206,20 @@ class TicketsController extends Controller
         }
     }
 
-    public function assign(Request $request)
+    public function paypal(Request $request, $ticket_id)
     {
-        $agent = User::find(Input::get('agent_id'));
-        $ticket = Ticket::find(Input::get('ticket_id'));
-        Log::info($agent);
-        Log::info($ticket);
+        return view('tickets.paypal', ['ticket' => $ticket_id, 'guest' => true]);
+
+    }
+
+    public function vip(Request $request)
+    {
+        $ticket = Ticket::find(Crypt::decrypt(Input::get('ticket')));
+        $ticket->vip = true;
+        if ($ticket->save()) {
+            return Redirect::to('home');
+        } else {
+            return view('tickets.paypal', ['ticket' => $ticket->id, 'guest' => true]);
+        }
     }
 }
