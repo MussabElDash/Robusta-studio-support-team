@@ -38,7 +38,6 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info("Creating dep ... \n" . implode(",", Input::all()));
         $department = Department::create(Input::all());
         if ($department->save()) {
             Flash::success('Successfully created department');
@@ -68,7 +67,6 @@ class DepartmentsController extends Controller
      */
     public function show($slug)
     {
-        Log::info('dep slug: ' . $slug);
         $department = Department::where('slug', $slug)->first();
         return view('departments.show', ['department' => $department]);
     }
@@ -94,7 +92,6 @@ class DepartmentsController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        Log::info("updating dep ... \n" . implode(",", Input::all()));
         $department = Department::where('slug', $slug)->first();
         if ($department->update(Input::all())) {
             $slug = $department->slug ? $department->slug : $slug;

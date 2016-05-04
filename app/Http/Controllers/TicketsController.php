@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
+use App\Models\User as UserModel;
 use App\Http\Requests;
 use Auth;
 
@@ -48,9 +50,15 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::with('assigned_to', 'department', 'labels', 'priority')->find($id);
 
-        Log::info(DB::getQueryLog());
+
         if ($request->ajax()) {
-            return Response::json(['html' => view('tickets.edit_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
+            return Response::json(['html' => view('tickets.edit_modal', ["ticket" => $ticket,
+                'agents' => ($ticket->department) ?
+                    array(-1 => 'Please select a department to load free agents') +
+                    UserModel::freeAgents($ticket->department->id)->get()->lists('name', 'id')->toArray()
+                    :
+                    array(-1 => 'Please select a department to load free agents')])->render(),
+                'id' => $ticket->id]);
         }
     }
 
@@ -75,9 +83,8 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::with('department',
             'creator', 'labels', 'priority', 'comments.user')->find($id);
-        Log::info(DB::getQueryLog());
         if ($request->ajax()) {
-            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket,"closed"=>!$ticket->open])->render(), 'id' => $ticket->id]);
+            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket, "closed" => !$ticket->open])->render(), 'id' => $ticket->id]);
         }
     }
 
@@ -102,7 +109,7 @@ class TicketsController extends Controller
         if ($request->ajax()) {
             return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets, 'closed' => false])->render());
         }
-        return view('tickets.pool', ['tickets' => $tickets,'closed' => false]);
+        return view('tickets.pool', ['tickets' => $tickets, 'closed' => false]);
     }
 
     public function claim(Request $request, $id)
@@ -184,12 +191,13 @@ class TicketsController extends Controller
         }
     }
 
-    public function toggle_vip( Request $request, $id)
+    public function toggle_vip(Request $request, $id)
     {
         $ticket = Ticket::find($id);
         if ($ticket->assigned_to == $this->user->id ||
             $this->user->hasRole(['Admin']) ||
-            $this->user->department_id == $ticket->department_id) {
+            $this->user->department_id == $ticket->department_id
+        ) {
             $ticket->vip = !$ticket->vip;
 
             $flag = $ticket->update();
@@ -200,5 +208,13 @@ class TicketsController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function assign(Request $request)
+    {
+        $agent = User::find(Input::get('agent_id'));
+        $ticket = Ticket::find(Input::get('ticket_id'));
+        Log::info($agent);
+        Log::info($ticket);
     }
 }
