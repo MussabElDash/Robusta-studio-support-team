@@ -16,3 +16,13 @@
     margin-left: 55px;
     margin-top: -10px;
 }
+.paypal{
+    margin-top: 10px;
+}
+.paypal img{
+    width: 100px;
+    float: right;
+}
+.total{
+    text-align: end;
+}

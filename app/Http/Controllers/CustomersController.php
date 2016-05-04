@@ -84,4 +84,5 @@ class CustomersController extends Controller
         }
         return view('customers.edit', ['customer' => $custom]);
     }
+
 }
