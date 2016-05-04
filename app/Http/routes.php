@@ -49,7 +49,9 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
-
+        Route::resource('agents', 'AgentsController', ['except' => [
+            'create'
+        ]]);
 
         //TICKET
         Route::group(['prefix' => 'tickets'], function () {
@@ -89,9 +91,6 @@ Route::group(['middleware' => ['web']], function () {
         // ADMIN AND SUPERVISOR
         Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
 
-            Route::resource('agents', 'AgentsController', ['except' => [
-                'create'
-            ]]);
             Route::resource('departments', 'DepartmentsController');
 
             Route::group(['prefix' => 'home'], function () {
