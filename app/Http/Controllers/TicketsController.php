@@ -158,7 +158,7 @@ class TicketsController extends Controller
             return $id !== '-1';
         });
         if (count($labels) > 0)
-            $ticket->labels()->attach(Input::get('label'));
+            $ticket->labels()->attach($labels);
         return Response::json(["success" => true]);
 
     }
