@@ -14,6 +14,7 @@ use Auth;
 use Log;
 use Response;
 use Helpers;
+use App\Models\User;
 
 class DepartmentsController extends Controller
 {
@@ -116,18 +117,26 @@ class DepartmentsController extends Controller
     {
         //
     }
-
     public function freeAgents(Request $request, $id)
     {
-        error_log(count(Helpers::freeAgents($id)));
         if ($request->ajax()) {
             $response = array(
                 'success' => true,
                 'status' => 'success',
-                'agents' => Helpers::freeAgents($id)
+                'agents' => User::freeAgents($id)->get()->lists('name','id')->toArray()
             );
-
-
+            return Response::json($response, 200);
+        }else{
+            error_log('NOT AJAX');
+        }
+    }
+    public function freeSupervisors(Request $request){
+        if ($request->ajax()) {
+            $response = array(
+                'success' => true,
+                'status' => 'success',
+                'supervisors' => User::freeSupervisors()->get()->lists('name','id')->toArray()
+            );
             return Response::json($response, 200);
         }else{
             error_log('NOT AJAX');
