@@ -77,6 +77,9 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('{id}/comment', ['as' => 'tickets.comment.store', 'uses' => 'CommentsController@store'])
                 ->where('id', '[1-9][0-9]*');
             Route::post('feed', ['as' => 'tickets.feed', 'uses' => 'TicketsController@from_feed']);
+
+            Route::put('{id}/toggle_status', ['as' => 'tickets.toggle_status', 'uses' => 'TicketsController@toggle_status']);
+            Route::put('{id}/toggle_vip', ['as' => 'tickets.toggle_vip', 'uses' => 'TicketsController@toggle_vip']);
         });
 
         // ADMIN ONLY
@@ -109,6 +112,7 @@ Route::group(['middleware' => ['web']], function () {
         // AGENT ONLY
         Route::group(['middleware' => 'userRole:Agent'], function () {
             Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
+            Route::get('closed', ['as' => 'agents.closed', 'uses' => 'AgentsController@closedTickets']);
         });
     });
 });

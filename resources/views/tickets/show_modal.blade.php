@@ -51,7 +51,7 @@
                         @include('comments._comment', ['user' => $comment->user])
                     @endforeach
                 </div>
-
+                @if(!$closed)
                 <div class="box-footer">
                     {!! Form::open(['route' => ['tickets.comment.store', 'id' => $ticket->id ], 'method' => 'post', "id" => "comment-form-" . $ticket->id]) !!}
                     <img class="img-responsive img-circle img-sm" src="/assets/images/user2-160x160.jpg"
@@ -61,7 +61,7 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
-
+                @endif
             </div>
 
 
