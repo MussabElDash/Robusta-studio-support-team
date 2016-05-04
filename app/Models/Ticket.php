@@ -106,6 +106,9 @@ class Ticket extends BaseModel
     public function addComment(){
 
     }
+    public function scopeClosedTickets(Builder $query,$user_id){
+        return $query->where('assigned_to',$user_id)->done();
+    }
 
     
 }
