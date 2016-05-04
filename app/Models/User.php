@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Database\Eloquent\Builder;
 
 
 /**
@@ -130,6 +131,12 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
+    }
+    public function scopeFreeAgents(Builder $query,$department_id){
+        return $query->where('role','Agent')->where('department_id',$department_id)->has('tickets','<','3');
+    }
+    public function scopeFreeSupervisors(Builder $query){
+        return $query->where('role','Supervisor')->where('department_id',null);
     }
 
 }

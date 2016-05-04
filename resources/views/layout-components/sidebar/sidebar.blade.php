@@ -9,35 +9,16 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-
         @include('layout-components.sidebar.search_form')
-
         <ul class="sidebar-menu">
             <li class="header">
                 MAIN NAVIGATION
             </li>
-            <!-- Common tabs -->
 
             <li class="{{ active('home') }}">
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
-            @if($user->role == 'Agent')
-            <li>
-                <a href={{route('agents.workspace')}}><i class="fa fa-cogs"></i> <span>Workspace</span></a>
-            </li>
-            @endif
 
-
-            <li class="{{ active('departments.*') }}">
-
-                <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
-            </li>
-            <li class="{{ active(['agents.*', 'not:agents/' . $user->slug]) }}">
-                <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
-            </li>
-            <li class="{{ active('agents/' . $user->slug) }}">
-                <a href="/agents/{{$user->slug}}"><i class="fa fa-user"></i> <span>Profile</span></a>
-            </li>
             <li class="{{ active('tickets.pool') }}">
                 <a href="{{ route('tickets.pool') }}">
                     <i class="fa fa-sticky-note-o"></i>
@@ -45,7 +26,7 @@
                 </a>
             </li>
 
-            @if ($user->role == 'Admin')
+            @if ($user->hasRole(['Admin']))
                 @include('layout-components.sidebar.admin')
             @elseif ($user->role == 'Supervisor')
                 @include('layout-components.sidebar.supervisor')
@@ -59,8 +40,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-
-                    @if ($user->role == 'Admin')
+                    @if ($user->hasRole(['Admin']))
                         <li><a href="#" data-toggle="modal" data-target="#create-department-modal"><i
                                         class="fa fa-plus"></i> <span>Create Department</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#create-agent-modal"><i class="fa fa-plus"></i>
@@ -71,16 +51,16 @@
                                         class="fa fa-plus"></i> <span>Create Priority</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#change-theme"><i class="fa fa-plus"></i>
                                 <span>Change Theme</span></a></li>
-                        @endif
+                    @endif
                     <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i>
                             <span>Create Customer</span></a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i>
+                    <li><a href="#" data-toggle="modal" data-target="#create-phone-ticket-modal"><i class="fa fa-plus"></i>
                             <span>Create Phone Ticket</span></a></li>
                 </ul>
             </li>
 
             <li class="header">Spotlight</li>
-            @if($user->department() == 'VIP' || $user->role == 'Admin')
+            @if($user->department == 'VIP' || $user->hasRole(['Admin']))
                 <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>VIP Tickets</span></a></li>
             @endif
         </ul>
@@ -90,13 +70,19 @@
 @section('modals')
     @parent
 
-    @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'departments._form', 'title' => 'Create New Department'])
-    @include('shared.modals.basic_modal', ['id' => 'create-agent-modal', 'body' => 'agents._form', 'title' => 'Create New Agent'])
+    @if ( $user->hasRole(['Admin']))
+        @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
+    @endif
+
+    @if( $user->hasRole(['Admin', 'Supervisor']) )
+        @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'departments._form', 'title' => 'Create New Department'])
+        @include('shared.modals.basic_modal', ['id' => 'create-agent-modal', 'body' => 'agents._form', 'title' => 'Create New Agent'])
+        @include('shared.modals.basic_modal', ['id' => 'create-label-modal', 'body' => 'labels._form', 'title' => 'Create New Label'])
+        @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
+    @endif
+
     @include('shared.modals.basic_modal', ['id' => 'create-customer-modal', 'body' => 'customers._form', 'title' => 'Create New Customer'])
-    @include('shared.modals.basic_modal', ['id' => 'create-label-modal', 'body' => 'labels._form', 'title' => 'Create New Label'])
-    @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
-    @include('shared.modals.basic_modal', ['id' => 'create-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
-    @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
+    @include('shared.modals.basic_modal', ['id' => 'create-phone-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
     @include('shared.modals.basic_modal', ['id' => 'create-ticket-from-feed-modal', 'body' => 'tickets._form_feed', 'title' => 'Create Ticket'])
 
 @endsection

@@ -27,10 +27,9 @@ class TicketsController extends Controller
     // CRUD
     public function index()
     {
-        $current_user = Auth::user();
-        $tickets = $current_user->tickets()->with('assigned_to', 'department',
+        $tickets = $this->user->tickets()->with('assigned_to', 'department',
             'creator', 'labels', 'priority')->get();
-        return view('tickets.index', ['user' => $current_user, 'tickets' => $tickets]);
+        return view('tickets.index', ['tickets' => $tickets]);
     }
 
     public function store()
@@ -57,13 +56,12 @@ class TicketsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $current_user = Auth::user();
         $ticket = Ticket::find($id);
 
         if ($ticket->update($request->all())) {
             if ($request->ajax()) {
                 return Response::json(["html" => view('tickets._ticket_pool',
-                    ["ticket" => $ticket, "user" => $current_user])->render(), "id" => $id]);
+                    ["ticket" => $ticket])->render(), "id" => $id]);
             }
 
             return view('tickets.show', []);
@@ -95,27 +93,25 @@ class TicketsController extends Controller
 
     public function pool(Request $request)
     {
-        $current_user = Auth::user();
-        if ($current_user->hasRole(["Admin"])) {
+        if ($this->user->hasRole(["Admin"])) {
             $tickets = Ticket::notAssigned()->with(['labels', 'priority'])->paginate(5);
         } else {
-            $tickets = Ticket::notAssigned()->ofDepartment($current_user->department_id)->with(['labels', 'priority'])->paginate(10);
+            $tickets = Ticket::notAssigned()->ofDepartment($this->user->department_id)->with(['labels', 'priority'])->paginate(10);
         }
 
         if ($request->ajax()) {
             return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets])->render());
         }
-        return view('tickets.pool', ['user' => $current_user, 'tickets' => $tickets]);
+        return view('tickets.pool', ['tickets' => $tickets]);
     }
 
     public function claim(Request $request, $id)
     {
-        $current_user = Auth::user();
 
-        if ($current_user->canClaim()) {
+        if ($this->user->canClaim()) {
             $ticket = Ticket::find($id);
             if ($ticket->canBeClaimed()) {
-                $ticket->assigned_to()->associate($current_user);
+                $ticket->assigned_to()->associate($this->user);
                 if ($ticket->save()) {
                     if ($request->ajax()) {
                         return Response::json(["success" => true]);
@@ -136,36 +132,35 @@ class TicketsController extends Controller
 
     public function from_feed(Request $request)
     {
-        $current_user = Auth::user();
-        if ($current_user->hasRole(['Admin', 'Supervisor'])) {
-            $twitter_id = Input::get('customer_twitter_id');
-            $customer = DB::table('customers')->where('twitter_id', $twitter_id)->first();
-            if ($customer == null) {
-                $customer = new Customer();
-                $customer->twitter_id = $twitter_id;
-                $customer->name = Input::get('customer_name');
-                $customer->profile_image_path = Input::get('customer_profile_image_path');
-                $customer->save();
-            }
-            $ticket = new Ticket();
-            $ticket->name = Input::get('name');
-            $ticket->description = Input::get('tweet_text');
-            if (Input::get('assigned_to') != -1)
-                $ticket->assigned_to= Input::get('assigned_to');
-            if (Input::get('department_id') != -1)
-                $ticket->department_id = Input::get('department_id');
-            $ticket->creator_id = $current_user->id;
-            $ticket->customer_id = $customer->id;
-            if (Input::get('priority_id') != -1)
-                $ticket->priority_id = Input::get('priority_id');
-            $ticket->tweet_id = Input::get('tweet_id');
-            $ticket->save();
-            $labels = array_filter(Input::get('label'), function ($id) {
-                return $id != -1;
-            });
-            if (count($labels) > 0)
-                $ticket->labels()->attach(Input::get('label'));
-            return Response::json(["success" => true]);
+        $twitter_id = Input::get('customer_twitter_id');
+        $customer = DB::table('customers')->where('twitter_id', $twitter_id)->first();
+        if ($customer == null) {
+            $customer = new Customer();
+            $customer->twitter_id = $twitter_id;
+            $customer->name = Input::get('customer_name');
+            $customer->profile_image_path = Input::get('customer_profile_image_path');
+            $customer->save();
         }
+        $ticket = new Ticket();
+        $ticket->name = Input::get('name');
+        $ticket->description = Input::get('tweet_text');
+        if (Input::get('assigned_to') != -1)
+            $ticket->assigned_to= Input::get('assigned_to');
+        if (Input::get('department_id') != -1)
+            $ticket->department_id = Input::get('department_id');
+        $ticket->creator_id = $this->user->id;
+        $ticket->customer_id = $customer->id;
+        if (Input::get('priority_id') != -1)
+            $ticket->priority_id = Input::get('priority_id');
+        $ticket->tweet_id = Input::get('tweet_id');
+        $ticket->save();
+        $labels = array_filter(Input::get('label'), function ($id) {
+            return $id !== '-1';
+        });
+
+        if (count($labels) > 0)
+            $ticket->labels()->attach($labels);
+        return Response::json(["success" => true]);
+
     }
 }

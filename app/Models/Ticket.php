@@ -102,7 +102,10 @@ class Ticket extends BaseModel
     {
         return $this->assigned_to == null;
     }
+
     public function addComment(){
 
     }
+
+    
 }
