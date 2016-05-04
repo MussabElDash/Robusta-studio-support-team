@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests;
-use Input;
-use Validator;
-use Session;
-use Redirect;
 use App\Models\Customer;
+use Auth;
+use Flash;
+use Input;
+use Log;
+use Redirect;
+use Session;
 
 class CustomersController extends Controller
 {
-    //
-    // validate
-    	protected $rules = [
-            'name'       => 'required'
-        ];
-
-	/**
+    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -26,23 +21,68 @@ class CustomersController extends Controller
      */
     public function store()
     {
-        $validator = Validator::make(Input::all(), $this->rules);
+        $customer = new Customer(Input::all());
         // process
-        if ($validator->fails()) {
+        if ($customer->save()) {
             // redirect
-            Session::flash('message', 'Error While creating Customer!');
-			return Redirect::to('home');
+            Flash::success('Successfully created a Customer!');
+            return Redirect::route('customers.show', $customer);
         } else {
-        	// store
-        	$customer = new Customer;
-			$customer->name = Input::get('name');
-			$customer->notes = Input::get('notes');
-			$customer->phone_number = Input::get('phone_number');
-			$customer->save();
-
             // redirect
-            Session::flash('message', 'Successfully created Customer!');
-			return Redirect::to('home');
+            Flash::error($customer->getErrors());
+            return Redirect::back();
         }
+    }
+
+    public function update($customer)
+    {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
+            Flash::error('No such Customer');
+            return Redirect::back();
+        }
+        // process
+        if ($custom->update(Input::all())) {
+            // redirect
+            $customer = $custom->slug ? $custom->slug : $customer;
+            Flash::success('Successfully updated a Customer!');
+            return Redirect::route('customers.show', $customer);
+        } else {
+            // redirect
+            Flash::error($custom->getErrors());
+            return Redirect::back()->with('errors', $custom->getErrors());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($customer)
+    {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
+            Flash::error('No such Customer');
+            return Redirect::to('home');
+        }
+        return view('customers.show', ['customer' => $custom]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($customer)
+    {
+        $custom = Customer::findBySlug($customer);
+        if (is_null($custom)) {
+            Flash::error('No such Customer');
+            return Redirect::to('home');
+        }
+        return view('customers.edit', ['customer' => $custom]);
     }
 }

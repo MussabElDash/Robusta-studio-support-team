@@ -35,14 +35,14 @@ class BaseModel extends Model
         });
     }
 
-    public function fixAndValidate($update = false)
+    protected function fixAndValidate($update = false)
     {
         if ($this instanceof SluggableInterface) {
-            $update ? resluggify() : sluggify();
+            $update ? $this->resluggify() : $this->sluggify();
         }
-        fixAttributes();
-        $valid = validate($update);
-        fixPassword();
+        $this->fixAttributes();
+        $valid = $this->validate($update);
+        $this->fixPassword();
         return $valid;
     }
 
