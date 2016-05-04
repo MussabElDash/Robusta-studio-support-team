@@ -107,7 +107,9 @@ class AgentsController extends Controller
 
     public function workspace(Request $request)
     {
-        return view('agents.workspace', ['tickets'=> $this->user->tickets]);
+
+        return view('agents.workspace',['agent' => $this->user,'tickets'=> $this->user->tickets()->open()]);
+
     }
     public function closedTickets(Request $request){
         return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->get(),'closed'=>true]);

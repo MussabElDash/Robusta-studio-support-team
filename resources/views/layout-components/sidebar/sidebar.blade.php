@@ -58,6 +58,8 @@
                                         class="fa fa-plus"></i> <span>Create Priority</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#change-theme"><i class="fa fa-plus"></i>
                                 <span>Change Theme</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#change-twitter-settings"><i class="fa fa-plus"></i>
+                                <span>Change Twitter Settings</span></a></li>
                     @endif
                     <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i>
                             <span>Create Customer</span></a></li>
@@ -79,6 +81,7 @@
 
     @if ( $user->hasRole(['Admin']))
         @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
+        @include('shared.modals.basic_modal', ['id' => 'change-twitter-settings', 'body' => 'settings._form_twitter', 'title' => 'Change Twitter Settings'])
     @endif
 
     @if( $user->hasRole(['Admin', 'Supervisor']) )
