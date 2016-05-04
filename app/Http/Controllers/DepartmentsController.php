@@ -13,6 +13,8 @@ use Redirect;
 use Auth;
 use Log;
 use Response;
+use Helpers;
+use App\Models\User;
 
 class DepartmentsController extends Controller
 {
@@ -25,49 +27,48 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('departments.index', ['departments' => $departments]);
+        return view('departments.index', ['departments' => $this->departments]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        Log::info("Creating dep ... \n".implode(",", Input::all()));
+        Log::info("Creating dep ... \n" . implode(",", Input::all()));
         $department = Department::create(Input::all());
-        if( $department->save() ){
+        if ($department->save()) {
             Flash::success('Successfully created department');
             $response = array(
-                            'success' => true,
-                            'status' => 'success',
-                            'slug' => $department->slug,
-                            'msg' => 'department created successfully!',
-                        );
-            return Response::json( $response , 200);
-        }else {
+                'success' => true,
+                'status' => 'success',
+                'slug' => $department->slug,
+                'msg' => 'department created successfully!',
+            );
+            return Response::json($response, 200);
+        } else {
             $response = array(
-                            'success' => false,
-                            'status' => 'error',
-                            'errors' => $department->getErrors(),
-                            'msg' => 'Error While creating department!',
-                        );
-            return Response::json( $response , 400);
+                'success' => false,
+                'status' => 'error',
+                'errors' => $department->getErrors(),
+                'msg' => 'Error While creating department!',
+            );
+            return Response::json($response, 400);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
-        Log::info('dep slug: '.$slug);
+        Log::info('dep slug: ' . $slug);
         $department = Department::where('slug', $slug)->first();
         return view('departments.show', ['department' => $department]);
     }
@@ -75,7 +76,7 @@ class DepartmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($slug)
@@ -87,18 +88,18 @@ class DepartmentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
     {
-        Log::info("updating dep ... \n".implode(",", Input::all()));
+        Log::info("updating dep ... \n" . implode(",", Input::all()));
         $department = Department::where('slug', $slug)->first();
         if ($department->update(Input::all())) {
             $slug = $department->slug ? $department->slug : $slug;
             Flash::success('Successfully updated the department');
-            return Redirect::route("departments.show" , [$slug]);
+            return Redirect::route("departments.show", [$slug]);
         } else {
             Flash::error($department->getErrors());
             return Redirect::back()->with('errors', $department->getErrors());
@@ -108,11 +109,36 @@ class DepartmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+    public function freeAgents(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $response = array(
+                'success' => true,
+                'status' => 'success',
+                'agents' => User::freeAgents($id)->get()->lists('name','id')->toArray()
+            );
+            return Response::json($response, 200);
+        }else{
+            error_log('NOT AJAX');
+        }
+    }
+    public function freeSupervisors(Request $request){
+        if ($request->ajax()) {
+            $response = array(
+                'success' => true,
+                'status' => 'success',
+                'supervisors' => User::freeSupervisors()->get()->lists('name','id')->toArray()
+            );
+            return Response::json($response, 200);
+        }else{
+            error_log('NOT AJAX');
+        }
     }
 }

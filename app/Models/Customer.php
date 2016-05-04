@@ -42,4 +42,9 @@ class Customer extends BaseModel implements SluggableInterface
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'user');
+    }
 }

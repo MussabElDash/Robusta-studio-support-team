@@ -1,6 +1,15 @@
 <!-- Can be used for edit - create -->
-{!! Form::model(isset($ticket) ? $ticket : null, ['route' => isset($ticket) ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store',
- 'method' => isset($ticket) ? 'put': 'post', 'id' => isset($ticket) ? 'ticket-form-' . $ticket->id : '', 'class' => 'form-horizontal']) !!}
+
+{{--*/ $flag = isset($ticket) && isset($autoFill) && $autoFill /*--}}
+{{--*/ $form_object = $flag ? $ticket : null /*--}}
+{{--*/ $form_route  = $flag ? ['tickets.update', 'id' => $ticket->id]: 'tickets.store' /*--}}
+{{--*/ $form_method = $flag ? 'put': 'post' /*--}}
+{{--*/ $form_id     = $flag ? 'ticket-form-' . $ticket->id : '' /*--}}
+{{--*/ $form_department_select = $flag ? $ticket->department_id : -1 /*--}}
+
+
+{!! Form::model( $form_object, ['route' => $form_route,
+ 'method' => $form_method, 'id' => $form_id, 'class' => 'form-horizontal']) !!}
 <div class="box-body">
 
     <div class="form-group">
@@ -17,12 +26,12 @@
         </div>
     </div>
 
-    {{--<div class="form-group">--}}
-    {{--{!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}--}}
-    {{--<div class="col-sm-10">--}}
-    {{--{{ Form::select('color', ['Payments', 'Subscribtions', 'DSL Plus', 'Technical Support'], '2', ['class' => 'form-control']) }}--}}
-    {{--</div>--}}
-    {{--</div>--}}
+    <div class="form-group">
+        {!! Form::label('department_id', 'Department', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-10">
+            {{ Form::select('department_id', $departments, $form_department_select, ['class' => 'form-control']) }}
+        </div>
+    </div>
 </div>
 
 <div class="box-footer">

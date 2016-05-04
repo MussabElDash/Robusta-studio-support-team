@@ -6,9 +6,11 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 use Auth;
+use Twitter;
 
 class CommentsController extends Controller
 {
@@ -40,15 +42,22 @@ class CommentsController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $current_user = Auth::user();
         $comment = new Comment;
-        $comment->user_id = $current_user->id;
+        $comment->user_id = $this->user->id;
+        $comment->user_type = get_class($this->user);
         $comment->body = $request->get("body");
         $comment->ticket_id = $id;
-
+        $ticket = $comment->ticket;
+        $comments = $ticket->comments;
+        if ($comments->count() > 0)
+            $last_status_id = $comments->last()->status_id;
+        else
+            $last_status_id = $ticket->tweet_id;
+        $tweet = json_decode(Twitter::postTweet(['status' => "@" . $comment->ticket->customer->name . " " . $comment->body, 'in_reply_to_status_id' =>$last_status_id, 'format' => 'json']), true);
+        $comment->status_id = $tweet['id'];
         if ($comment->save()) {
             if ($request->ajax()) {
-                return Response::json(["html" => view("comments._comment", ["user" => $current_user, "comment" => $comment])->render(), "id" => $id]);
+                return Response::json(["html" => view("comments._comment", ["comment" => $comment])->render(), "id" => $id]);
             }
         } else {
             // return error

@@ -103,4 +103,12 @@ class Ticket extends BaseModel
         return $this->assigned_to == null;
     }
 
+    public function addComment(){
+
+    }
+    public function scopeClosedTickets(Builder $query,$user_id){
+        return $query->where('assigned_to',$user_id)->done();
+    }
+
+    
 }

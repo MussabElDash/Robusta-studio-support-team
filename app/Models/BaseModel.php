@@ -25,6 +25,10 @@ class BaseModel extends Model
         parent::boot();
 
         static::creating(function ($model) {
+            foreach ( $model->attributes as $k => $v ){
+                $model->attributes[$k] = $v === '-1' ? null : $v;
+            }
+
             if ($model instanceof SluggableInterface) {
                 $model->sluggify();
             }
@@ -34,10 +38,14 @@ class BaseModel extends Model
         });
 
         static::updating(function ($model) {
+            foreach ( $model->attributes as $k => $v ){
+                $model->attributes[$k] = $v === '-1' ? null : $v;
+            }
+
             if ($model instanceof SluggableInterface) {
                 $model->resluggify();
             }
-            $model->fixAttributes();
+//            $model->fixAttributes();
             $valid = $model->validate(true);
             $model->fixPassword();
             return $valid;
@@ -119,4 +127,5 @@ class BaseModel extends Model
     {
         return !empty($this->errors);
     }
+
 }
