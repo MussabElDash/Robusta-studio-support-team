@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Auth;
-
+use App\Models\Customer;
 use App\Models\Ticket;
+use Auth;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-
-use DB;
 use Log;
 
 class TicketsController extends Controller
@@ -77,7 +74,7 @@ class TicketsController extends Controller
             'creator', 'labels', 'priority', 'comments.user')->find($id);
         Log::info(DB::getQueryLog());
         if ($request->ajax()) {
-            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket,"closed"=>!$ticket->open])->render(), 'id' => $ticket->id]);
+            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket, "closed" => !$ticket->open])->render(), 'id' => $ticket->id]);
         }
     }
 
@@ -102,7 +99,7 @@ class TicketsController extends Controller
         if ($request->ajax()) {
             return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets, 'closed' => false])->render());
         }
-        return view('tickets.pool', ['tickets' => $tickets,'closed' => false]);
+        return view('tickets.pool', ['tickets' => $tickets, 'closed' => false]);
     }
 
     public function claim(Request $request, $id)
@@ -141,21 +138,13 @@ class TicketsController extends Controller
             $customer->profile_image_path = Input::get('customer_profile_image_path');
             $customer->save();
         }
-        $ticket = new Ticket();
-        $ticket->name = Input::get('name');
+        $ticket = new Ticket(Input::all());
         $ticket->description = Input::get('tweet_text');
-        if (Input::get('assigned_to') != -1)
-            $ticket->assigned_to = Input::get('assigned_to');
-        if (Input::get('department_id') != -1)
-            $ticket->department_id = Input::get('department_id');
         $ticket->creator_id = $this->user->id;
         $ticket->customer_id = $customer->id;
-        if (Input::get('priority_id') != -1)
-            $ticket->priority_id = Input::get('priority_id');
-        $ticket->tweet_id = Input::get('tweet_id');
         $ticket->save();
         $labels = array_filter(Input::get('label'), function ($id) {
-            return $id !== '-1';
+            return !empty($id);
         });
 
         if (count($labels) > 0)
@@ -184,12 +173,13 @@ class TicketsController extends Controller
         }
     }
 
-    public function toggle_vip( Request $request, $id)
+    public function toggle_vip(Request $request, $id)
     {
         $ticket = Ticket::find($id);
         if ($ticket->assigned_to == $this->user->id ||
             $this->user->hasRole(['Admin']) ||
-            $this->user->department_id == $ticket->department_id) {
+            $this->user->department_id == $ticket->department_id
+        ) {
             $ticket->vip = !$ticket->vip;
 
             $flag = $ticket->update();
