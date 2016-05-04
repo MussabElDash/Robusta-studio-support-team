@@ -16,7 +16,7 @@ class BaseModel extends Model
 
     protected $passwordAttributes = array();
 
-    protected $emptyIsNull = array();
+    protected static $emptyIsNull = array();
 
     private $removedAttributes = array();
 
@@ -45,7 +45,9 @@ class BaseModel extends Model
             if ($model instanceof SluggableInterface) {
                 $model->resluggify();
             }
-//            $model->fixAttributes();
+            Log::debug($model->attributes);
+           $model->fixAttributes();
+           Log::debug($model->attributes);
             $valid = $model->validate(true);
             $model->fixPassword();
             return $valid;
@@ -104,7 +106,7 @@ class BaseModel extends Model
                 array_forget(static::$rules, $key);
                 continue;
             }
-            if (empty($value) && in_array($key, $this->emptyIsNull)) {
+            if (empty($value) && in_array($key, static::$emptyIsNull)) {
                 $this->attributes[$key] = null;
             }
         }

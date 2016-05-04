@@ -25,6 +25,10 @@ class Ticket extends BaseModel
         'description' => 'required'
     ];
 
+    protected static $emptyIsNull = [
+        'department_id'
+    ];
+
     // Relations
     public function creator()
     {
@@ -110,5 +114,5 @@ class Ticket extends BaseModel
         return $query->where('assigned_to',$user_id)->done();
     }
 
-    
+
 }

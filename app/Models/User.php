@@ -71,7 +71,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
 
     protected $passwordAttributes = ['password' => false];
 
-    protected $emptyIsNull = ['date_of_birth', 'department_id'];
+    protected static $emptyIsNull = ['date_of_birth', 'department_id'];
 
     // Relations
     public function department()
@@ -126,7 +126,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
-    
+
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';
