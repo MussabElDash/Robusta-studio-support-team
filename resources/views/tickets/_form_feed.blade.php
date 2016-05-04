@@ -21,7 +21,7 @@
     <div class="form-group">
         {!! Form::label('priority', 'Priority', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('priority_id', array(-1=>'Select priority')+DB::table('priorities')->lists('name','id'), '-1', ['class' => 'form-control']) }}
+            {{ Form::select('priority_id', $priorities, '-1', ['class' => 'form-control']) }}
         </div>
     </div>
     <div class="form-group">
