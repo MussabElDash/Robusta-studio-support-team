@@ -31,9 +31,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Log::info('Showing user profile for user: ');
         try {
-            $tweets = Cache::remember('tweets', 60, function () {
+            $tweets = Cache::remember('tweets', 15, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
         } catch (\Exception $e) {
@@ -91,16 +90,13 @@ class HomeController extends Controller
             'TWITTER_ACCESS_TOKEN',
             'TWITTER_ACCESS_TOKEN_SECRET');
         $path = base_path('.env');
-        $old = "";
-        $new = "";
         if (file_exists($path)) {
             foreach ($settings as $setting) {
                 file_put_contents($path, str_replace(
                     $setting . ' = ' . getenv($setting), $setting . ' = ' . Input::get($setting), file_get_contents($path)));
-//                $old = $old.$setting . ' = ' . getenv($setting)."\n";
-//                $new = $new.$setting . '=' . Input::get($setting)."\n";
             }
         }
         return Redirect::to('home');
     }
+
 }

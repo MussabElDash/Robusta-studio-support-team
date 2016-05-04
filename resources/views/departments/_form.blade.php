@@ -17,7 +17,7 @@
     <div class="form-group">
         {!! Form::label('Head', 'Head', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('user_id', array(-1=>'Please select a supervisor'), '-1', ['class' => 'form-control','id'=>'supervisor_select']) }}
+            {{ Form::select('user_id', array(""=>'Please select a supervisor'), null, ['class' => 'form-control','id'=>'supervisor_select']) }}
         </div>
     </div>
 

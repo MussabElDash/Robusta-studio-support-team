@@ -27,7 +27,7 @@ class AgentsController extends Controller
         if ($user->save()) {
             // redirect
             Flash::success('Successfully created an Agent!');
-            return Redirect::route('agents.show', $user);
+            return Redirect::route('agents.show', $user->slug);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -50,9 +50,8 @@ class AgentsController extends Controller
         // process
         if ($user->update(Input::all())) {
             // redirect
-            $agent = $user->slug ? $user->slug : $agent;
             Flash::success('Successfully updated an Agent!');
-            return Redirect::route('agents.show', $agent);
+            return Redirect::route('agents.show', $agent->slug);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -101,14 +100,16 @@ class AgentsController extends Controller
     public function index()
     {
         $agents = User::all();
+        foreach ($agents as $agent) {
+            $agent->open = Ticket::openTickets($agent->id)->count();
+            $agent->closed = Ticket::closedTickets($agent->id)->count();
+        }
         return view('agents.index', ['agents' => $agents]);
     }
 
     public function workspace(Request $request)
     {
-
-        return view('agents.workspace', ['agent' => $this->user, 'tickets' => $this->user->tickets()->open()]);
-
+        return view('agents.workspace', ['agent' => $this->user, 'tickets' => $this->user->tickets()->open()->get()]);
     }
 
     public function closedTickets(Request $request)

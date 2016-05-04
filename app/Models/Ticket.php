@@ -25,6 +25,10 @@ class Ticket extends BaseModel
         'description' => 'required'
     ];
 
+    protected static $emptyIsNull = [
+        'department_id'
+    ];
+
     // Relations
     public function creator()
     {
@@ -109,6 +113,9 @@ class Ticket extends BaseModel
     public function scopeClosedTickets(Builder $query,$user_id){
         return $query->where('assigned_to',$user_id)->done();
     }
+    public function scopeOpenTickets(Builder $query,$user_id){
+        return $query->where('assigned_to',$user_id)->open();
+    }
 
-    
+
 }

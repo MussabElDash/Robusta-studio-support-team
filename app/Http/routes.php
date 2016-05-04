@@ -22,6 +22,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-skin', function () {
         return response(view('skin'))->header('Content-Type', 'text/css');
     });
+    Route::group(['prefix' => 'ticket'], function () {
+        Route::get('paypal/{id}', ['as' => 'tickets.paypal', 'uses' => 'TicketsController@paypal']);
+        Route::post('vip', ['as' => 'tickets.vip', 'uses' => 'TicketsController@vip']);
+    });
 
     Route::group(['middleware' => ['auth']], function () {
 
@@ -87,6 +91,8 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::put('{id}/toggle_status', ['as' => 'tickets.toggle_status', 'uses' => 'TicketsController@toggle_status']);
             Route::put('{id}/toggle_vip', ['as' => 'tickets.toggle_vip', 'uses' => 'TicketsController@toggle_vip']);
+
+            Route::put('assign', ['as' => 'tickets.assign', 'uses' => 'TicketsController@assign']);
         });
 
         // ADMIN ONLY

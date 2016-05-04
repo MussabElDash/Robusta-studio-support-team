@@ -14,10 +14,10 @@
             </div>
 
             <div class="modal-body">
-                @include("tickets._form", ['ticket' => $ticket, 'autoFill' => true])
+                @include("tickets._form_feed",
+                ['ticket' => $ticket, 'autoFill' => true,'route'=> ['tickets.update', 'id' => $ticket->id],
+                'method'=>'put','class'=>'form-horizontal','agents'=>$agents])
             </div>
-
-
         </div>
     </div>
 </div>
