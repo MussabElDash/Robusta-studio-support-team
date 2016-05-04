@@ -31,9 +31,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Log::info('Showing user profile for user: ');
         try {
-            $tweets = Cache::remember('tweets', 60, function () {
+            $tweets = Cache::remember('tweets', 15, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
         } catch (\Exception $e) {
