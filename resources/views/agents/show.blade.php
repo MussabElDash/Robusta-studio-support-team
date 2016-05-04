@@ -51,6 +51,7 @@
                 {{--*/ $canDelete = $user->hasRole(['Admin']) /*--}}
                 {{--*/ $canDelete |= $user->hasRole(['Supervisor']) && $user->department == $agent-> department/*--}}
                 {{--*/ $canDelete &= $user != $agent /*--}}
+                {{--*/ $canDelete &= $user.role != $agent.role /*--}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Show Agent
