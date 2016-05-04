@@ -27,8 +27,7 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('departments.index', ['departments' => $departments]);
+        return view('departments.index', ['departments' => $this->departments]);
     }
 
     /**
