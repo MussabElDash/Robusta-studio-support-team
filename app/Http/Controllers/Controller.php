@@ -27,9 +27,9 @@ class Controller extends BaseController
     public function __construct()
     {
         // Fetch the Site Settings object
-        $this->departments = ['-1' => 'Select Department'] + Department::lists('name', 'id')->all();
-        $this->labels = ['-1' => 'Select Label'] + Label::lists('name', 'id')->all();
-        $this->priorities = ['-1' => 'Select Priority'] + Priority::lists('name', 'id')->all();
+        $this->departments = ['' => 'Select Department'] + Department::lists('name', 'id')->all();
+        $this->labels = ['' => 'Select Label'] + Label::lists('name', 'id')->all();
+        $this->priorities = ['' => 'Select Priority'] + Priority::lists('name', 'id')->all();
 
         $this->user = Auth::user();
 

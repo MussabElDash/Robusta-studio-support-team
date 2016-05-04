@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Customer;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 use App\Models\User as UserModel;
 use App\Http\Requests;
-use Auth;
-
 use App\Models\Ticket;
+
+use Auth;
+use DB;
+
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-
-use DB;
 use Log;
 
 class TicketsController extends Controller
@@ -54,10 +55,10 @@ class TicketsController extends Controller
         if ($request->ajax()) {
             return Response::json(['html' => view('tickets.edit_modal', ["ticket" => $ticket,
                 'agents' => ($ticket->department) ?
-                    array(-1 => 'Please select a department to load free agents') +
+                    array('' => 'Please select a department to load free agents') +
                     UserModel::freeAgents($ticket->department->id)->get()->lists('name', 'id')->toArray()
                     :
-                    array(-1 => 'Please select a department to load free agents')])->render(),
+                    array('' => 'Please select a department to load free agents')])->render(),
                 'id' => $ticket->id]);
         }
     }
@@ -148,21 +149,13 @@ class TicketsController extends Controller
             $customer->profile_image_path = Input::get('customer_profile_image_path');
             $customer->save();
         }
-        $ticket = new Ticket();
-        $ticket->name = Input::get('name');
+        $ticket = new Ticket(Input::all());
         $ticket->description = Input::get('tweet_text');
-        if (Input::get('assigned_to') != -1)
-            $ticket->assigned_to = Input::get('assigned_to');
-        if (Input::get('department_id') != -1)
-            $ticket->department_id = Input::get('department_id');
         $ticket->creator_id = $this->user->id;
         $ticket->customer_id = $customer->id;
-        if (Input::get('priority_id') != -1)
-            $ticket->priority_id = Input::get('priority_id');
-        $ticket->tweet_id = Input::get('tweet_id');
         $ticket->save();
         $labels = array_filter(Input::get('label'), function ($id) {
-            return $id !== '-1';
+            return !empty($id);
         });
 
         if (count($labels) > 0)

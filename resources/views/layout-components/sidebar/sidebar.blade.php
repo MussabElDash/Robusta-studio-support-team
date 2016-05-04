@@ -96,6 +96,6 @@
     @include('shared.modals.basic_modal', ['id' => 'create-customer-modal', 'body' => 'customers._form', 'title' => 'Create New Customer'])
     @include('shared.modals.basic_modal', ['id' => 'create-phone-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
     @include('shared.modals.basic_modal', ['id' => 'create-ticket-from-feed-modal', 'body' => 'tickets._form_feed',
-     'title' => 'Create Ticket','route'=>'tickets.feed','method'=>'post','class'=>'form-horizontal feed','ticket'=>null,'agents'=>array(-1=>'Please select a department to load free agents')])
+     'title' => 'Create Ticket','route'=>'tickets.feed','method'=>'post','class'=>'form-horizontal feed','ticket'=>null,'agents'=>array(''=>'Please select a department to load free agents')])
 
 @endsection
