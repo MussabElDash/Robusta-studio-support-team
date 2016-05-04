@@ -42,17 +42,16 @@ class CommentsController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $current_user = Auth::user();
         $comment = new Comment;
-        $comment->user_id = $current_user->id;
-        $comment->user_type = get_class($current_user);
+        $comment->user_id = $this->user->id;
+        $comment->user_type = get_class($this->user);
         $comment->body = $request->get("body");
         $comment->ticket_id = $id;
         $tweet=json_decode(Twitter::postTweet(['status' => "@".$comment->ticket->customer->name." ".$comment->body, 'in_reply_to_status_id'=> Input::get('last_status_id')   ,'format' => 'json']),true);
         $comment->status_id = $tweet['id'];
         if ($comment->save()) {
             if ($request->ajax()) {
-                return Response::json(["html" => view("comments._comment", ["user" => $current_user, "comment" => $comment])->render(), "id" => $id]);
+                return Response::json(["html" => view("comments._comment", ["comment" => $comment])->render(), "id" => $id]);
             }
         } else {
             // return error
