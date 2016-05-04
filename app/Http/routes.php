@@ -37,9 +37,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('ticket', 'TicketsController', ['only' => [
             'store'
         ]]);
+
         Route::resource('customer', 'CustomersController', ['only' => [
             'store'
         ]]);
+
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
@@ -49,7 +51,9 @@ Route::group(['middleware' => ['web']], function () {
             });
         });
 
-
+        Route::resource('agents', 'AgentsController', ['except' => [
+            'create'
+        ]]);
 
         //TICKET
         Route::group(['prefix' => 'tickets'], function () {
@@ -89,9 +93,6 @@ Route::group(['middleware' => ['web']], function () {
         // ADMIN AND SUPERVISOR
         Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
 
-            Route::resource('agents', 'AgentsController', ['except' => [
-                'create'
-            ]]);
             Route::resource('departments', 'DepartmentsController');
 
             Route::group(['prefix' => 'home'], function () {
