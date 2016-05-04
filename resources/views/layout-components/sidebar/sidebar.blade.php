@@ -26,6 +26,13 @@
                 </a>
             </li>
 
+            <li class="{{ active('agents.closed') }}">
+                <a href="{{ route('agents.closed') }}">
+                    <i class="fa fa-close"></i>
+                    <span>Closed Tickets</span>
+                </a>
+            </li>
+
             @if ($user->hasRole(['Admin']))
                 @include('layout-components.sidebar.admin')
             @elseif ($user->role == 'Supervisor')

@@ -163,4 +163,42 @@ class TicketsController extends Controller
         return Response::json(["success" => true]);
 
     }
+
+    public function toggle_status(Request $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        if ($ticket->assigned_to == $this->user->id) {
+            $ticket->open = !$ticket->open;
+
+            $flag = $ticket->update();
+
+            if ($request->ajax()) {
+                return Response::json(["success" => $flag]);
+            }
+
+            return redirect()->back();
+        }
+
+        if ($request->ajax()) {
+            return Response::json(["message" => "Not Authorized"], 401);
+        }
+    }
+
+    public function toggle_vip( Request $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        if ($ticket->assigned_to == $this->user->id ||
+            $this->user->hasRole(['Admin']) ||
+            $this->user->department_id == $ticket->department_id) {
+            $ticket->vip = !$ticket->vip;
+
+            $flag = $ticket->update();
+
+            if ($request->ajax()) {
+                return Response::json(["success" => $flag]);
+            }
+
+            return redirect()->back();
+        }
+    }
 }
