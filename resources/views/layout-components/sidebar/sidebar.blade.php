@@ -19,6 +19,13 @@
                 <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
             </li>
 
+            <li class="{{ active('tickets.pool') }}">
+                <a href="{{ route('tickets.pool') }}">
+                    <i class="fa fa-sticky-note-o"></i>
+                    <span>Tickets Pool</span>
+                </a>
+            </li>
+
             @if ($user->role == 'Admin')
                 @include('layout-components.sidebar.admin')
             @elseif ($user->role == 'Supervisor')
