@@ -25,6 +25,10 @@ class BaseModel extends Model
         parent::boot();
 
         static::creating(function ($model) {
+            foreach ( $model->attributes as $k => $v ){
+                $model->attributes[$k] = $v === '-1' ? null : $v;
+            }
+
             if ($model instanceof SluggableInterface) {
                 $model->sluggify();
             }
