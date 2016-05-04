@@ -18,10 +18,20 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', [function () {
         return view('landing');
     }]);
+
     Route::get('/get-skin', function () {
         return response(view('skin'))->header('Content-Type', 'text/css');
     });
+
     Route::group(['middleware' => ['auth']], function () {
+
+        Route::group(['prefix' => 'home'], function () {
+            Route::get('', ['uses' => 'HomeController@index']);
+        });
+
+        Route::group(['prefix' => 'department'], function () {
+            Route::get('free/{id}', ['as' => 'departments.free', 'uses' => 'DepartmentsController@freeAgents'])->where('id', '[1-9][0-9]*');
+        });
 
         // Resources
         Route::resource('ticket', 'TicketsController', ['only' => [
@@ -38,6 +48,8 @@ Route::group(['middleware' => ['web']], function () {
                 return redirect()->route('agents.edit', [$id]);
             });
         });
+
+
 
         //TICKET
         Route::group(['prefix' => 'tickets'], function () {
@@ -63,11 +75,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('feed', ['as' => 'tickets.feed', 'uses' => 'TicketsController@from_feed']);
         });
 
-
-        Route::group(['prefix' => 'home'], function () {
-            Route::get('', ['uses' => 'HomeController@index']);
-        });
-
         // ADMIN ONLY
         Route::group(['middleware' => 'userRole:Admin'], function () {
 
@@ -90,8 +97,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
             });
+
             Route::group(['prefix' => 'department'], function () {
-                Route::get('free/{id}', ['as' => 'departments.free', 'uses' => 'DepartmentsController@freeAgents'])->where('id', '[1-9][0-9]*');
                 Route::get('supervisor', ['as' => 'departments.supervisor', 'uses' => 'DepartmentsController@freeSupervisors'])->where('id', '[1-9][0-9]*');
             });
         });
