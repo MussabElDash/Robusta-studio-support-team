@@ -27,7 +27,7 @@ class AgentsController extends Controller
         if ($user->save()) {
             // redirect
             Flash::success('Successfully created an Agent!');
-            return Redirect::route('agents.show', $user);
+            return Redirect::route('agents.show', $user->slug);
         } else {
             // redirect
             Flash::error($user->getErrors());
@@ -50,9 +50,8 @@ class AgentsController extends Controller
         // process
         if ($user->update(Input::all())) {
             // redirect
-            $agent = $user->slug ? $user->slug : $agent;
             Flash::success('Successfully updated an Agent!');
-            return Redirect::route('agents.show', $agent);
+            return Redirect::route('agents.show', $agent->slug);
         } else {
             // redirect
             Flash::error($user->getErrors());
