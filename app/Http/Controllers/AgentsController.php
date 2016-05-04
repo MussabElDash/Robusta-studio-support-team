@@ -22,14 +22,11 @@ class AgentsController extends Controller
      */
     public function store()
     {
-        Log::info("creating agent ... \n" . implode(",", Input::all()));
         $user = new User(Input::all());
-        // $user->department_id = Input::get('department_id');
-        Log::info($user);
         // process
         if ($user->save()) {
             // redirect
-            Flash::success('Successfully created Agent!');
+            Flash::success('Successfully created an Agent!');
             return Redirect::route('agents.show', $user);
         } else {
             // redirect
@@ -47,6 +44,7 @@ class AgentsController extends Controller
     {
         $user = User::findBySlug($agent);
         if (is_null($user)) {
+            Flash::error('No such Agent');
             return Redirect::back();
         }
         // process
@@ -73,6 +71,7 @@ class AgentsController extends Controller
     {
         $user = User::findBySlug($agent);
         if (is_null($user)) {
+            Flash::error('No such Agent');
             return Redirect::to('home');
         }
         return view('agents.show', ['agent' => $user]);
