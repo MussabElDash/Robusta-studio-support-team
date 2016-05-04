@@ -3,13 +3,11 @@
     {{--*/ $comment_text = $comments->last()->body/*--}}
     {{--*/ $commenter_name = $comments->last()->user->name/*--}}
     {{--*/ $commenter_image = $comments->last()->user->profile_image_path/*--}}
-    {{--*/ $last_status_id = $comments->last()->status_id/*--}}
 
 @else
     {{--*/ $comment_text = $ticket->description/*--}}
     {{--*/ $commenter_name = $ticket->customer->name/*--}}
     {{--*/ $commenter_image = $ticket->customer->profile_image_path/*--}}
-    {{--*/ $last_status_id = $ticket->tweet_id/*--}}
 @endif
 <div class="col-lg-4  col-md-4  col-sm-4 ">
     <div class="box box-success">
@@ -43,7 +41,6 @@
         <!-- /.chat -->
         <div class="box-footer">
             {!! Form::open(['route' => ['tickets.comment.store', 'id' => $ticket->id ], 'method' => 'post', "class" => "comment-form"]) !!}
-            {!! Form::hidden('last_status_id',$last_status_id,array('id'=>'last_status_id')) !!}
             {!! Form::hidden('commenter_name',$user->name,array('id'=>'commenter_name')) !!}
             {!! Form::hidden('commenter_image',$user->profile_image_path,array('id'=>'commenter_image')) !!}
             <div class="input-group">

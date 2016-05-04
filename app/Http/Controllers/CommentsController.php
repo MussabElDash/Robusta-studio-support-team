@@ -48,7 +48,13 @@ class CommentsController extends Controller
         $comment->user_type = get_class($current_user);
         $comment->body = $request->get("body");
         $comment->ticket_id = $id;
-        $tweet=json_decode(Twitter::postTweet(['status' => "@".$comment->ticket->customer->name." ".$comment->body, 'in_reply_to_status_id'=> Input::get('last_status_id')   ,'format' => 'json']),true);
+        $ticket = $comment->ticket;
+        $comments = $ticket->comments;
+        if ($comments->count() > 0)
+            $last_status_id = $comments->last()->status_id;
+        else
+            $last_status_id = $ticket->tweet_id;
+        $tweet = json_decode(Twitter::postTweet(['status' => "@" . $comment->ticket->customer->name . " " . $comment->body, 'in_reply_to_status_id' =>$last_status_id, 'format' => 'json']), true);
         $comment->status_id = $tweet['id'];
         if ($comment->save()) {
             if ($request->ajax()) {
