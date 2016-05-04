@@ -54,7 +54,7 @@
                     @endif
                     <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i>
                             <span>Create Customer</span></a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#create-ticket-modal"><i class="fa fa-plus"></i>
+                    <li><a href="#" data-toggle="modal" data-target="#create-phone-ticket-modal"><i class="fa fa-plus"></i>
                             <span>Create Phone Ticket</span></a></li>
                 </ul>
             </li>
@@ -70,16 +70,19 @@
 @section('modals')
     @parent
 
+    @if ( $user->hasRole(['Admin']))
+        @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
+    @endif
+
     @if( $user->hasRole(['Admin', 'Supervisor']) )
         @include('shared.modals.basic_modal', ['id' => 'create-department-modal', 'body' => 'departments._form', 'title' => 'Create New Department'])
         @include('shared.modals.basic_modal', ['id' => 'create-agent-modal', 'body' => 'agents._form', 'title' => 'Create New Agent'])
         @include('shared.modals.basic_modal', ['id' => 'create-label-modal', 'body' => 'labels._form', 'title' => 'Create New Label'])
         @include('shared.modals.basic_modal', ['id' => 'create-priority-modal', 'body' => 'priorities._form', 'title' => 'Create New Priority'])
-        @include('shared.modals.basic_modal', ['id' => 'change-theme', 'body' => 'settings._form_color', 'title' => 'Change Theme'])
-        @include('shared.modals.basic_modal', ['id' => 'create-ticket-from-feed-modal', 'body' => 'tickets._form_feed', 'title' => 'Create Ticket'])
     @endif
 
     @include('shared.modals.basic_modal', ['id' => 'create-customer-modal', 'body' => 'customers._form', 'title' => 'Create New Customer'])
-    @include('shared.modals.basic_modal', ['id' => 'create-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
+    @include('shared.modals.basic_modal', ['id' => 'create-phone-ticket-modal', 'body' => 'tickets._form', 'title' => 'Create New Ticket'])
+    @include('shared.modals.basic_modal', ['id' => 'create-ticket-from-feed-modal', 'body' => 'tickets._form_feed', 'title' => 'Create Ticket'])
 
 @endsection

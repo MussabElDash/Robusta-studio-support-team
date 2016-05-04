@@ -37,9 +37,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('ticket', 'TicketsController', ['only' => [
             'store'
         ]]);
+
         Route::resource('customer', 'CustomersController', ['only' => [
             'store'
         ]]);
+
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
