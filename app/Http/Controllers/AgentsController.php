@@ -124,7 +124,9 @@ class AgentsController extends Controller
             Flash::error('No such Agent');
             return Redirect::back();
         }
-        if ($this->user->hasRole(['Supervisor']) && $this->user->department != $user->department) {
+        if (($this->user->hasRole(['Supervisor']) && $this->user->department != $user->department)
+            || $this->user == $user
+        ) {
             Flash::error("You don't have permission to fire this agent");
             return Redirect::back();
         }
