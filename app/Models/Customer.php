@@ -29,8 +29,6 @@ class Customer extends BaseModel implements SluggableInterface
         'twitter_id' => 'required'
     ];
 
-    protected $emptyIsNull = ['twitter_id', 'notes'];
-
     // Relations
 
     public function creator()

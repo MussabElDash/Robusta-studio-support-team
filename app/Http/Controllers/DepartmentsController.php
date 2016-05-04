@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
-use Flash;
-use Session;
-use Redirect;
-use Auth;
-use Log;
-use Response;
-use Helpers;
+use App\Models\Department;
 use App\Models\User;
+use Auth;
+use Flash;
+use Helpers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Log;
+use Redirect;
+use Response;
+use Session;
 
 class DepartmentsController extends Controller
 {
@@ -27,7 +26,7 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        return view('departments.index', ['departments' => $this->departments]);
+        return view('departments.index', ['departments1' => Department::all()]);
     }
 
     /**
@@ -116,28 +115,31 @@ class DepartmentsController extends Controller
     {
         //
     }
+
     public function freeAgents(Request $request, $id)
     {
         if ($request->ajax()) {
             $response = array(
                 'success' => true,
                 'status' => 'success',
-                'agents' => User::freeAgents($id)->get()->lists('name','id')->toArray()
+                'agents' => User::freeAgents($id)->get()->lists('name', 'id')->toArray()
             );
             return Response::json($response, 200);
-        }else{
+        } else {
             error_log('NOT AJAX');
         }
     }
-    public function freeSupervisors(Request $request){
+
+    public function freeSupervisors(Request $request)
+    {
         if ($request->ajax()) {
             $response = array(
                 'success' => true,
                 'status' => 'success',
-                'supervisors' => User::freeSupervisors()->get()->lists('name','id')->toArray()
+                'supervisors' => User::freeSupervisors()->get()->lists('name', 'id')->toArray()
             );
             return Response::json($response, 200);
-        }else{
+        } else {
             error_log('NOT AJAX');
         }
     }
