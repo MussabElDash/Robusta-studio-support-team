@@ -50,6 +50,23 @@
                 </div>
             </div>
             {!! Form::close() !!}
+
+            {{--*/ $toggle_status_text = $ticket->open ? 'Mark as Done' : 'Open' /*--}}
+            {{--*/ $toggle_vip_text = $ticket->vip ? 'Unmark as Vip' : 'Mark as Vip' /*--}}
+            <div style="margin-top: 10px;">
+                <span style="margin-left: 10px;">
+                {!! Form::open(['route' => ['tickets.toggle_status', $ticket->id], 'method' => 'put']) !!}
+                    {!! Form::submit($toggle_status_text, ['class' => 'btn btn-success']) !!}
+                    {!! Form::close() !!}
+                </span>
+                <span style="margin-left: 35px;">
+                    {!! Form::open(['route' => ['tickets.toggle_vip', $ticket->id], 'method' => 'put']) !!}
+                    {!! Form::submit($toggle_vip_text, ['class' => 'btn btn-success']) !!}
+                    {!! Form::close() !!}
+                </span>
+
+            </div>
+
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Customer;
 use Illuminate\Database\Seeder;
-use \App\Models\Customer;
 
 class CustomersTableSeeder extends Seeder
 {
@@ -19,12 +19,10 @@ class CustomersTableSeeder extends Seeder
                 'twitter_id' => '9823475',
                 'creator_id' => 1,
                 'name' => 'mohamed',
-                'slug' => 'mohamedx'
             ], [
                 'twitter_id' => '9823474',
                 'creator_id' => 1,
-                'name' => 'mohamed',
-                'slug' => 'mohamedy'
+                'name' => 'Ahmed',
 
             ]
         ];
