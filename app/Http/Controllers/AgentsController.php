@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\Ticket;
 use App\Models\User;
 use Auth;
 use Flash;
@@ -107,5 +108,8 @@ class AgentsController extends Controller
     public function workspace(Request $request)
     {
         return view('agents.workspace', ['tickets'=> $this->user->tickets]);
+    }
+    public function closedTickets(Request $request){
+        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->get(),'closed'=>true]);
     }
 }

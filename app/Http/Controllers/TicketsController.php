@@ -61,7 +61,7 @@ class TicketsController extends Controller
         if ($ticket->update($request->all())) {
             if ($request->ajax()) {
                 return Response::json(["html" => view('tickets._ticket_pool',
-                    ["ticket" => $ticket])->render(), "id" => $id]);
+                    ["ticket" => $ticket, "closed" => false])->render(), "id" => $id]);
             }
 
             return view('tickets.show', []);
@@ -77,7 +77,7 @@ class TicketsController extends Controller
             'creator', 'labels', 'priority', 'comments.user')->find($id);
         Log::info(DB::getQueryLog());
         if ($request->ajax()) {
-            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket])->render(), 'id' => $ticket->id]);
+            return Response::json(['html' => view('tickets.show_modal', ["ticket" => $ticket,"closed"=>!$ticket->open])->render(), 'id' => $ticket->id]);
         }
     }
 
@@ -100,9 +100,9 @@ class TicketsController extends Controller
         }
 
         if ($request->ajax()) {
-            return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets])->render());
+            return Response::json(view('tickets._tickets_pool', ['tickets' => $tickets, 'closed' => false])->render());
         }
-        return view('tickets.pool', ['tickets' => $tickets]);
+        return view('tickets.pool', ['tickets' => $tickets,'closed' => false]);
     }
 
     public function claim(Request $request, $id)

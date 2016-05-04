@@ -110,6 +110,7 @@ Route::group(['middleware' => ['web']], function () {
         // AGENT ONLY
         Route::group(['middleware' => 'userRole:Agent'], function () {
             Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
+            Route::get('closed', ['as' => 'agents.closed', 'uses' => 'AgentsController@closedTickets']);
         });
     });
 });
