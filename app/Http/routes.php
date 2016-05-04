@@ -87,6 +87,8 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::put('{id}/toggle_status', ['as' => 'tickets.toggle_status', 'uses' => 'TicketsController@toggle_status']);
             Route::put('{id}/toggle_vip', ['as' => 'tickets.toggle_vip', 'uses' => 'TicketsController@toggle_vip']);
+
+            Route::put('assign',['as'=>'tickets.assign','uses'=>'TicketsController@assign']);
         });
 
         // ADMIN ONLY

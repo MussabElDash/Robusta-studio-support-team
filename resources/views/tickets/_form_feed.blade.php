@@ -1,5 +1,7 @@
 <!-- Can be used for edit - create -->
-{!! Form::model( null, ['route' =>  'tickets.feed','method' => 'post', 'class' => 'form-horizontal feed']) !!}
+{{--*/ $form_id     = $ticket ? 'ticket-form-' . $ticket->id : '' /*--}}
+
+{!! Form::model($ticket, ['route' =>  $route,'method' => $method, 'class' => $class, 'id' => $form_id]) !!}
 <div class="box-body">
     {!! Form::hidden('customer_twitter_id','',array('id' => 'customer_twitter_id')) !!}
     {!! Form::hidden('customer_name','',array('id' => 'customer_name')) !!}
@@ -13,28 +15,29 @@
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('department', 'Department', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('department_id', 'Department', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('department_id', $departments, '-1', ['class' => 'form-control','id'=>'department_select_free_agents']) }}
+            {{ Form::select('department_id', $departments, null, ['class' => 'form-control department_select_free_agents']) }}
+
         </div>
     </div>
     <div class="form-group">
         {!! Form::label('priority', 'Priority', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('priority_id', $priorities, '-1', ['class' => 'form-control']) }}
+            {{ Form::select('priority_id', $priorities, null, ['class' => 'form-control']) }}
         </div>
     </div>
     <div class="form-group">
         {!! Form::label('agent', 'Agent', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('assigned_to', array(-1=>'Please select a department to load free agents'), '-1', ['class' => 'form-control','id'=>'agent_select']) }}
+            {{ Form::select('assigned_to',$agents,null, ['class' => 'form-control agent_select']) }}
+
         </div>
     </div>
     <div class="form-group" id="dynamic-fields">
         {!! Form::label('labels', 'Labels', ['class' => 'col-sm-12 control-label']) !!}
         <div class="entry input-group col-sm-12">
-            {{--*/ $labels = array(-1=>'Select label')+DB::table('labels')->lists('name','id') /*--}}
-            {{ Form::select('label[]', $labels,-1, ['class' => 'form-control']) }}
+            {{ Form::select('label[]', $labels, null, ['class' => 'form-control']) }}
             <span class="input-group-btn">
                 <button class="btn btn-success btn-add" type="button">
                     <span class="glyphicon glyphicon-plus"></span>
