@@ -128,11 +128,4 @@ class BaseModel extends Model
         return !empty($this->errors);
     }
 
-    public function __set($key, $value)
-    {
-        Log::info("assuty");
-        Log::info($key);
-        Log::info($value);
-        parent::__set($key,  $value === -1 ? null : $value);
-    }
 }

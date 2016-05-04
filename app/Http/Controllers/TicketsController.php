@@ -157,6 +157,7 @@ class TicketsController extends Controller
         $labels = array_filter(Input::get('label'), function ($id) {
             return $id !== '-1';
         });
+
         if (count($labels) > 0)
             $ticket->labels()->attach(Input::get('label'));
         return Response::json(["success" => true]);
