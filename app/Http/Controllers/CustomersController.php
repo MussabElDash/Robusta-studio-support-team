@@ -50,7 +50,7 @@ class CustomersController extends Controller
         } else {
             // redirect
             Flash::error($custom->getErrors());
-            return Redirect::back()->with('errors', $custom->getErrors());
+            return Redirect::back();
         }
     }
 

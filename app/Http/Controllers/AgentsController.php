@@ -10,8 +10,8 @@ use Flash;
 use Input;
 use Log;
 use Redirect;
-use Session;
 use Request;
+use Session;
 
 class AgentsController extends Controller
 {
@@ -56,7 +56,7 @@ class AgentsController extends Controller
         } else {
             // redirect
             Flash::error($user->getErrors());
-            return Redirect::back()->with('errors', $user->getErrors());
+            return Redirect::back();
         }
     }
 
@@ -107,10 +107,32 @@ class AgentsController extends Controller
     public function workspace(Request $request)
     {
 
-        return view('agents.workspace',['agent' => $this->user,'tickets'=> $this->user->tickets()->open()]);
+        return view('agents.workspace', ['agent' => $this->user, 'tickets' => $this->user->tickets()->open()]);
 
     }
-    public function closedTickets(Request $request){
-        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->get(),'closed'=>true]);
+
+    public function closedTickets(Request $request)
+    {
+        return view('agents.closed', ['tickets' => Ticket::closedTickets($this->user->id)->get(), 'closed' => true]);
+    }
+
+    public function destroy($agent)
+    {
+        $user = User::findBySlug($agent);
+        if (is_null($user)) {
+            Flash::error('No such Agent');
+            return Redirect::back();
+        }
+        if ($this->user->hasRole(['Supervisor']) && $this->user->department != $user->department) {
+            Flash::error("You don't have permission to fire this agent");
+            return Redirect::back();
+        }
+        if ($user->delete()) {
+            Flash::success('Successfully deleted an Agent!');
+            return Redirect::to('home');
+        } else {
+            Flash::error('An Error occured while deleting');
+            return Redirect::back();
+        }
     }
 }

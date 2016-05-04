@@ -41,22 +41,26 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('customers', 'CustomersController', ['except' => [
             'index', 'create'
         ]]);
-        Route::post('/customers/{customer}/edit', function ($id) {
+        Route::post('customers/{customer}/edit', function ($id) {
             return redirect()->route('customers.edit', [$id]);
         });
 
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
-        Route::group(['prefix' => 'agent'], function () {
-            Route::post('/agents/{agent}/edit', function ($id) {
+        Route::resource('agents', 'AgentsController', ['except' => [
+            'create', 'destroy'
+        ]]);
+        Route::group(['prefix' => 'agents'], function () {
+            Route::post('{agent}/edit', function ($id) {
                 return redirect()->route('agents.edit', [$id]);
             });
+            Route::delete('{agent}', [
+                'as' => 'agents.destroy',
+                'uses' => 'AgentsController@destroy',
+                'middleware' => 'userRole:Admin,Supervisor'
+            ]);
         });
-
-        Route::resource('agents', 'AgentsController', ['except' => [
-            'create'
-        ]]);
 
         //TICKET
         Route::group(['prefix' => 'tickets'], function () {
@@ -96,7 +100,7 @@ Route::group(['middleware' => ['web']], function () {
             ]]);
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
-                Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);
+                Route::post('twitter', ['uses' => 'HomeController@twitterSettings', 'as' => 'home.twitter']);
 
             });
         });
