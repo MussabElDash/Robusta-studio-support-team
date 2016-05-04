@@ -6,6 +6,10 @@ use App\Models\Priority;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Response;
+
+use Log;
+use Flash;
 
 class PrioritiesController extends Controller
 {
@@ -39,11 +43,18 @@ class PrioritiesController extends Controller
     {
         $priority = Priority::create($request->all());
 
-        if ($priority->id) {
-            return redirect()->back();
-        } else {
-            // error
+        $response = [
+            'success' => true
+        ];
+        $status = 200;
+
+        if ($priority->id == null) {
+            $response["success"] = false;
+            $response["errors"] = $priority->getErrors();
+            $status = 400;
         }
+
+        return Response::json($response, $status);
     }
 
     /**

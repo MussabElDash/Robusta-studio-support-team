@@ -1,5 +1,5 @@
 <!-- Can be used for edit - create -->
-{!! Form::model(null, ['route' => 'priority.store', 'class' => 'form-horizontal']) !!}
+{!! Form::model(null, ['route' => 'priorities.store', 'class' => 'form-horizontal']) !!}
 <div class="box-body">
 
     <div class="form-group">
@@ -18,8 +18,8 @@
 
     <div class="form-group">
         {!! Form::label('background_color', 'Background Color', ['class' => 'col-sm-2 control-label']) !!}
-        <div id="background_color" class="input-group colorpicker-component">
-            {!! Form::text('background_color','#773f60', ['class' => 'form-control']) !!}
+        <div id="background_color" class="col-sm-10 input-group colorpicker-component">
+            {!! Form::text('background_color', null, ['class' => 'form-control', 'style' => 'margin-left: 15px;width: 97%']) !!}
             <span class="input-group-addon"><i></i></span>
         </div>
         <script>
@@ -31,8 +31,8 @@
 
     <div class="form-group">
         {!! Form::label('name_color', 'Text Color', ['class' => 'col-sm-2 control-label']) !!}
-        <div id="name_color" class="input-group colorpicker-component">
-            {!! Form::text('name_color','#773f60', ['class' => 'form-control']) !!}
+        <div id="name_color" class="col-sm-10 input-group colorpicker-component">
+            {!! Form::text('name_color', null, ['class' => 'form-control', 'style' => 'margin-left: 15px;width: 97%']) !!}
             <span class="input-group-addon"><i></i></span>
         </div>
         <script>

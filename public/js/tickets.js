@@ -44,7 +44,7 @@ $(document).on('click', "[id$='show']", function (e) {
                             $("#comment-form-" + data['id'])[0].reset();
                         },
                         error: function (data) {
-                            console.log("Not Authorized");
+                            //console.log("Not Authorized");
                         }
                     });
                 });
@@ -57,6 +57,22 @@ $(document).on('click', "[id$='show']", function (e) {
     } else {
         $("#show-ticket-modal-" + $(this)[0].dataset["id"]).modal("show");
     }
+});
+
+$(document).on('submit', '#create-priority-modal', function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: 'priorities',
+        type: 'post',
+        data: $("#create-priority-modal form").serialize(),
+        context: $("#create-priority-modal"),
+        success: function (data) {
+            hideModalAfterSuccess('create-priority-modal');
+        },
+        error: function (data) {
+            showModalError('create-priority-modal', 'errors', data);
+        }
+    });
 });
 
 // EDIT Modal AJAX
@@ -318,3 +334,24 @@ $(function () {
         return false;
     });
 });
+
+function hideModalAfterSuccess(modalId) {
+    $('#' + modalId + ' form')[0].reset();
+    $('#' + modalId).modal('hide');
+    $('#' + modalId + ' .error').remove();
+}
+
+
+function showModalError(formId, errorArrayName, data) {
+    var inputs = $('#' + formId + ' :input[id]');
+    var errors = data.responseJSON[errorArrayName];
+    $('#' + formId + ' .error').remove();
+    $.each( inputs, function( index, value) {
+        var errorMsg = "<p class='text-red error' style='width: 79%;margin-left: 19%'>";
+        var id = $(value)[0].id;
+        if (errors[id]) {
+            errorMsg = errorMsg + errors[id] + "</p>"
+            $(value).parent().parent().prepend(errorMsg);
+        }
+    });
+}
