@@ -35,7 +35,7 @@
 
             @if ($user->hasRole(['Admin']))
                 @include('layout-components.sidebar.admin')
-            @elseif ($user->role == 'Supervisor')
+            @elseif ($user->hasRole(['Supervisor']))
                 @include('layout-components.sidebar.supervisor')
             @else
                 @include('layout-components.sidebar.agent')
@@ -58,12 +58,14 @@
                                         class="fa fa-plus"></i> <span>Create Priority</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#change-theme"><i class="fa fa-plus"></i>
                                 <span>Change Theme</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#change-twitter-settings"><i class="fa fa-plus"></i>
+                        <li><a href="#" data-toggle="modal" data-target="#change-twitter-settings"><i
+                                        class="fa fa-plus"></i>
                                 <span>Change Twitter Settings</span></a></li>
                     @endif
                     <li><a href="#" data-toggle="modal" data-target="#create-customer-modal"><i class="fa fa-plus"></i>
                             <span>Create Customer</span></a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#create-phone-ticket-modal"><i class="fa fa-plus"></i>
+                    <li><a href="#" data-toggle="modal" data-target="#create-phone-ticket-modal"><i
+                                    class="fa fa-plus"></i>
                             <span>Create Phone Ticket</span></a></li>
                 </ul>
             </li>
