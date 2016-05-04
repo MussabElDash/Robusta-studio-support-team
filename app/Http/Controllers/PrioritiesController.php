@@ -37,13 +37,13 @@ class PrioritiesController extends Controller
      */
     public function store(Request $request)
     {
-        $priority = new Priority();
-        $priority->name = Input::get('name');
-        $priority->value = Input::get('value');
-        $priority->background_color = Input::get('background_color');
-        $priority->name_color = Input::get('name_color');
-        $priority->save();
+        $priority = Priority::create($request->all());
 
+        if ($priority->id) {
+            return redirect()->back();
+        } else {
+            // error
+        }
     }
 
     /**
