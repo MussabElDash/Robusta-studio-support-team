@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Priority;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Response;
 
@@ -20,7 +19,8 @@ class PrioritiesController extends Controller
      */
     public function index()
     {
-        //
+        $priorities = Priority::all();
+        return view('priorities.index', ['priorities' => $priorities]);
     }
 
     /**
@@ -58,17 +58,6 @@ class PrioritiesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -97,8 +86,11 @@ class PrioritiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if (Priority::destroy($id)) {
+            return Response::json(["success" => true, 'id' => $id]);
+        }
+        return Response::json(["success" => false], 500);
     }
 }

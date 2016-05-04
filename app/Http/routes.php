@@ -88,9 +88,10 @@ Route::group(['middleware' => ['web']], function () {
         // ADMIN ONLY
         Route::group(['middleware' => 'userRole:Admin'], function () {
 
-            Route::resource('priorities', 'PrioritiesController', ['only' => [
-                'store'
+            Route::resource('priorities', 'PrioritiesController', ['except' => [
+                'show'
             ]]);
+
             Route::resource('label', 'LabelsController', ['only' => [
                 'store'
             ]]);

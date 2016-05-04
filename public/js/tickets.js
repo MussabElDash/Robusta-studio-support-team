@@ -335,6 +335,25 @@ $(function () {
     });
 });
 
+$(document).on('click', "#destroy-priority-index", function(e) {
+    console.log(this);
+
+    $.ajax({
+        url: "priorities/" + $(this)[0].dataset['id'],
+        type: "delete",
+        context: $(this),
+        success: function (data) {
+            this.fadeOut(300, function () {
+                $('#priority-index-' + data['id']).remove();
+            });
+        },
+        error: function (data) {
+            alert("error");
+        }
+    })
+});
+
+// Helper Function
 function hideModalAfterSuccess(modalId) {
     $('#' + modalId + ' form')[0].reset();
     $('#' + modalId).modal('hide');
