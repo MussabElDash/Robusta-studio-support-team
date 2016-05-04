@@ -62,36 +62,43 @@ Route::group(['middleware' => ['web']], function () {
                 ->where('id', '[1-9][0-9]*');
             Route::post('feed', ['as' => 'tickets.feed', 'uses' => 'TicketsController@from_feed']);
         });
-    });
-    // ADMIN ONLY
-    Route::group(['middleware' => 'userRole:Admin'], function () {
 
-        Route::resource('priority', 'PrioritiesController', ['only' => [
-            'store'
-        ]]);
-        Route::resource('label', 'LabelsController', ['only' => [
-            'store'
-        ]]);
-    });
-    // ADMIN AND SUPERVISOR
-    Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
-
-        Route::resource('agents', 'AgentsController', ['except' => [
-            'create'
-        ]]);
-        Route::resource('departments', 'DepartmentsController');
 
         Route::group(['prefix' => 'home'], function () {
             Route::get('', ['uses' => 'HomeController@index']);
-            Route::post('', ['uses' => 'HomeController@store']);
         });
-        Route::group(['prefix' => 'department'], function () {
-            Route::get('free/{id}', ['as' => 'departments.free', 'uses' => 'DepartmentsController@freeAgents'])->where('id', '[1-9][0-9]*');
-            Route::get('supervisor', ['as' => 'departments.supervisor', 'uses' => 'DepartmentsController@freeSupervisors'])->where('id', '[1-9][0-9]*');
+
+        // ADMIN ONLY
+        Route::group(['middleware' => 'userRole:Admin'], function () {
+
+            Route::resource('priority', 'PrioritiesController', ['only' => [
+                'store'
+            ]]);
+            Route::resource('label', 'LabelsController', ['only' => [
+                'store'
+            ]]);
         });
-    });
-    // AGENT ONLY
-    Route::group(['middleware' => 'userRole:Agent'], function () {
-        Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
+
+        // ADMIN AND SUPERVISOR
+        Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
+
+            Route::resource('agents', 'AgentsController', ['except' => [
+                'create'
+            ]]);
+            Route::resource('departments', 'DepartmentsController');
+
+            Route::group(['prefix' => 'home'], function () {
+                Route::post('', ['uses' => 'HomeController@store']);
+            });
+            Route::group(['prefix' => 'department'], function () {
+                Route::get('free/{id}', ['as' => 'departments.free', 'uses' => 'DepartmentsController@freeAgents'])->where('id', '[1-9][0-9]*');
+                Route::get('supervisor', ['as' => 'departments.supervisor', 'uses' => 'DepartmentsController@freeSupervisors'])->where('id', '[1-9][0-9]*');
+            });
+        });
+
+        // AGENT ONLY
+        Route::group(['middleware' => 'userRole:Agent'], function () {
+            Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
+        });
     });
 });

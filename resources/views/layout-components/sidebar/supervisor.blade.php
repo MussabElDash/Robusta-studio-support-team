@@ -1,7 +1,4 @@
 <!-- supervisor tabs will be shared with higher roles(admin)-->
-<li class="{{ active('home') }}">
-    <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
-</li>
 <li class="{{ active('departments.*') }}">
     <a href="/departments"><i class="fa fa-dashboard"></i> <span>Departments</span></a>
 </li>

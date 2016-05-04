@@ -14,6 +14,11 @@
             <li class="header">
                 MAIN NAVIGATION
             </li>
+
+            <li class="{{ active('home') }}">
+                <a href="/home"><i class="fa fa-dashboard"></i> <span>Feed</span></a>
+            </li>
+
             @if ($user->role == 'Admin')
                 @include('layout-components.sidebar.admin')
             @elseif ($user->role == 'Supervisor')
