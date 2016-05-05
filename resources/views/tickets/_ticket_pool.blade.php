@@ -58,27 +58,25 @@
                        data-route={{route('tickets.claim', $ticket->id)}} data-id={{$ticket->id}}>
                         <i class="fa fa-calendar-plus-o"></i> Claim</a>
                 @endif
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown"
-                                aria-expanded="false">
-                            <i class="fa fa-bars"></i>
-                            <span class="caret"></span>
-                            <span class="sr-only">Settings</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li><a id="ticket-invite"
-                                   data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i
-                                            class="fa fa-send-o"></i> Invite</a>
-                            </li>
-                            <li><a id="ticket-edit"
-                                   data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i
-                                            class="fa fa-edit"></i> Edit </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="fa fa-bars"></i>
+                        <span class="caret"></span>
+                        <span class="sr-only">Settings</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a id="ticket-invite"
+                               data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i
+                                        class="fa fa-send-o"></i> Invite</a>
+                        </li>
+                        <li><a id="ticket-edit"
+                               data-route={{route('tickets.edit', $ticket->id)}} data-id={{$ticket->id}}><i
+                                        class="fa fa-edit"></i> Edit </a>
+                        </li>
+                    </ul>
+                </div>
             @endif
-
-
 
         </div>
 

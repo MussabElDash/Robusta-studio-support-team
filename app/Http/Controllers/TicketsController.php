@@ -156,6 +156,7 @@ class TicketsController extends Controller
         $ticket->description = Input::get('tweet_text');
         $ticket->creator_id = $this->user->id;
         $ticket->customer_id = $customer->id;
+        $ticket->tweet_id = Input::get('tweet_id');
         $ticket->save();
         $labels = array_filter(Input::get('label'), function ($id) {
             return !empty($id);

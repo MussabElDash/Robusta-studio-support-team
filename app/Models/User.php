@@ -130,7 +130,9 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
         return Auth::user() == $this || Auth::user()->role == 'Admin';
     }
     public function scopeFreeAgents(Builder $query,$department_id){
-        return $query->where('role','Agent')->where('department_id',$department_id)->has('tickets','<','3');
+        return $query->where('role','Agent')->where('department_id',$department_id)->whereHas('tickets',function($q){
+             $q->open();
+        },'<','3');
     }
     public function scopeFreeSupervisors(Builder $query){
         return $query->where('role','Supervisor')->where('department_id',null);

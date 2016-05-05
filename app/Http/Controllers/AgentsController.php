@@ -115,6 +115,6 @@ class AgentsController extends Controller
 
     }
     public function closedTickets(Request $request){
-        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->get(),'closed'=>true]);
+        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->paginate(5),'closed'=>true]);
     }
 }
