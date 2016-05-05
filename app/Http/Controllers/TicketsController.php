@@ -19,7 +19,10 @@ use DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use App\Events\TicketAssigned;
+
 use Log;
+use Event;
 
 class TicketsController extends Controller
 {
@@ -164,8 +167,10 @@ class TicketsController extends Controller
 
         if (count($labels) > 0)
             $ticket->labels()->attach($labels);
-        return Response::json(["success" => true]);
 
+        if (Input::get('assigned_to') != -1)
+            $this->notify($this->user->id, $ticket);
+        return Response::json(["success" => true]);
     }
 
     public function toggle_status(Request $request, $id)
@@ -222,5 +227,9 @@ class TicketsController extends Controller
         } else {
             return view('tickets.paypal', ['ticket' => $ticket->id, 'guest' => true]);
         }
+    }
+    
+    public function notify($actor_id, $ticket) {
+        Event::fire(new TicketAssigned($actor_id, $ticket->recipient_id, $ticket->id, 'tickets'));
     }
 }
