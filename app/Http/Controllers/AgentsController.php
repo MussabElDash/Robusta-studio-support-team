@@ -101,7 +101,7 @@ class AgentsController extends Controller
 
     public function index()
     {
-        $agents = User::all();
+        $agents = User::paginate(5);
         foreach($agents as $agent)
         {
             $agent->open= Ticket::openTickets($agent->id)->count();
@@ -121,6 +121,6 @@ class AgentsController extends Controller
 
     }
     public function closedTickets(Request $request){
-        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->get(),'closed'=>true]);
+        return view('agents.closed',['tickets'=>Ticket::closedTickets($this->user->id)->paginate(5),'closed'=>true]);
     }
 }

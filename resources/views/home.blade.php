@@ -36,7 +36,7 @@
                             @foreach ($tweets as $tweet)
                                 {{--we can just hide tweets that already have tickets--}}
                                 {{--@if(DB::table('tickets')->where('tweet_id','=',$tweet['id'])->exists())--}}
-                                    {{--@continue--}}
+                                {{--@continue--}}
                                 {{--@endif--}}
                                 <li class="media">
                                     <div class="profile-img-container pull-left">
@@ -78,6 +78,12 @@
                 </div>
             </div>
             <!-- TWEET WRAPPER END -->
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 ticket-pagination">
+                    {{--<a class="btn btn-default btn-block" href="{{ route('tickets.pool') }}?page=2">Load Older Tickets</a>--}}
+                    {!!$tweets->render()!!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection

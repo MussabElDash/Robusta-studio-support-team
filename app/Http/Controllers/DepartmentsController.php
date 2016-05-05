@@ -26,7 +26,11 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        return view('departments.index', ['departments1' => Department::all()]);
+        $departments1 = Department::paginate(5);
+        foreach($departments1 as $department){
+            $department->no_of_agents = $department->users->count();
+        }
+        return view('departments.index', ['departments1' => $departments1]);
     }
 
     /**
