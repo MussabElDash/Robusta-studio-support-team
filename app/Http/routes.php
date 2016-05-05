@@ -52,8 +52,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
-        Route::group(['prefix' => 'agent'], function () {
-            Route::post('/agents/{agent}/edit', function ($id) {
+        Route::group(['prefix' => 'agents'], function () {
+            Route::post('/{agent}/edit', function ($id) {
                 return redirect()->route('agents.edit', [$id]);
             });
         });
@@ -94,12 +94,14 @@ Route::group(['middleware' => ['web']], function () {
         // ADMIN ONLY
         Route::group(['middleware' => 'userRole:Admin'], function () {
 
-            Route::resource('priority', 'PrioritiesController', ['only' => [
-                'store'
+            Route::resource('priorities', 'PrioritiesController', ['except' => [
+                'show', 'create'
             ]]);
-            Route::resource('label', 'LabelsController', ['only' => [
-                'store'
+
+            Route::resource('labels', 'LabelsController', ['except' => [
+                'show', 'create'
             ]]);
+
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
                 Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);

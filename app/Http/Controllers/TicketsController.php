@@ -146,6 +146,7 @@ class TicketsController extends Controller
         $twitter_id = Input::get('customer_twitter_id');
         $customer = DB::table('customers')->where('twitter_id', $twitter_id)->first();
         if ($customer == null) {
+            Log::info("\n\n in \n\n");
             $customer = new Customer();
             $customer->twitter_id = $twitter_id;
             $customer->name = Input::get('customer_name');
@@ -204,6 +205,10 @@ class TicketsController extends Controller
             }
 
             return redirect()->back();
+        }
+
+        if ($request->ajax()) {
+            return Response::json(["message" => "Not Authorized"], 401);
         }
     }
 

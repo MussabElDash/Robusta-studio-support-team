@@ -26,7 +26,7 @@ class CustomersController extends Controller
         if ($customer->save()) {
             // redirect
             Flash::success('Successfully created a Customer!');
-            return Redirect::route('customers.show', $customer);
+            return Redirect::route('customers.show', $customer->slug);
         } else {
             // redirect
             Flash::error($customer->getErrors());
@@ -44,9 +44,8 @@ class CustomersController extends Controller
         // process
         if ($custom->update(Input::all())) {
             // redirect
-            $customer = $custom->slug ? $custom->slug : $customer;
             Flash::success('Successfully updated a Customer!');
-            return Redirect::route('customers.show', $customer);
+            return Redirect::route('customers.show', $customer->slug);
         } else {
             // redirect
             Flash::error($custom->getErrors());

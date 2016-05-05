@@ -13,7 +13,7 @@ class Label extends BaseModel
      * @var array
      */
     protected static $rules = [
-        'name' => 'required',
+        'name' => 'required|unique:labels',
         'background_color' => 'required',
         'name_color' => 'required'
     ];

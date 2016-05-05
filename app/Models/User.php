@@ -124,7 +124,7 @@ class User extends BaseModel implements SluggableInterface, AuthenticatableContr
     {
         return ($this->ticketsCount) ? $this->ticketsCount->count < 3 : true;
     }
-    
+
     public function editable()
     {
         return Auth::user() == $this || Auth::user()->role == 'Admin';

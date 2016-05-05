@@ -34,13 +34,17 @@
                         </tr>
                     @endforeach
                     </tbody>
-                    {{--<tfoot>--}}
-                    {{--<tr>--}}
-                        {{--<th rowspan="1" colspan="1">Name</th>--}}
-                        {{--<th rowspan="1" colspan="1">Description</th>--}}
-                        {{--<th rowspan="1" colspan="1">No. of agents</th>--}}
-                    {{--</tr>--}}
-                    {{--</tfoot>--}}
+                    <tfoot>
+                    <tr>
+                        @foreach($columns as $column)
+                            <th class="sorting_asc" tabindex="0" aria-controls="example2"
+                                rowspan="1"
+                                colspan="1" aria-sort="ascending"
+                                aria-label="{{ $column }}: activate to sort column descending">{{ title_case($column) }}
+                            </th>
+                        @endforeach
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
