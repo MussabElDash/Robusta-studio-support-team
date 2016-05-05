@@ -22,7 +22,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-skin', function () {
         return response(view('skin'))->header('Content-Type', 'text/css');
     });
-    Route::group(['prefix' => 'ticket'],function() {
+    Route::group(['prefix' => 'ticket'], function () {
         Route::get('paypal/{id}', ['as' => 'tickets.paypal', 'uses' => 'TicketsController@paypal']);
         Route::post('vip', ['as' => 'tickets.vip', 'uses' => 'TicketsController@vip']);
     });
@@ -45,22 +45,26 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('customers', 'CustomersController', ['except' => [
             'index', 'create'
         ]]);
-        Route::post('/customers/{customer}/edit', function ($id) {
+        Route::post('customers/{customer}/edit', function ($id) {
             return redirect()->route('customers.edit', [$id]);
         });
 
         Route::resource('comments', 'CommentsController', ['only' => ['store']]);
 
         //AGENT
+        Route::resource('agents', 'AgentsController', ['except' => [
+            'create', 'destroy'
+        ]]);
         Route::group(['prefix' => 'agents'], function () {
-            Route::post('/{agent}/edit', function ($id) {
+            Route::post('{agent}/edit', function ($id) {
                 return redirect()->route('agents.edit', [$id]);
             });
+            Route::delete('{agent}', [
+                'as' => 'agents.destroy',
+                'uses' => 'AgentsController@destroy',
+                'middleware' => 'userRole:Admin,Supervisor'
+            ]);
         });
-
-        Route::resource('agents', 'AgentsController', ['except' => [
-            'create'
-        ]]);
 
         //TICKET
         Route::group(['prefix' => 'tickets'], function () {
@@ -88,7 +92,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::put('{id}/toggle_status', ['as' => 'tickets.toggle_status', 'uses' => 'TicketsController@toggle_status']);
             Route::put('{id}/toggle_vip', ['as' => 'tickets.toggle_vip', 'uses' => 'TicketsController@toggle_vip']);
 
-            Route::put('assign',['as'=>'tickets.assign','uses'=>'TicketsController@assign']);
+            Route::put('assign', ['as' => 'tickets.assign', 'uses' => 'TicketsController@assign']);
         });
 
         // ADMIN ONLY
@@ -104,7 +108,7 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
-                Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);
+                Route::post('twitter', ['uses' => 'HomeController@twitterSettings', 'as' => 'home.twitter']);
 
             });
         });

@@ -33,6 +33,7 @@ class LogAfterRequest
             array_forget($responseArray, 'Content-Type');
         }
         Log::info('app.requests', ['request' => [
+            'Method' => $request->method(),
             'Full Url' => $request->fullUrl(),
             'Parameters' => $request->all(),
             'IPs' => $request->ips(),
