@@ -40,7 +40,10 @@ class BaseModel extends Model
         if ($this instanceof SluggableInterface) {
             $update ? $this->resluggify() : $this->sluggify();
         }
-            $this->fixAttributes($update);
+        if ($update) {
+            $this->fixAttributes();
+        }
+        $this->nullifyEmpty();
         $valid = $this->validate($update);
         $this->fixPassword();
         return $valid;
@@ -96,6 +99,12 @@ class BaseModel extends Model
                     continue;
                 }
             }
+        }
+    }
+
+    protected function nullifyEmpty()
+    {
+        foreach ($this->attributes as $key => $value) {
             if (empty($value)) {
                 $this->attributes[$key] = null;
             }

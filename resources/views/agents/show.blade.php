@@ -48,8 +48,18 @@
     <div class="margin-top content">
         <div class="row">
             <div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-2 col-lg-offset-2">
+                {{--*/ $canDelete = $user->hasRole(['Admin']) /*--}}
+                {{--*/ $canDelete |= $user->hasRole(['Supervisor']) && $user->department == $agent-> department/*--}}
+                {{--*/ $canDelete &= $user != $agent /*--}}
+                {{--*/ $canDelete &= $user->role != $agent->role /*--}}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Show Agent</div>
+                    <div class="panel-heading">
+                        Show Agent
+                        @if($canDelete)
+                            <a href="#" data-toggle="modal" data-target="#agent-confirm-delete"
+                               class="badge label-danger pull-right"><span>Fire!</span></a>
+                        @endif
+                    </div>
                     <div class="panel-body">
                         @if($agent->editable())
                             {{ Form::model($agent, array('class' => "form-horizontal", 'method' => 'POST', 'route' => array('agents.edit', $agent->slug))) }}
@@ -72,4 +82,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('modals')
+    @parent
+    @include('shared.modals.basic_modal', ['id' => 'agent-confirm-delete', 'body' => 'agents._delete', 'title' => 'Agent delete'])
 @endsection

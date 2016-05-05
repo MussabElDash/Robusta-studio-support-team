@@ -8,7 +8,6 @@
 {{--*/ $form_department_select = $flag ? $ticket->department_id : '' /*--}}
 
 
-
 {!! Form::model( $form_object, ['route' => $form_route,
  'method' => $form_method, 'id' => $form_id, 'class' => 'form-horizontal']) !!}
 <div class="box-body">
@@ -26,11 +25,26 @@
             {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Problem Description', 'required' => 'required']) !!}
         </div>
     </div>
+    @if($flag)
+        <div class="form-group">
+            {!! Form::label('department_id', 'Department', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-10">
+                {{ Form::select('department_id', $departments, $form_department_select, ['class' => 'form-control']) }}
+            </div>
+        </div>
+    @endif
 
     <div class="form-group">
-        {!! Form::label('department_id', 'Department', ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label('phone_number', "Phone Number", ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {{ Form::select('department_id', $departments, $form_department_select, ['class' => 'form-control']) }}
+            {{ Form::text('phone_number', null, ['class' => 'form-control', 'placeholder' => 'Phone Number', 'required' => 'required']) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('customer_name', "Customer's Name", ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-10">
+            {{ Form::text('customer_name', null, ['class' => 'form-control', 'placeholder' => 'Name', 'required' => 'required']) }}
         </div>
     </div>
 </div>

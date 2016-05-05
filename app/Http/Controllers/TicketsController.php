@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Customer;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Http\Request;
-
-use App\Models\User as UserModel;
 use App\Http\Requests;
+use App\Models\Customer;
 use App\Models\Ticket;
-
+use App\Models\User as UserModel;
 use Auth;
-use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 use DB;
-
-
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
@@ -39,13 +36,33 @@ class TicketsController extends Controller
 //        $tickets = Ticket::with('assigned_to', 'department',
 //            'creator', 'labels', 'priority')->get();
         $tickets = Ticket::paginate(5);
-        return view('tickets.index', ['tickets' => $tickets,'closed'=>false]);
+        return view('tickets.index', ['tickets' => $tickets, 'closed' => false]);
     }
 
     public function store()
     {
-
-        return view('tickets.show');
+        $customer = Customer::where(['phone_number' => Input::get('phone_number')])->first();
+        Log::debug($customer);
+        if (is_null($customer)) {
+            $customer = new Customer();
+            $customer->phone_number = Input::get('phone_number');
+            $customer->name = Input::get('customer_name');
+            $customer->save();
+        }
+        Log::debug($customer->attributes);
+        $ticket = new Ticket(Input::all());
+        $ticket->creator_id = $this->user->id;
+        $ticket->assigned_to = $this->user->id;
+        $ticket->customer_id = $customer->id;
+        $ticket->department_id = $this->user->department_id;
+        $ticket->tweet_id = Carbon::now() . $this->user->id;
+        if ($ticket->save()) {
+            Flash::success('Successfully created a Ticket!');
+            return Redirect::route('agents.workspace');
+        } else {
+            Flash::error($ticket->getErrors());
+            return Redirect::back();
+        }
     }
 
     public function create()
