@@ -6,6 +6,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\Notification;
 use Log;
+use Auth;
+use Helpers;
 
 class TicketAssigned extends Event implements ShouldBroadcast
 {
@@ -43,8 +45,12 @@ class TicketAssigned extends Event implements ShouldBroadcast
     {
         Log::info("\n\nin broadcastOn\n\n");
         Log::info($this->notification);
-
-        return ['user'];
+        Log::info("&&&&");
+        Log::info(Helpers::getUser());
+        // if(Auth::user()->id === $this->notification->recipient_id) {
+            // return ['user'];
+        // }
+        return [];
     }
 
     /**
