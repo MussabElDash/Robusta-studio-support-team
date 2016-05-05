@@ -98,12 +98,14 @@ Route::group(['middleware' => ['web']], function () {
         // ADMIN ONLY
         Route::group(['middleware' => 'userRole:Admin'], function () {
 
-            Route::resource('priority', 'PrioritiesController', ['only' => [
-                'store'
+            Route::resource('priorities', 'PrioritiesController', ['except' => [
+                'show', 'create'
             ]]);
-            Route::resource('label', 'LabelsController', ['only' => [
-                'store'
+
+            Route::resource('labels', 'LabelsController', ['except' => [
+                'show', 'create'
             ]]);
+
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
                 Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);
