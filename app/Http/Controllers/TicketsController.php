@@ -205,6 +205,10 @@ class TicketsController extends Controller
 
             return redirect()->back();
         }
+
+        if ($request->ajax()) {
+            return Response::json(["message" => "Not Authorized"], 401);
+        }
     }
 
     public function paypal(Request $request, $ticket_id)

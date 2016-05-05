@@ -74,6 +74,7 @@
             @if($user->department == 'VIP' || $user->hasRole(['Admin']))
                 <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>VIP Tickets</span></a></li>
             @endif
+
         </ul>
     </section>
 </aside>

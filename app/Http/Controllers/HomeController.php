@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $tweets = Cache::remember('tweets', 15, function () {
+            $tweets = Cache::remember('tweets', 60, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
         } catch (\Exception $e) {
