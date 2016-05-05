@@ -132,12 +132,52 @@ $(document).on('click', "[id$='claim']", function (e) {
 //    }
 //});
 //
-//$(document).ready(function () {
-//    $(document).on('click', '.pagination a', function (e) {
-//        getTickets($(this).attr('href').split('page=')[1]);
-//        e.preventDefault();
-//    });
-//});
+$(window).ready(function () {
+    console.log('hahah');
+    this.pusher = new Pusher('ef9d531d012262441596', {
+        cluster: 'eu',
+        encrypted: true
+    });
+    this.pusherChannel = this.pusher.subscribe('user');
+
+    this.pusherChannel.bind('ticket-assigned', function(notification) {
+        // console.log(notification);
+        var notificationsCount = parseInt($('#notifications-counter').html()) | 0;
+        notificationsCount++;
+        var soundFx = $('#soundFX'); // Get our sound FX.
+        soundFx[0].play();
+        $('#notifications-counter').html(notificationsCount);
+        var url = notification.parameters.notifiable_type + '/admin-user';
+        $(".dropdown ul .menu").prepend(
+            `<li>
+                <a href="/${url}" style="font-weight: bold;">
+                  <i class="fa ${notification.parameters.css_class}"></i>${notification.message}
+                </a>
+            </li>`);
+    });
+
+
+    $('#notifications-menu').click(function (e) {
+        if($(".notifications-menu").hasClass('open')) {
+            $(".dropdown ul .menu li a").css('font-weight', 'normal');
+            $('#notifications-counter').html("");
+        }
+        $.ajaxSetup({
+            header: $('meta[name="_token"]').attr('content')
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/notifications/mark_as_read',
+            success: function () {
+            },
+            error: function () {
+                console.log('failed marking notifications as read');
+            }
+        });
+    });
+});
+
+
 //
 //function getTickets(page) {
 //    $.ajax({
@@ -151,6 +191,8 @@ $(document).on('click', "[id$='claim']", function (e) {
 //    });
 //}
 $(function () {
+    /// notifications related
+
     $(document).on('click', '.fa-ticket', function (e) {
         var modal = $("#create-ticket-from-feed-modal");
         modal.find("#customer_twitter_id").val($(this).data('customer-twitter-id'));
