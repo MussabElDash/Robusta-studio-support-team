@@ -19,6 +19,7 @@
     {!! Html::script('assets/colorpicker/bootstrap-colorpicker.js') !!}
     {!! Html::script('js/tickets.js') !!}
     {!! Html::script('https://js.pusher.com/3.0/pusher.min.js') !!}
+    {!! Html::script('assets/js/moment.min.js') !!}
 
 
     @section('scripts')

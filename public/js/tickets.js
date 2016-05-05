@@ -267,11 +267,31 @@ $(function () {
             data: $(this).serialize(),
             dataType: 'json',
             success: function () {
-                post.parent().siblings('div.chat').find('img.online').attr('src', post.find('#commenter_image').val());
-                post.parent().siblings('div.chat').find('span.name').text(post.find('#commenter_name').val());
-                post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
+                console.log(post.find('#commenter_image').val());
+                 $(post).parent().siblings('div.chat').prepend(`
+                    <div class="item">
+                        <img alt="user image" class="online" src=${post.find('#commenter_image').val() || '/assets/images/user2-160x160.jpg'}>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> ${moment(Date.now()).fromNow()}</small>
+                                <span class="name">${post.find('#commenter_name').val()}</span>
+                            </a>
+                            <p class="comment">
+                                ${post.find('input.form-control').val()}
+                            </p>
+                        </p>
+                    </div>`)
+                // var comments_list = post.parent().parent().find('#chat-box-workspace .item').slice(0, 5);
+                // console.log(comments_list);
+                // console.log(post);
+                // console.debug(post.parent().parent().find('#chat-box-workspace'));
+                // post.parent().parent().find('#chat-box-workspace').html(comments_list);
+                // post.parent().siblings("#chat-box-workspace").html(comments_list);
+                // $('#chat-box-workspace').html(comments_list);
+                // post.parent().siblings('div.chat').find('img.online').attr('src', post.find('#commenter_image').val());
+                // post.parent().siblings('div.chat').find('span.name').text(post.find('#commenter_name').val());
+                // post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
                 post.find('input.form-control').val("");
-
             },
             error: function () {
                 alert("request failed");

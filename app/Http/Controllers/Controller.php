@@ -35,9 +35,9 @@ class Controller extends BaseController
         Log::info("@@@@@@");
         Log::info($this->user);
         // Log::info($this->user->id);
-        $this->notifications = Notification::where(['recipient_id' => $this->user['id']])->get();
+        $this->notifications = Notification::where(['recipient_id' => $this->user['id']])->orderBy('created_at', 'desc')->get();
         // $this->notifications = Notification::where('recipient_id', 2)->get();
-        Log::info($this->notifications);
+        // Log::info($this->notifications);
 
 
         View::share('departments', $this->departments);
