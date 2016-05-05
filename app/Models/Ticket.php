@@ -25,10 +25,6 @@ class Ticket extends BaseModel
         'description' => 'required'
     ];
 
-    protected static $emptyIsNull = [
-        'department_id'
-    ];
-
     // Relations
     public function creator()
     {
