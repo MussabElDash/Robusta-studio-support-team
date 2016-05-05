@@ -72,13 +72,13 @@ Route::group(['middleware' => ['web']], function () {
             Route::group(['middleware' => 'userRole:Admin,Supervisor'], function () {
                 Route::delete('{id}', ['as' => 'tickets.destroy', 'uses' => 'TicketsController@destroy'])->where('id', '[1-9][0-9]*');
             });
+            Route::get('', ['as' => 'tickets.index', 'uses' => 'TicketsController@index','middleware'=>'userRole:Admin']);
 
             Route::get('pool', ['as' => 'tickets.pool', 'uses' => 'TicketsController@pool']);
             Route::post('{id}/claim', ['as' => 'tickets.claim', 'uses' => 'TicketsController@claim'])->where('id', '[1-9][0-9]*');
 
             // CRUD
             Route::get('create', ['as' => 'tickets.new', 'uses' => 'TicketsController@new']);
-            Route::get('', ['as' => 'tickets.index', 'uses' => 'TicketsController@index']);
             Route::get('{id}/edit', ['as' => 'tickets.edit', 'uses' => 'TicketsController@edit'])->where('id', '[1-9][0-9]*');
             Route::post('', ['as' => 'tickets.store', 'uses' => 'TicketsController@store']);
 
