@@ -9,11 +9,11 @@
   </a>
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
-      <li class="dropdown notifications-menu">
+      <li id="notifications-menu" class="dropdown notifications-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-bell-o"></i>
           <!-- number should be changed to $variable -->
-          <span class="label label-warning">0</span>
+          <span id="notifications-counter" class="label label-warning"></span>
         </a>
         <ul class="dropdown-menu">
           <!-- number should be changed to $variable -->
@@ -21,11 +21,18 @@
 
           <li>
             <ul class="menu">
-              @include('notifications.notification_1')
-              @include('notifications.notification_2')
-              @include('notifications.notification_3')
-              @include('notifications.notification_4')
-              @include('notifications.notification_5')
+                @foreach ($notifications as $notification)
+                    <li>
+                        <a href="{{$notification->getURL()}}" style="{{$notification['seen'] === 0 ? 'font-weight: bold;' : ''}}">
+                          <i class="{{'fa ' . $notification['css_class']}}"></i>{{$notification->text()}}
+                        </a>
+                    </li>
+                @endforeach
+              {{--@include('notifications.notification_1')--}}
+              {{--@include('notifications.notification_2')--}}
+              {{--@include('notifications.notification_3')--}}
+              {{--@include('notifications.notification_4')--}}
+              {{--@include('notifications.notification_5')--}}
             </ul>
           </li>
           <li class="footer"><a href="#">View all</a></li>

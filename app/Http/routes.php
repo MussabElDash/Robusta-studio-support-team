@@ -42,6 +42,10 @@ Route::group(['middleware' => ['web']], function () {
             'store'
         ]]);
 
+        Route::group(['prefix' => 'notifications'], function () {
+            Route::get('mark_as_read', ['as' => 'notifications.markRead', 'uses' => 'NotificationsController@markAsRead']);
+        });
+
         Route::resource('customers', 'CustomersController', ['except' => [
             'index', 'create'
         ]]);

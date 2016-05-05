@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Models;
-
-
-abstract class Notification extends BaseModel
+use Auth;
+use Log;
+class Notification extends BaseModel
 {
     /**
      * The rules used for validation
@@ -13,8 +13,8 @@ abstract class Notification extends BaseModel
     protected static $rules = [
         'actor_id' => 'required',
         'recipient_id' => 'required',
-        'object_id' => 'required',
-        'type' => 'required'
+        'notifiable_id' => 'required',
+        'notifiable_type' => 'required'
     ];
     /**
      * The attributes that are mass assignable.
@@ -22,7 +22,7 @@ abstract class Notification extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'actor_id', 'recipient_id', 'object_id', 'type', 'seen'
+        'actor_id', 'recipient_id', 'notifiable_id', 'seen', 'notifiable_type', 'css_class'
     ];
 
     /**
@@ -49,6 +49,23 @@ abstract class Notification extends BaseModel
         return $this->belongsTo(BaseModel::class, 'notifiable_id');
     }
 
-    abstract function text();
+    public function text()
+    {
+        $user = User::find($this->actor_id);
+        if($this->notifiable_type == 'agents') {
+            return $user->name . ' has viewed the agents list';
+        }
+        return "No message yet";
+    }
 
+    public function getURL()
+    {
+        $user = User::find($this->actor_id);
+        if($this->notifiable_type == 'agents') {
+            return 'agents/' . $user->slug;
+        }elseif($this->notifiable_type == 'tickets') {
+            return 'tickets/pool';
+        }
+        return "No message yet";
+    }
 }
