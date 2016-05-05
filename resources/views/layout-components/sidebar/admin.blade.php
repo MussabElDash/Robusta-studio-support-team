@@ -9,7 +9,7 @@
     </a>
     <ul class="treeview-menu">
         <li><a href={{ route('priorities.index') }}><i class="fa fa-circle-o text-red"></i> <span>Priorities</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Labels</span></a></li>
+        <li><a href={{ route('labels.index') }}><i class="fa fa-circle-o text-red"></i> <span>Labels</span></a></li>
     </ul>
 </li>
 

@@ -40,9 +40,14 @@ class BaseModel extends Model
         if ($this instanceof SluggableInterface) {
             $update ? $this->resluggify() : $this->sluggify();
         }
-        $this->fixAttributes();
+        Log::debug($this->attributes);
+        if($update) {
+            $this->fixAttributes();
+        }
+        Log::debug($this->attributes);
         $valid = $this->validate($update);
         $this->fixPassword();
+        Log::debug($valid);
         return $valid;
     }
 

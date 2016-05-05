@@ -8,7 +8,6 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Response;
 
 use Log;
-use Flash;
 
 class PrioritiesController extends Controller
 {

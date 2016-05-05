@@ -59,22 +59,6 @@ $(document).on('click', "[id$='show']", function (e) {
     }
 });
 
-$(document).on('submit', '#create-priority-modal', function (e) {
-    e.preventDefault();
-    $.ajax({
-        url: 'priorities',
-        type: 'post',
-        data: $("#create-priority-modal form").serialize(),
-        context: $("#create-priority-modal"),
-        success: function (data) {
-            hideModalAfterSuccess('create-priority-modal');
-        },
-        error: function (data) {
-            showModalError('create-priority-modal', 'errors', data);
-        }
-    });
-});
-
 // EDIT Modal AJAX
 $(document).on('click', "[id$='edit']", function (e) {
     if ($("#edit-ticket-modal-" + $(this)[0].dataset["id"]).length == 0) {
@@ -414,6 +398,94 @@ $(document).on('click', "#edit-priority-index", function(e) {
         $("#edit-priority-index-modal-" + this.dataset['id']).modal("show");
     }
 });
+
+$(document).on('submit', '#create-priority-modal', function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: 'priorities',
+        type: 'post',
+        data: $("#create-priority-modal form").serialize(),
+        context: $("#create-priority-modal"),
+        success: function (data) {
+            hideModalAfterSuccess('create-priority-modal');
+        },
+        error: function (data) {
+            showModalError('create-priority-modal', 'errors', data);
+        }
+    });
+});
+
+
+// Label
+$(document).on('click', "#destroy-label-index", function(e) {
+    $.ajax({
+        url: "labels/" + $(this)[0].dataset['id'],
+        type: "delete",
+        context: $(this),
+        success: function (data) {
+            this.fadeOut(300, function () {
+                $('#label-index-' + data['id']).remove();
+            });
+        },
+        error: function (data) {
+            alert("error");
+        }
+    })
+});
+
+$(document).on('click', "#edit-label-index", function(e) {
+    if ( $("#edit-label-index-modal-" + this.dataset['id']).length == 0 ){
+        $.ajax({
+            url: "labels/" + $(this)[0].dataset['id'] + '/edit',
+            type: "get",
+            context: $(this),
+            success: function (data) {
+                $("#modals").append(data['html']);
+                $("#edit-label-index-modal-" + data['id']).modal("show");
+                $("#edit-label-index-modal-" + data['id'] + ' form').submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this)[0].action,
+                        type: "put",
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            var id = 'edit-label-index-modal-' + data['id'];
+                            hideModalAfterSuccess(id);
+                            $(this).remove();
+                            console.log(data["html"]);
+                            $("#label-index-" + data['id']).html(data["html"]) ;
+                        },
+                        error: function (data) {
+                            showModalError('edit-label-index-modal-' + data.responseJSON['id'], 'errors', data);
+                        }
+                    });
+                });
+            },
+            error: function (data) {
+                alert("error");
+            }
+        })
+    } else {
+        $("#edit-label-index-modal-" + this.dataset['id']).modal("show");
+    }
+});
+
+$(document).on('submit', '#create-label-modal', function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: 'labels',
+        type: 'post',
+        data: $("#create-label-modal form").serialize(),
+        context: $("#create-label-modal"),
+        success: function (data) {
+            hideModalAfterSuccess('create-label-modal');
+        },
+        error: function (data) {
+            showModalError('create-label-modal', 'errors', data);
+        }
+    });
+});
+
 
 // Helper Function
 function hideModalAfterSuccess(modalId) {

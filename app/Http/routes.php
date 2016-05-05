@@ -98,7 +98,7 @@ Route::group(['middleware' => ['web']], function () {
                 'show', 'create'
             ]]);
 
-            Route::resource('label', 'LabelsController', ['except' => [
+            Route::resource('labels', 'LabelsController', ['except' => [
                 'show', 'create'
             ]]);
 
