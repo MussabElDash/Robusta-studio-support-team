@@ -12,7 +12,9 @@
         "doctrine/dbal": "v2.5.4",
         "anlutro/l4-settings": "^0.4.8",
         "laracasts/flash": "^2.0",
-        "watson/active": "^2.0"
+        "watson/active": "^2.0",
+        "pusher/pusher-php-server": "~2.0",
+        "predis/predis": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
