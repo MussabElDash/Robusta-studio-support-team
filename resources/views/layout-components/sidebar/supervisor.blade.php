@@ -5,4 +5,3 @@
 <li class="{{ active(['agents.*', 'not:agents/' . $user->slug, 'not:agents.workspace']) }}">
     <a href="/agents"><i class="fa fa-users"></i> <span>Agents</span></a>
 </li>
-@include('layout-components.sidebar.agent')

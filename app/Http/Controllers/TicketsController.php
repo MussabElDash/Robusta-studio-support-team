@@ -33,9 +33,10 @@ class TicketsController extends Controller
     // CRUD
     public function index()
     {
-        $tickets = $this->user->tickets()->with('assigned_to', 'department',
-            'creator', 'labels', 'priority')->get();
-        return view('tickets.index', ['tickets' => $tickets]);
+//        $tickets = Ticket::with('assigned_to', 'department',
+//            'creator', 'labels', 'priority')->get();
+        $tickets = Ticket::paginate(5);
+        return view('tickets.index', ['tickets' => $tickets,'closed'=>false]);
     }
 
     public function store()
