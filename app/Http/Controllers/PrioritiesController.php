@@ -23,22 +23,6 @@ class PrioritiesController extends Controller
         return view('priorities.index', ['priorities' => $priorities]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $priority = Priority::create($request->all());
@@ -63,9 +47,14 @@ class PrioritiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $priority = Priority::find($id);
+
+        if ( $request->ajax() ){
+            return Response::json(['html' => view('shared.modals.basic_modal', ['priority' => $priority, 'autoFill' => true, 'id' => 'edit-priority-index-modal-' . $id,
+                    'body' => 'priorities._form', 'title' => 'Edit Priority'])->render(), 'id' => $id] );
+        }
     }
 
     /**
@@ -77,7 +66,22 @@ class PrioritiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $priority = Priority::find($id);
+        $response = [
+            'success' => true,
+            'id' => $id
+        ];
+        $status = 200;
+
+        if (!$priority->update($request->all())){
+            $response["success"] = false;
+            $response["errors"] = $priority->getErrors();
+            $status = 400;
+        } else {
+            $response["html"] = view('priorities._priority_index', ['priority' => $priority])->render();
+        }
+
+        return Response::json($response, $status);
     }
 
     /**

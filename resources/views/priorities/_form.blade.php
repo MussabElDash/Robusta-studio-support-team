@@ -1,5 +1,12 @@
 <!-- Can be used for edit - create -->
-{!! Form::model(null, ['route' => 'priorities.store', 'class' => 'form-horizontal']) !!}
+
+{{--*/ $flag = isset($priority) && isset($autoFill) && $autoFill /*--}}
+{{--*/ $form_object = $flag ? $priority : null /*--}}
+{{--*/ $form_route  = $flag ? ['priorities.update', 'id' => $priority->id]: 'priorities.store' /*--}}
+{{--*/ $form_method = $flag ? 'put': 'post' /*--}}
+{{--*/ $form_id = $flag ? 'edit-priority-index-form-id' . $priority->id : '' /*--}}
+
+{!! Form::model($form_object, ['route' => $form_route, 'method' => $form_method, 'id' => $form_id, 'class' => 'form-horizontal']) !!}
 <div class="box-body">
 
     <div class="form-group">
@@ -24,7 +31,7 @@
         </div>
         <script>
             $(function () {
-                $('#background_color').colorpicker();
+                $('.colorpicker-component').colorpicker();
             });
         </script>
     </div>
@@ -35,11 +42,6 @@
             {!! Form::text('name_color', null, ['class' => 'form-control', 'style' => 'margin-left: 15px;width: 97%']) !!}
             <span class="input-group-addon"><i></i></span>
         </div>
-        <script>
-            $(function () {
-                $('#name_color').colorpicker();
-            });
-        </script>
     </div>
 
 

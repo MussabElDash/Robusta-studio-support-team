@@ -89,12 +89,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['middleware' => 'userRole:Admin'], function () {
 
             Route::resource('priorities', 'PrioritiesController', ['except' => [
-                'show'
+                'show', 'create'
             ]]);
 
-            Route::resource('label', 'LabelsController', ['only' => [
-                'store'
+            Route::resource('label', 'LabelsController', ['except' => [
+                'show', 'create'
             ]]);
+
             Route::group(['prefix' => 'home'], function () {
                 Route::post('', ['uses' => 'HomeController@store']);
                 Route::post('twitter',['uses' => 'HomeController@twitterSettings','as'=>'home.twitter']);

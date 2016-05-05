@@ -335,9 +335,8 @@ $(function () {
     });
 });
 
+// Priority
 $(document).on('click', "#destroy-priority-index", function(e) {
-    console.log(this);
-
     $.ajax({
         url: "priorities/" + $(this)[0].dataset['id'],
         type: "delete",
@@ -351,6 +350,43 @@ $(document).on('click', "#destroy-priority-index", function(e) {
             alert("error");
         }
     })
+});
+
+$(document).on('click', "#edit-priority-index", function(e) {
+    if ( $("#edit-priority-index-modal-" + this.dataset['id']).length == 0 ){
+        $.ajax({
+            url: "priorities/" + $(this)[0].dataset['id'] + '/edit',
+            type: "get",
+            context: $(this),
+            success: function (data) {
+                $("#modals").append(data['html']);
+                $("#edit-priority-index-modal-" + data['id']).modal("show");
+                $("#edit-priority-index-modal-" + data['id'] + ' form').submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this)[0].action,
+                        type: "put",
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            var id = 'edit-priority-index-modal-' + data['id'];
+                            hideModalAfterSuccess(id);
+                            $(this).remove();
+                            console.log(data["html"]);
+                            $("#priority-index-" + data['id']).html(data["html"]) ;
+                        },
+                        error: function (data) {
+                            showModalError('edit-priority-index-modal-' + data.responseJSON['id'], 'errors', data);
+                        }
+                    });
+                });
+            },
+            error: function (data) {
+                alert("error");
+            }
+        })
+    } else {
+        $("#edit-priority-index-modal-" + this.dataset['id']).modal("show");
+    }
 });
 
 // Helper Function
