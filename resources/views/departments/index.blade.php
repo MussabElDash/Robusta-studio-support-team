@@ -3,5 +3,5 @@
     'columns' => ['name', 'description', 'no_of_agents'],
     'idColumn' => 'slug',
     'route' => 'departments',
-    'models' => $departments
+    'models' => $departments1
     ])

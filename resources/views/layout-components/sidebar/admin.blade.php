@@ -1,5 +1,4 @@
 <!-- Admin tabs -->
-@include('layout-components.sidebar.supervisor')
 <li><a href="statistics.html"><i class="fa fa-pie-chart"></i> <span>Statistics</span></a></li>
 <!-- Add Supervisor tabs as well -->
 
@@ -13,3 +12,6 @@
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Labels</span></a></li>
     </ul>
 </li>
+
+@include('layout-components.sidebar.supervisor')
+

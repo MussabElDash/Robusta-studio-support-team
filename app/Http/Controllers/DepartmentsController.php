@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
-use Flash;
-use Session;
-use Redirect;
-use Auth;
-use Log;
-use Response;
-use Helpers;
+use App\Models\Department;
 use App\Models\User;
+use Auth;
+use Flash;
+use Helpers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Log;
+use Redirect;
+use Response;
+use Session;
 
 class DepartmentsController extends Controller
 {
@@ -27,7 +26,7 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        return view('departments.index', ['departments' => $this->departments]);
+        return view('departments.index', ['departments1' => Department::all()]);
     }
 
     /**
@@ -38,7 +37,6 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info("Creating dep ... \n" . implode(",", Input::all()));
         $department = Department::create(Input::all());
         if ($department->save()) {
             Flash::success('Successfully created department');
@@ -68,7 +66,6 @@ class DepartmentsController extends Controller
      */
     public function show($slug)
     {
-        Log::info('dep slug: ' . $slug);
         $department = Department::where('slug', $slug)->first();
         return view('departments.show', ['department' => $department]);
     }
@@ -94,12 +91,10 @@ class DepartmentsController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        Log::info("updating dep ... \n" . implode(",", Input::all()));
         $department = Department::where('slug', $slug)->first();
         if ($department->update(Input::all())) {
-            $slug = $department->slug ? $department->slug : $slug;
             Flash::success('Successfully updated the department');
-            return Redirect::route("departments.show", [$slug]);
+            return Redirect::route("departments.show", [$department->slug]);
         } else {
             Flash::error($department->getErrors());
             return Redirect::back()->with('errors', $department->getErrors());
@@ -116,28 +111,31 @@ class DepartmentsController extends Controller
     {
         //
     }
+
     public function freeAgents(Request $request, $id)
     {
         if ($request->ajax()) {
             $response = array(
                 'success' => true,
                 'status' => 'success',
-                'agents' => User::freeAgents($id)->get()->lists('name','id')->toArray()
+                'agents' => User::freeAgents($id)->get()->lists('name', 'id')->toArray()
             );
             return Response::json($response, 200);
-        }else{
+        } else {
             error_log('NOT AJAX');
         }
     }
-    public function freeSupervisors(Request $request){
+
+    public function freeSupervisors(Request $request)
+    {
         if ($request->ajax()) {
             $response = array(
                 'success' => true,
                 'status' => 'success',
-                'supervisors' => User::freeSupervisors()->get()->lists('name','id')->toArray()
+                'supervisors' => User::freeSupervisors()->get()->lists('name', 'id')->toArray()
             );
             return Response::json($response, 200);
-        }else{
+        } else {
             error_log('NOT AJAX');
         }
     }

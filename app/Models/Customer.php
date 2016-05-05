@@ -10,17 +10,16 @@ class Customer extends BaseModel implements SluggableInterface
 {
     use SluggableTrait;
     protected $sluggable = [
-        'build_from' => 'phone_number',
+        'build_from' => 'name',
         'save_to' => 'slug',
         'unique' => true,
     ];
 
     /*
         Validations
-    */
+*/
     protected static $rules = [
         'name' => 'required',
-        'phone_number' => 'required|unique:customers,phone_number,',
     ];
 
     /*
@@ -28,8 +27,6 @@ class Customer extends BaseModel implements SluggableInterface
     */
 
     protected $fillable = ['twitter_id', 'name', 'notes', 'phone_number', 'profile_image_path'];
-
-    protected $emptyIsNull = ['twitter_id', 'notes'];
 
     // Relations
 
