@@ -56,7 +56,7 @@ class Notification extends BaseModel
             return $user->name . ' has viewed the agents list';
         }
         if($this->notifiable_type == 'tickets') {
-            return $user->name . ' has assigned to a new ticket';
+            return $user->name . ' has assigned you to a new ticket';
         }
         return "No message yet";
     }
@@ -70,7 +70,7 @@ class Notification extends BaseModel
             return 'agents/' . $user->slug;
         }
         if($this->notifiable_type == 'tickets') {
-            return 'tickets/pool';
+            return 'workspace';
         }
         return "No message yet";
     }

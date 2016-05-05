@@ -23,11 +23,11 @@ class TicketAssigned extends Event implements ShouldBroadcast
         Log::info($actor_id . " " . $recipient_id . " " . $notifiable_id . " " . $notifiable_type);
         $notification = Notification::create([
                                                 'actor_id' => $actor_id,
+                                                'seen' => true,
                                                 'css_class' => 'fa-users text-aqua',
                                                 'recipient_id' => $recipient_id,
                                                 'notifiable_id' => $notifiable_id,
                                                 'notifiable_type' => $notifiable_type,
-                                                'seen' => false,
                                             ]);
         // $notification->text = $notification->text();
         // Log::info("notifiaction ");
@@ -46,11 +46,13 @@ class TicketAssigned extends Event implements ShouldBroadcast
         Log::info("\n\nin broadcastOn\n\n");
         Log::info($this->notification);
         Log::info("&&&&");
-        Log::info(Helpers::getUser());
-        // if(Auth::user()->id === $this->notification->recipient_id) {
-            // return ['user'];
+        $user = Helpers::getUser();
+        Log::info('yala ? ' . $user['id']);
+        // if($user['id'] === $this->notification->recipient_id) {
+        return ['user.' . $this->notification->recipient_id];
         // }
-        return [];
+        // return [];
+        // return [];
     }
 
     /**

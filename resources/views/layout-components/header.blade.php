@@ -15,7 +15,7 @@
           <!-- number should be changed to $variable -->
           <span id="notifications-counter" class="label label-warning"></span>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="width:350px;">
           <!-- number should be changed to $variable -->
           <li class="header">{{ true ? 'No new notifications' : 'You have' . 5 . 'new notifications'}}</li>
 

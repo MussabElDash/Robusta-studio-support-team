@@ -15,7 +15,7 @@ class helper
 {
     public static function getUser() {
         Log::info("---> in helpers");
-        Log::info(Auth::user() . Auth()::id);
+        Log::info(Auth::user());
         return Auth::user();
     }
 }

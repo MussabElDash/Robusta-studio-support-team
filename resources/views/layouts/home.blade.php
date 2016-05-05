@@ -27,6 +27,12 @@
         $.widget.bridge('uibutton', $.ui.button);
         $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
     </script>
+
+    @if(Auth::check())
+        <script>
+            var userID = "{{ Auth::user()->id }}";
+        </script>
+    @endif
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">

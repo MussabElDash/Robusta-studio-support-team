@@ -138,7 +138,8 @@ $(window).ready(function () {
         cluster: 'eu',
         encrypted: true
     });
-    this.pusherChannel = this.pusher.subscribe('user');
+    console.log(userID);
+    this.pusherChannel = this.pusher.subscribe('user.' + userID);
 
     this.pusherChannel.bind('ticket-assigned', function(notification) {
         // console.log(notification);
@@ -280,7 +281,7 @@ $(function () {
     });
     $(document).on('change', '.department_select_free_agents', function (e) {
         var agents_select = $(this).parents('.box-body').find('.agent_select');
-        agents_select.html("<option value='-1'>Please select a department to load free agents</option>");
+        agents_select.html("<option value=''>Please select a department to load free agents</option>");
         e.preventDefault();
         var department = $(this).val();
         if (department != -1) {
@@ -292,6 +293,8 @@ $(function () {
                 url: "/department/free/" + department,
                 dataType: 'json',
                 success: function (response) {
+                    console.log('success')
+                    console.log(response);
                     $.each(response['agents'], function (key, value) {
                         agents_select.append($("<option></option>")
                             .attr("value", key)
@@ -299,6 +302,7 @@ $(function () {
                     });
                 },
                 error: function (jqxhr) {
+                    console.log(jqxhr);
                     alert('failed');
                 }
             });

@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Events\TicketAssigned;
+use App\Events\TicketAssigned2;
 use Auth;
 use Flash;
 use Input;
@@ -108,9 +109,10 @@ class AgentsController extends Controller
             $agent->closed= Ticket::closedTickets($agent->id)->count();
         }
 
-        Log::info("#####");
-        Log::info($this->user['slug']);
-        Event::fire(new TicketAssigned($this->user['id'], 2, $this->user['slug'], 'agents'));
+        // Log::info("#####");
+        // Log::info($this->user['slug']);
+        // Event::fire(new TicketAssigned($this->user['id'], 3, $this->user['slug'], 'agents'));
+        // Event::fire(new TicketAssigned2());
 
         return view('agents.index', ['agents' => $agents]);
     }
