@@ -100,7 +100,7 @@ class AgentsController extends Controller
 
     public function index()
     {
-        $agents = User::all();
+        $agents = User::paginate(5);
         foreach($agents as $agent)
         {
             $agent->open= Ticket::openTickets($agent->id)->count();
