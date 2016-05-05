@@ -8,6 +8,7 @@
 {{--*/ $form_department_select = $flag ? $ticket->department_id : '' /*--}}
 
 
+
 {!! Form::model( $form_object, ['route' => $form_route,
  'method' => $form_method, 'id' => $form_id, 'class' => 'form-horizontal']) !!}
 <div class="box-body">

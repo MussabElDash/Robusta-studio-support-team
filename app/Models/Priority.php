@@ -18,7 +18,7 @@ class Priority extends BaseModel
      * @var array
      */
     protected static $rules = [
-        'name' => 'required',
+        'name' => 'required|unique:priorities',
         'value' => 'required',
         'background_color' => 'required',
         'name_color' => 'required'
@@ -29,7 +29,7 @@ class Priority extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'value', 'background_color','name_color'
+        'name', 'value', 'background_color','name_color', 'description'
     ];
 
     /**

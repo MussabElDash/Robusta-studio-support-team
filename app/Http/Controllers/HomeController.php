@@ -10,12 +10,15 @@ use App\Models\Ticket;
 use Auth;
 use Cache;
 use Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Input;
 use Mockery\CountValidator\Exception;
 use Redirect;
 use Illuminate\Http\Request;
 use Log;
 use DB;
+use \Illuminate\Pagination\Paginator;
 
 use App\Models\Department;
 use Session;
@@ -29,12 +32,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $tweets = Cache::remember('tweets', 15, function () {
+            $tweets = Cache::remember('tweets', 60, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
+//            $tweets = Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         } catch (\Exception $e) {
         }
         if (!empty($tweets)) {
@@ -67,7 +71,24 @@ class HomeController extends Controller
                     $i++;
                 }
             }
-            return view('home', ['user' => Auth::user(), 'tweets' => $tweets_filter]);
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+            //Create a new Laravel collection from the array data
+            $collection = new Collection($tweets_filter);
+
+            //Define how many items we want to be visible in each page
+            $perPage = 5;
+
+            //Slice the collection to get the items to display in current page
+            $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+            //Create our paginator and pass it to the view
+            $paginatedSearchResults = new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+            $paginatedSearchResults->setPath('home');
+
+            return view('home', ['user' => Auth::user(),
+                'tweets' => $paginatedSearchResults]);
+            //Get current page form url e.g. &page=6
         } else {
             return view('home', ['user' => Auth::user(), 'tweets' => []]);
         }

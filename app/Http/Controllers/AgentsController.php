@@ -99,7 +99,7 @@ class AgentsController extends Controller
 
     public function index()
     {
-        $agents = User::all();
+        $agents = User::paginate(5);
         foreach ($agents as $agent) {
             $agent->open = Ticket::openTickets($agent->id)->count();
             $agent->closed = Ticket::closedTickets($agent->id)->count();
@@ -110,11 +110,6 @@ class AgentsController extends Controller
     public function workspace(Request $request)
     {
         return view('agents.workspace', ['agent' => $this->user, 'tickets' => $this->user->tickets()->open()->get()]);
-    }
-
-    public function closedTickets(Request $request)
-    {
-        return view('agents.closed', ['tickets' => Ticket::closedTickets($this->user->id)->get(), 'closed' => true]);
     }
 
     public function destroy($agent)
@@ -137,5 +132,10 @@ class AgentsController extends Controller
             Flash::error('An Error occured while deleting');
             return Redirect::back();
         }
+    }
+
+    public function closedTickets(Request $request)
+    {
+        return view('agents.closed', ['tickets' => Ticket::closedTickets($this->user->id)->paginate(5), 'closed' => true]);
     }
 }

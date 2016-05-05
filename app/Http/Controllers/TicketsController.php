@@ -33,9 +33,10 @@ class TicketsController extends Controller
     // CRUD
     public function index()
     {
-        $tickets = $this->user->tickets()->with('assigned_to', 'department',
-            'creator', 'labels', 'priority')->get();
-        return view('tickets.index', ['tickets' => $tickets]);
+//        $tickets = Ticket::with('assigned_to', 'department',
+//            'creator', 'labels', 'priority')->get();
+        $tickets = Ticket::paginate(5);
+        return view('tickets.index', ['tickets' => $tickets,'closed'=>false]);
     }
 
     public function store()
@@ -157,6 +158,7 @@ class TicketsController extends Controller
         $ticket->description = Input::get('tweet_text');
         $ticket->creator_id = $this->user->id;
         $ticket->customer_id = $customer->id;
+        $ticket->tweet_id = Input::get('tweet_id');
         $ticket->save();
         $labels = array_filter(Input::get('label'), function ($id) {
             return !empty($id);
@@ -204,6 +206,10 @@ class TicketsController extends Controller
             }
 
             return redirect()->back();
+        }
+
+        if ($request->ajax()) {
+            return Response::json(["message" => "Not Authorized"], 401);
         }
     }
 
