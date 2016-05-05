@@ -17,6 +17,8 @@ class TicketAssigned extends Event implements ShouldBroadcast
      */
     public function __construct($actor_id, $recipient_id, $notifiable_id, $notifiable_type)
     {
+        Log::info("$$$4$");
+        Log::info($actor_id . " " . $recipient_id . " " . $notifiable_id . " " . $notifiable_type);
         $notification = Notification::create([
                                                 'actor_id' => $actor_id,
                                                 'css_class' => 'fa-users text-aqua',
@@ -63,7 +65,8 @@ class TicketAssigned extends Event implements ShouldBroadcast
     public function broadcastWith()
     {
         return ['message' => $this->notification->text(),
-                'parameters' => $this->notification
+                'parameters' => $this->notification,
+                'url' => $this->notification->getURL()
             ];
     }
 }

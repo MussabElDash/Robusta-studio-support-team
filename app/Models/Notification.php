@@ -55,15 +55,21 @@ class Notification extends BaseModel
         if($this->notifiable_type == 'agents') {
             return $user->name . ' has viewed the agents list';
         }
+        if($this->notifiable_type == 'tickets') {
+            return $user->name . ' has assigned to a new ticket';
+        }
         return "No message yet";
     }
 
     public function getURL()
     {
+        Log::info("%%%%%");
+        Log::info($this->notifiable_type);
         $user = User::find($this->actor_id);
         if($this->notifiable_type == 'agents') {
             return 'agents/' . $user->slug;
-        }elseif($this->notifiable_type == 'tickets') {
+        }
+        if($this->notifiable_type == 'tickets') {
             return 'tickets/pool';
         }
         return "No message yet";

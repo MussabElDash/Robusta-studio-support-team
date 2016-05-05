@@ -228,8 +228,8 @@ class TicketsController extends Controller
             return view('tickets.paypal', ['ticket' => $ticket->id, 'guest' => true]);
         }
     }
-    
+
     public function notify($actor_id, $ticket) {
-        Event::fire(new TicketAssigned($actor_id, $ticket->recipient_id, $ticket->id, 'tickets'));
+        Event::fire(new TicketAssigned($actor_id, $ticket->assigned_to, $ticket->id, 'tickets'));
     }
 }

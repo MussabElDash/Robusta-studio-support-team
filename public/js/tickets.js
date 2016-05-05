@@ -147,10 +147,9 @@ $(window).ready(function () {
         var soundFx = $('#soundFX'); // Get our sound FX.
         soundFx[0].play();
         $('#notifications-counter').html(notificationsCount);
-        var url = notification.parameters.notifiable_type + '/admin-user';
         $(".dropdown ul .menu").prepend(
             `<li>
-                <a href="/${url}" style="font-weight: bold;">
+                <a href="/${notification.url}" style="font-weight: bold;">
                   <i class="fa ${notification.parameters.css_class}"></i>${notification.message}
                 </a>
             </li>`);
