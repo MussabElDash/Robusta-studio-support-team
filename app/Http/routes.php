@@ -42,6 +42,10 @@ Route::group(['middleware' => ['web']], function () {
             'store'
         ]]);
 
+        Route::group(['prefix' => 'notifications'], function () {
+            Route::get('mark_as_read', ['as' => 'notifications.markRead', 'uses' => 'NotificationsController@markAsRead']);
+        });
+
         Route::resource('customers', 'CustomersController', ['except' => [
             'index', 'create'
         ]]);
@@ -125,7 +129,7 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         // AGENT ONLY
-        Route::group(['middleware' => 'userRole:Agent'], function () {
+        Route::group(['middleware' => 'userRole:Agent,Admin'], function () {
             Route::get('workspace', ['as' => 'agents.workspace', 'uses' => 'AgentsController@workspace']);
             Route::get('closed', ['as' => 'agents.closed', 'uses' => 'AgentsController@closedTickets']);
         });

@@ -38,14 +38,19 @@ class HomeController extends Controller
             $tweets = Cache::remember('tweets', 60, function () {
                 return Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
             });
-//            $tweets = Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
+            // $tweets = Twitter::getMentionsTimeline(['count' => 20, 'format' => 'array']);
         } catch (\Exception $e) {
+            Log::info("\n\n{\nerror connecting to twitter api\n}\n\n");
+            Log::info($e);
         }
         if (!empty($tweets)) {
             $tweets_filter = array();
             $i = 0;
             foreach ($tweets as $tweet) {
                 if ($tweet['in_reply_to_status_id'] != null) {
+                    // Log::info($tweet['in_reply_to_status_id']);
+                    // Log::info($tweet['text']);
+                    // Log::info($tweet['user']['name']);
                     if (!Comment::where('status_id', '=', $tweet['id'])->exists()) {
                         $comment = Comment::where('status_id', '=', $tweet['in_reply_to_status_id'])->first();
                         $ticket = Ticket::where('tweet_id', '=', $tweet['in_reply_to_status_id'])->first();

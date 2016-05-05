@@ -132,12 +132,52 @@ $(document).on('click', "[id$='claim']", function (e) {
 //    }
 //});
 //
-//$(document).ready(function () {
-//    $(document).on('click', '.pagination a', function (e) {
-//        getTickets($(this).attr('href').split('page=')[1]);
-//        e.preventDefault();
-//    });
-//});
+$(window).ready(function () {
+    console.log('hahah');
+    this.pusher = new Pusher('ef9d531d012262441596', {
+        cluster: 'eu',
+        encrypted: true
+    });
+    console.log(userID);
+    this.pusherChannel = this.pusher.subscribe('user.' + userID);
+
+    this.pusherChannel.bind('ticket-assigned', function(notification) {
+        // console.log(notification);
+        var notificationsCount = parseInt($('#notifications-counter').html()) | 0;
+        notificationsCount++;
+        var soundFx = $('#soundFX'); // Get our sound FX.
+        soundFx[0].play();
+        $('#notifications-counter').html(notificationsCount);
+        $(".dropdown ul .menu").prepend(
+            `<li>
+                <a href="/${notification.url}" style="font-weight: bold;">
+                  <i class="fa ${notification.parameters.css_class}"></i>${notification.message}
+                </a>
+            </li>`);
+    });
+
+
+    $('#notifications-menu').click(function (e) {
+        if($(".notifications-menu").hasClass('open')) {
+            $(".dropdown ul .menu li a").css('font-weight', 'normal');
+            $('#notifications-counter').html("");
+        }
+        $.ajaxSetup({
+            header: $('meta[name="_token"]').attr('content')
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/notifications/mark_as_read',
+            success: function () {
+            },
+            error: function () {
+                console.log('failed marking notifications as read');
+            }
+        });
+    });
+});
+
+
 //
 //function getTickets(page) {
 //    $.ajax({
@@ -151,6 +191,8 @@ $(document).on('click', "[id$='claim']", function (e) {
 //    });
 //}
 $(function () {
+    /// notifications related
+
     $(document).on('click', '.fa-ticket', function (e) {
         var modal = $("#create-ticket-from-feed-modal");
         modal.find("#customer_twitter_id").val($(this).data('customer-twitter-id'));
@@ -225,11 +267,31 @@ $(function () {
             data: $(this).serialize(),
             dataType: 'json',
             success: function () {
-                post.parent().siblings('div.chat').find('img.online').attr('src', post.find('#commenter_image').val());
-                post.parent().siblings('div.chat').find('span.name').text(post.find('#commenter_name').val());
-                post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
+                console.log(post.find('#commenter_image').val());
+                 $(post).parent().siblings('div.chat').prepend(`
+                    <div class="item">
+                        <img alt="user image" class="online" src=${post.find('#commenter_image').val() || '/assets/images/user2-160x160.jpg'}>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> ${moment(Date.now()).fromNow()}</small>
+                                <span class="name">${post.find('#commenter_name').val()}</span>
+                            </a>
+                            <p class="comment">
+                                ${post.find('input.form-control').val()}
+                            </p>
+                        </p>
+                    </div>`)
+                // var comments_list = post.parent().parent().find('#chat-box-workspace .item').slice(0, 5);
+                // console.log(comments_list);
+                // console.log(post);
+                // console.debug(post.parent().parent().find('#chat-box-workspace'));
+                // post.parent().parent().find('#chat-box-workspace').html(comments_list);
+                // post.parent().siblings("#chat-box-workspace").html(comments_list);
+                // $('#chat-box-workspace').html(comments_list);
+                // post.parent().siblings('div.chat').find('img.online').attr('src', post.find('#commenter_image').val());
+                // post.parent().siblings('div.chat').find('span.name').text(post.find('#commenter_name').val());
+                // post.parent().siblings('div.chat').find('p.comment').text(post.find('input.form-control').val());
                 post.find('input.form-control').val("");
-
             },
             error: function () {
                 alert("request failed");
@@ -239,7 +301,7 @@ $(function () {
     });
     $(document).on('change', '.department_select_free_agents', function (e) {
         var agents_select = $(this).parents('.box-body').find('.agent_select');
-        agents_select.html("<option value='-1'>Please select a department to load free agents</option>");
+        agents_select.html("<option value=''>Please select a department to load free agents</option>");
         e.preventDefault();
         var department = $(this).val();
         if (department != -1) {
@@ -251,6 +313,8 @@ $(function () {
                 url: "/department/free/" + department,
                 dataType: 'json',
                 success: function (response) {
+                    console.log('success')
+                    console.log(response);
                     $.each(response['agents'], function (key, value) {
                         agents_select.append($("<option></option>")
                             .attr("value", key)
@@ -258,6 +322,7 @@ $(function () {
                     });
                 },
                 error: function (jqxhr) {
+                    console.log(jqxhr);
                     alert('failed');
                 }
             });

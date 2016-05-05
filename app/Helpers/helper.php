@@ -3,6 +3,8 @@
 namespace App\Helpers;
 use App\Models\User;
 use DB;
+use Auth;
+use Log;
 /**
  * Created by PhpStorm.
  * User: mahmoudawadeen
@@ -11,5 +13,9 @@ use DB;
  */
 class helper
 {
-
+    public static function getUser() {
+        Log::info("---> in helpers");
+        Log::info(Auth::user());
+        return Auth::user();
+    }
 }

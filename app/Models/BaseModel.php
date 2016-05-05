@@ -88,14 +88,16 @@ class BaseModel extends Model
         }
     }
 
-    protected function fixAttributes()
+    protected function fixAttributes($update = false)
     {
         foreach ($this->attributes as $key => $value) {
-            if ((empty($value) && $this->getOriginal($key) == NULL) || ($value == $this->getOriginal($key))) {
-                $this->removedAttributes[$key] = $this->attributes[$key];
-                array_forget($this->attributes, $key);
-                array_forget(static::$rules, $key);
-                continue;
+            if($update) {
+                if ((empty($value) && $this->getOriginal($key) == NULL) || ($value == $this->getOriginal($key))) {
+                    $this->removedAttributes[$key] = $this->attributes[$key];
+                    array_forget($this->attributes, $key);
+                    array_forget(static::$rules, $key);
+                    continue;
+                }
             }
         }
     }

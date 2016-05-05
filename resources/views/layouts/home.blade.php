@@ -18,15 +18,22 @@
     {!! Html::script('assets/js/AdminLTE.min.js') !!}
     {!! Html::script('assets/colorpicker/bootstrap-colorpicker.js') !!}
     {!! Html::script('js/tickets.js') !!}
+    {!! Html::script('https://js.pusher.com/3.0/pusher.min.js') !!}
+    {!! Html::script('assets/js/moment.min.js') !!}
 
 
     @section('scripts')
     @show
-
     <script>
         $.widget.bridge('uibutton', $.ui.button);
         $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
     </script>
+
+    @if(Auth::check())
+        <script>
+            var userID = "{{ Auth::user()->id }}";
+        </script>
+    @endif
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -34,7 +41,10 @@
     <header class="main-header">
         @include('layout-components.header')
     </header>
-
+    <audio id="soundFX">
+        <source src="/media/notification_sound.mp3"></source>
+        Update your browser to enjoy HTML5 audio!
+    </audio>
     @include('layout-components.sidebar.sidebar')
 
     <div class="content-wrapper">

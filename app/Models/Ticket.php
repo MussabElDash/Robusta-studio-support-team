@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 
 
-
+use Log;
 class Ticket extends BaseModel
 {
 
@@ -107,9 +107,15 @@ class Ticket extends BaseModel
 
     }
     public function scopeClosedTickets(Builder $query,$user_id){
+        if(User::find($user_id)->hasRole(['Admin'])) {
+            return $query->open();
+        }
         return $query->where('assigned_to',$user_id)->done();
     }
     public function scopeOpenTickets(Builder $query,$user_id){
+        if(User::find($user_id)->hasRole(['Admin'])) {
+            return $query->open();
+        }
         return $query->where('assigned_to',$user_id)->open();
     }
 
