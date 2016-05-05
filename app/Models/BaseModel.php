@@ -45,7 +45,6 @@ class BaseModel extends Model
         }
         $valid = $this->validate($update);
         $this->fixPassword();
-        Log::debug($valid);
         return $valid;
     }
 
